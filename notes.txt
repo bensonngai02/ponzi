@@ -1,25 +1,30 @@
 April 24, 2022
-Lisp - expression oriented language (no difference between expressions + statements)
+LISP - expression oriented language (no difference between expressions + statements)
 SECD Machine
-Stack, Environment, Control, Dump
-Specifically designed to evaluate lambda calculus expressions (Lisp)
-S Register (Stack)
-Stack is a list → Point at list head 
-Stack space doesn’t have to be continuous
-Can use discontinuous memory cells
-Garbage collection
-E Register (Environment)
-Current variable environment
-List of lists
-Variables at head of list
-Variables that are free in the current function are also in list
-Other stuff too
-C Register (Control)
-Program counter
-Pointer to head of code (instruction list)
-When instruction is executed → move on to next instruction in list
-D Register (Dump)
-Return stack
+-   Stack, Environment, Control, Dump
+-   Specifically designed to evaluate lambda calculus expressions (Lisp)
+
+    S Register (Stack)
+        - Holds intermediate results when computer values of expressions
+        - Stack is a list → Point at list head 
+        - Stack space doesn’t have to be continuous
+        - Can use discontinuous memory cells
+        - Garbage collection
+    E Register (Environment)
+        - Current variable environment
+        - Holds values bound to variables during evaluation
+        - List of lists
+        - Variables at head of list
+        - Variables that are free in the current function are also in list
+        - Other stuff too
+    C Register (Control)
+        - Program counter
+        - Holds machine language program being executed
+        - Pointer to head of code (instruction list)
+        - When instruction is executed → move on to next instruction in list
+    D Register (Dump)
+        - Return stack
+        - Saves values of other registers upon calling a new function
 
 Example: (1 2 3)			// list holding numbers 1, 2, 3
 
