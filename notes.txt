@@ -1,0 +1,100 @@
+April 24, 2022
+Lisp - expression oriented language (no difference between expressions + statements)
+SECD Machine
+Stack, Environment, Control, Dump
+Specifically designed to evaluate lambda calculus expressions (Lisp)
+S Register (Stack)
+Stack is a list → Point at list head 
+Stack space doesn’t have to be continuous
+Can use discontinuous memory cells
+Garbage collection
+E Register (Environment)
+Current variable environment
+List of lists
+Variables at head of list
+Variables that are free in the current function are also in list
+Other stuff too
+C Register (Control)
+Program counter
+Pointer to head of code (instruction list)
+When instruction is executed → move on to next instruction in list
+D Register (Dump)
+Return stack
+
+Example: (1 2 3)			// list holding numbers 1, 2, 3
+
+Links:
+https://vaxbusters.org/workshop/secd.xml 
+http://www.elizas.website/seax/implementation/secd.html
+https://github.com/zachallaun/secd
+https://jaredkrinke.github.io/learn-scheme/1-1-7-examplesquarer.html
+
+
+LISP Syntax
+Integer Operations
+( + 21 35 12 7)
+(+ (* 3 5) (- 10 6))
+Prefix notation + integer operations can take arbitrary # of arguments
+Define
+Establishes variable bindings
+Basically string substitution
+(define size 2) → everywhere that uses size is now 2
+(define circumference (* 4 pi radius size))
+(define (square x) (*x x x))
+Function - to square something, multiply it by itself
+(define (<name> <formal parameters>) <body>)
+Creating definition of function ‘f’ with parameter ‘a’ and body sum of squares
+(define (f a)
+  (sum-of-squares (+ a 1) (* a 2)))
+
+(f 5)
+Retrieve body of f, then replace formal parameter ‘a’ with argument 5
+Defining a Procedure
+(define square
+     (lambda (n)
+          (* n n)))
+Lambda - creates procedures
+Conditions
+
+Cond
+    (define (abs x)
+    (cond ((> x 0) x)
+            ((= x 0) 0)
+            ((< x 0) (- x))))
+
+General Form: 
+    (cond (<p1> <e1>)
+        (<p2> <e2>)
+        (<pn> <en>))
+
+If
+    (if <predicate> <consequent> <alternative>)
+
+Else
+    (define (abs x)
+    (cond ((< x 0) (- x))
+            (else x)))
+
+And
+    (and (> x 5) (< x 10))
+
+Or 
+    (define (>= x y)
+    (or (> x y) (= x y)))
+  
+Not
+    (define (>= x y)
+    (not (< x y)))
+
+True
+    #t
+
+False
+    #f
+
+Predicates - names end with a question mark
+    Eq? 
+    Zero?
+    string=?
+
+
