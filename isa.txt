@@ -1,0 +1,68 @@
+Tython Instruction Set Architecture (ISA)
+-------------------------------------------
+
+Table of Contents
+-------------------------------------------
+1. Basic instructions:
+        NIL (Nil)
+            - Pushes nil pointer onto the stack.
+            - Acts as empty list.
+        LDC (Load Constant)
+            - Loads next value from control register and
+              pushes it (constant argument) onto stack.
+        LD (Load (from environment))
+            - Pushes the variables value from environment onto the stack. 
+              Variable is indicated by the argument, a pair - location in list of lists.
+              The pair's car specifies the level, the cdr the position. 
+              ie. (1 . 3) gives the current function's (level 1) third parameter.
+
+2. Branching instructions:
+        SEL (Select Branch)
+            - if else
+            - Expects 2 list arguments + pops value 'v' from stack
+            - If v = true --> replace control register with 'ct'
+            - If v = false --> replace control register with 'cf'
+            - Pointer to instruction after 'SEL' is saved onto dump before (so that it can be recovered later)
+
+        JOIN (Join with Main Control)
+            - Used to return to instruction after SEL (whether if or else is performed)
+            - Returns control to control register saved during SEL (on dump register)
+            - 'ct' & 'cf' code lists end with join
+
+    3. Non-recursive function instructions:
+        ** Q: What is a function closure? **
+        ** A: Record storing a function with its environment. Function retains references to variables in-scope
+              during function definition + function exiting that scope *
+        LDF (Load function)
+            - Constructs a function closure (Pair - function + current environment)
+            - Pushes the closure onto the stack
+
+        AP (Apply)
+            - Transfers control to the function (function execution)
+            - Pops closure + list of parameters from stack
+            - Installs its environment as the current one (load parameters)
+            - Clear stack, set C as function pointer of closure
+            - Before this is done -> S, E, C pushed onto dump so continue execution after function is done
+
+        RTN (Return)
+            - Expected at end of function list, returns a value
+            - Top of stack 'v' is saved (value to return)
+            - Restore S, E, C.
+            - Push 'v' back onto stack of restored environment
+
+Built-ins:
+CAR, CDR, ATOM, et al. -  Unary built-in operations
+ADD, SUB, CONS, et al. -  Binary built-in operations
+
+
+
+
+
+Recursive function instructions:
+DUM    - Dummy
+RAP    - Recursive apply
+
+Auxiliary instructions:
+READC  - Read character
+WRITEC - Write character
+STOP   - Stop execution
