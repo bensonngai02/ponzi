@@ -60,7 +60,7 @@ Table of Contents
 
 
 
-5. Unary Operations:
+5. Unary (1) Operations:
         ** Q: What is a unary built-in? **
         ** A: Take 1 Argument for stack, evaluate, push return value back on **
         CAR
@@ -72,12 +72,30 @@ Table of Contents
         NULL
             - Returns true if argument is nil/empty list, else fase
 
-6. Integer Operations:
-        ADD 
-        SUB
-        CONS
+6. Binary (2) Operations:
+        ** Take two arguments from stack **
+    Integer Operations:
+        ADD (Add)
+        SUB (Subtract)
+        MTY (Multiply)
+        DIV (Division)
+
+    Boolean Operations:
+        EQ (Check if two atoms are equal)
+        GT (Greater than)
+        LT (Less than)
+        GTE (Greater than or eq to)
+        LTE (Less than or eq to)
+
+    List Operations:
+        CONS 
+            - Add item to beginning of list + return list
 
 Auxiliary instructions:
+    WRITEC (Write character)
+        - Priting to the screen is a recursive action.
+        - Accepts 1 argument (first character)
+        - Tail recursion into sequence is empty -> print \n
 READC  - Read character
-WRITEC - Write character
+
 STOP   - Stop execution
