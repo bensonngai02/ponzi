@@ -1,4 +1,4 @@
-/* CODE */
+/* scheme code */
 
 (define (sum a b)
         (display "x + y = ")
@@ -13,6 +13,13 @@
           (* n n)))
 
 
-/* OUTPUT */
-
+/* scheme output */
 x + y = 35
+
+
+/* s-expression code */
+(EQ LDC 0 SUB LDC 10 ADD LDC 3 LDC 7)
+(LDC 7 LDC 3 ADD LDC 10 SUB LDC 0 EQ)
+
+/* s-expression output */
+

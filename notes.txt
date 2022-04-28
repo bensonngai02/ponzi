@@ -33,6 +33,25 @@ SECD Machine
         - where s, e, c, d represent the AFTER state
         - s', e', c', d' represent the BEFORE state
 
+Compiler
+    - If c is the code generated from a well-formed expression
+        - s e c d -> (x.s) e NIL d
+    - Namelist - list of lists (instructions)
+        - ie. ((A) (X Y) (APPEND REV DUP))
+        - to compute an index pair with 'location'
+        - position (x, a) = if eq(x, car(a)) then 0
+                            else 1 + position(x, cdr(a))
+                            where x = variable we're looking for
+                                  n = name list
+                                  a = list of atoms (sublist of n)
+        - location (x, n) = if member(x, car(n)) then cons(0, position(x, car(n)))
+                            else {cons(car(z) + 1), cdr(z)}
+                            where z = location(x, cdr(n))
+    - Putting Expressions + Namelists together
+            - e*n where e = expression, n = Namelist
+            - x*n = (LD i) where i = location(x,n)
+            - (QUOTE s) *n = (LDC s)
+
 
 Example: (1 2 3)			// list holding numbers 1, 2, 3
 
@@ -120,3 +139,18 @@ Create stack pointer stack that keeps track of pointers to stack bases.
 That way, we can make stack dynamic - grow.
 Or
 We can realloc with C.
+
+April 28, 2022
+- write code for stack
+- define our types
+    - atom (struct union)
+        - integers
+        - booleans
+        - strings ("nil", "omega")
+    - s-expression (class)
+        - make it a class
+        - make methods around class
+            - location, index, position, etc.
+    - Machine class
+        - Pointers: S, E, C, D
+        - malloc every time you need to add to linked list

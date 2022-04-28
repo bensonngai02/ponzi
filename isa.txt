@@ -62,25 +62,30 @@ Table of Contents
         AP (Apply)
             - Transfers control to the function (function execution)
             - Pops closure + list of parameters from stack
+                - Closure must be ABOVE list 'v' of parameters in stack
             - Installs its environment as the current one (load parameters)
             - Clear stack, set C as function pointer of closure
             - Before this is done -> S, E, C pushed onto dump so continue execution after function is done
+            - ((c'.e') v.s) e (AP.c) d -> NIL (v.e') c' (s e c.d)
 
         RTN (Return)
             - Expected at end of function list, returns a value
             - Top of stack 'v' is saved (value to return)
             - Restore S, E, C.
             - Push 'v' back onto stack of restored environment
+            - (x) e' (RTN) (s e c.d) -> (x.s) e c d
 
 4. Recursive function instructions:
         DUM (Dummy Environment)
             - Pushes "dummy" empty list in front of environment list.
+            - s e (DUM.c) d -> s (omega.e) c d
 
         RAP (Recursive apply)
             - Basically ap
             - But replaces dummy list with current functions so that recursion is possible.
-
-
+                - Therefore stack doesn't grow on every recursive call
+            - ((c'.e') v.s) (omega.e) (RAP.c) d -> NIL rplaca(e',v) c' (s e c.d)
+                v - list of values (new control + environment)
 
 5. Unary (1) Operations
         ** Q: What is a unary built-in? **
