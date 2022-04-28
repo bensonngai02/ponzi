@@ -15,19 +15,30 @@ Table of Contents
               Variable is indicated by the argument, a pair - location in list of lists.
               The pair's car specifies the level, the cdr the position. 
               ie. (1 . 3) gives the current function's (level 1) third parameter.
+            - index (n,s) = if eq(n,0) then car(s) else index(n-1, cdr(s))
+            - locate (i, e) =
+                {index(n, index(b,e))
+                    where b = car(i)
+                    and n = cdr(i)
+                }
+            - s e (LD i.c) d -> (x.s) e c d where x = locate(i,e)
 
 2. Branching instructions:
         SEL (Select Branch)
             - if else
+            - Selects sublist of control (subset of instructions) based on value at top of stack
             - Expects 2 list arguments + pops value 'v' from stack
             - If v = true --> replace control register with 'ct'
             - If v = false --> replace control register with 'cf'
             - Pointer to instruction after 'SEL' is saved onto dump before (so that it can be recovered later)
+            - (x.s) e (SEL ct cf.c) d -> s e c_x (c.d)
+
 
         JOIN (Join with Main Control)
             - Used to return to instruction after SEL (whether if or else is performed)
             - Returns control to control register saved during SEL (on dump register)
             - 'ct' & 'cf' code lists end with join
+            - s e (JOIN) (c.d) -> s e c d
 
 3. Non-recursive function instructions:
         ** Q: What is a function closure? **
@@ -36,6 +47,17 @@ Table of Contents
         LDF (Load function)
             - Constructs a function closure (Pair - function + current environment)
             - Pushes the closure onto the stack
+            - Pair
+                - function : control list (list of instructions) for that function
+                - environment
+            - s e (LDF c'.c) d -> ((c'.e).s) e c d
+                - where (c'.e) is the cons of a control list operand of LDR + Environment
+                - ie. If the machine is in the state..
+                    (0) ((3 7) (A)) (LDF (LD (1.1) RTN) LD (0.1)) NIL
+                - Applying LDF (LD (1.1) RTN)...
+                    (((LD (1.1) RTN) ((3 7) (A))) 0) ((3 7) (A)) (LD(0.1)) NIL
+                where the closure is
+                    ((LD (1.1) RTN).((3 7)(A)))
 
         AP (Apply)
             - Transfers control to the function (function execution)
@@ -60,15 +82,12 @@ Table of Contents
 
 
 
-5. Unary (1) Operations:
+5. Unary (1) Operations
         ** Q: What is a unary built-in? **
         ** A: Take 1 Argument for stack, evaluate, push return value back on **
-        CAR
-            - Returns head of list
-        CDR
-            - Returns tail of list
         ATOM
             - Returns true if argument isn't collection like list, else false
+            - (a.s) e (ATOM.c) d -> (t.s) e c d
         NULL
             - Returns true if argument is nil/empty list, else fase
 
@@ -76,20 +95,45 @@ Table of Contents
         ** Take two arguments from stack **
     Integer Operations:
         ADD (Add)
+            - (a b.s) e (ADD.c) d + (b+a.s) e c d
+                - (a b.s) - stack has at least 2 members
+                - top of stack replaced by sum (b+a.s)
         SUB (Subtract)
-        MTY (Multiply)
+            - (a b.s) e (SUB.c) d -> (b-a.s) e c d
+        MUL (Multiply)
+            - (a b.s) e (MUL.c) d -> (b*a.s) e c d
         DIV (Division)
+            - (a b.s) e (DIV.c) d -> (b/a.s) e c d
 
     Boolean Operations:
+        - Replaces arithemtic values on stack with an atom (True/False)
         EQ (Check if two atoms are equal)
+            - (a b.s) e (LEQ.c) d -> (b == a.s) e c d
         GT (Greater than)
         LT (Less than)
-        GTE (Greater than or eq to)
-        LTE (Less than or eq to)
+        GEQ (Greater than or eq to)
+        LEQ (Less than or eq to)
+            - (a b.s) e (LEQ.c) d -> (b <= a.s) e c d
 
     List Operations:
+        - Primitive operations on S-Expressions
+        CAR
+            - Returns head of list
+            - Take car (head) of item on top of the stack
+            - car (cons (x,y)) returns x
+            - ((a.b).s) e (CAR.c) d -> (a.s) e c d
+        CDR
+            - Returns tail of list
+            - Take cdr (tail) of item on top of stack
+            - car (cons (x, y)) returns y
+            - ((a.b).s) e (CDR.c) d -> (b.s) e c d
         CONS 
+            - Constructs memory objects that hold two values or 
+              pointers to two objects
             - Add item to beginning of list + return list
+            - Probably useful for constructing our lists
+            - (a b.s) e (CONS.c) d -> ((a.b).s) e c d
+            
 
 Auxiliary instructions:
     WRITEC (Write character)

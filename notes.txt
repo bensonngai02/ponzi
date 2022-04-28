@@ -14,6 +14,7 @@ SECD Machine
         - Current variable environment
         - Holds values bound to variables during evaluation
         - List of lists
+            - ((3 17) (A B) (C D))
         - Variables at head of list
         - Variables that are free in the current function are also in list
         - Other stuff too
@@ -25,6 +26,13 @@ SECD Machine
     D Register (Dump)
         - Return stack
         - Saves values of other registers upon calling a new function
+
+- Each register contains a POINTER to a data structure reprsenting an S-Expression
+- Each instruction can be denoted by a 'machine transition' format
+    - s e c d -> s' e' c' d'
+        - where s, e, c, d represent the AFTER state
+        - s', e', c', d' represent the BEFORE state
+
 
 Example: (1 2 3)			// list holding numbers 1, 2, 3
 
