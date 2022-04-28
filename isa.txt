@@ -73,8 +73,9 @@ Table of Contents
             - Returns true if argument is nil/empty list, else fase
 
 6. Integer Operations:
-        
-ADD, SUB, CONS, et al. -  Binary built-in operations
+        ADD 
+        SUB
+        CONS
 
 Auxiliary instructions:
 READC  - Read character
