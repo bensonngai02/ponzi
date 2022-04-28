@@ -97,4 +97,13 @@ Predicates - names end with a question mark
     Zero?
     string=?
 
+April 27, 2022
 
+Stacks 
+Malloc ~ 8192 bytes
+Stack pointer. To push, increment the stack pointer. To 
+
+Create stack pointer stack that keeps track of pointers to stack bases.
+That way, we can make stack dynamic - grow.
+Or
+We can realloc with C.

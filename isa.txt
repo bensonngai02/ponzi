@@ -29,10 +29,10 @@ Table of Contents
             - Returns control to control register saved during SEL (on dump register)
             - 'ct' & 'cf' code lists end with join
 
-    3. Non-recursive function instructions:
+3. Non-recursive function instructions:
         ** Q: What is a function closure? **
         ** A: Record storing a function with its environment. Function retains references to variables in-scope
-              during function definition + function exiting that scope *
+              during function definition + function exiting that scope **
         LDF (Load function)
             - Constructs a function closure (Pair - function + current environment)
             - Pushes the closure onto the stack
@@ -50,17 +50,31 @@ Table of Contents
             - Restore S, E, C.
             - Push 'v' back onto stack of restored environment
 
-Built-ins:
-CAR, CDR, ATOM, et al. -  Unary built-in operations
+4. Recursive function instructions:
+        DUM (Dummy Environment)
+            - Pushes "dummy" empty list in front of environment list.
+
+        RAP (Recursive apply)
+            - Basically ap
+            - But replaces dummy list with current functions so that recursion is possible.
+
+
+
+5. Unary Operations:
+        ** Q: What is a unary built-in? **
+        ** A: Take 1 Argument for stack, evaluate, push return value back on **
+        CAR
+            - Returns head of list
+        CDR
+            - Returns tail of list
+        ATOM
+            - Returns true if argument isn't collection like list, else false
+        NULL
+            - Returns true if argument is nil/empty list, else fase
+
+6. Integer Operations:
+        
 ADD, SUB, CONS, et al. -  Binary built-in operations
-
-
-
-
-
-Recursive function instructions:
-DUM    - Dummy
-RAP    - Recursive apply
 
 Auxiliary instructions:
 READC  - Read character
