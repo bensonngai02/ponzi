@@ -11,8 +11,15 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-typedef union Atom {
+typedef union AtomVal {
     uint64_t integer;
     char * string;
     bool boolean;
+} AtomVal;
+typedef struct Atom {
+    bool is_integer;
+    bool is_string;
+    bool is_boolean;
+    AtomVal val;
 } Atom;
+
