@@ -1,6 +1,7 @@
 #include "atom.h"
+#include "expression.cxx"
 
-class Atom {
+class Atom : public Expression{
     public:
         bool is_integer;
         bool is_string;
