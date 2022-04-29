@@ -20,7 +20,7 @@ class Stack {
 
     Node * pop(){
         Node * popped = this->head;
-        head = head->next;
+        this->head = this->head->next;
         return popped;
     }
 
@@ -35,11 +35,11 @@ class Stack {
     void print(){
         fprintf(stderr, "PRINTING STACK: ");
         while (this->head != NULL) {
-            if (isalnum(this->atom)) {
-                if (isdigit(this->atom))
-                    fprintf(stderr, "%ld -> ",head->atom);
+            if (isalnum(this->head->atom) {
+                if (isdigit(this->head->atom))
+                    fprintf(stderr, "%ld -> ", this->head->atom);
                 else 
-                    fprintf(stderr, "%s ->", head->atom);
+                    fprintf(stderr, "%s ->", this->head->atom);
             }
             else
                 (head->atom) ? fprintf(stderr, "true -> ") : fprintf(srderr, "false -> ");
