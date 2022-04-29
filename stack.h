@@ -1,6 +1,8 @@
 #pragma once
 
+#include "atom.cxx"
+
 typedef struct Node {
     struct Node * next;
-    struct Atom * atom;
+    Atom * atom;
 } Node;

@@ -16,10 +16,3 @@ typedef union AtomVal {
     char * string;
     bool boolean;
 } AtomVal;
-typedef struct Atom {
-    bool is_integer;
-    bool is_string;
-    bool is_boolean;
-    AtomVal val;
-} Atom;
-
