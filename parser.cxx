@@ -2,8 +2,7 @@
 
 using namespace std;
 
-
-struct Compiler
+struct Parser
 {
     char *program;
     char *current;

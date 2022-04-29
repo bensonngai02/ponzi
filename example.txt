@@ -1,20 +1,21 @@
 /* scheme code */
 
-(define (sum a b)
-        (display "x + y = ")
+(define (sum a b)                                                       // how to define a function. function name = sum. parameters = a, b
+        (display "x + y = ")                                            // function body
         (display (+ a b)))
 
-(sum 10 25)
-(newline)
+(sum 10 25)                                                             // or written as apply(sum (10 25))
 
+(define (square n)
+        (define squared * n n)
+        (display "5 ^ 2 = ")
+        (display squared))
 
-(define square
-     (lambda (n)
-          (* n n)))
-
+(square 5)
 
 /* scheme output */
 x + y = 35
+5 ^ 2 = 25
 
 
 /* s-expression code */
