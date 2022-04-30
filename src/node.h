@@ -19,8 +19,14 @@ public:
     Expression * cdr();
     Node * cons(Expression * car, Expression * cdr);
     bool eq(Expression * op);
+
     bool member(Node * target, Node * list);
     int position(Node * target, Node * list);
     Node * location(Node * target, Node * list);
+
+    void push(Expression * expression);
+    Expression * pop();
+    Expression * peek();
+
     void print();
 };

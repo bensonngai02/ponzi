@@ -14,16 +14,21 @@ int i = 0;
 // all instantiated to (NIL, NIL)
 Node * stack = new Node();
 Node * environment = new Node();
+// need to read in control 
 Node * control = (Node *) getControlPtr(input, &i);
 Node * dump = new Node();
 
+void execute(Node * inst_node) {
+    Expression * inst = inst_node->car();
+    int inst_type = inst->getType();
+    if (inst_type == NIL_TYPE) {
+        // stop the program
+    }
+    else if (inst_type == ATOM_TYPE) {
 
-void push(Expression * expression) {
+    }
+    else if (inst_type == NODE_TYPE) {
+
+    }
 
 }
-
-void pop()
-
-
-
-// need to read in control 

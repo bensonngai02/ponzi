@@ -7,10 +7,6 @@
 class SECD {
     public:
         SECD();
-
-    void push(Expression * expression);
-    Expression * pop();
-    Expression * peek();
-
+    void execute(Node * inst_node);
 
 };

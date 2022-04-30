@@ -92,6 +92,22 @@ Node * Node::location(Node * target, Node * list) {
     }
 }
 
+void Node::push(Expression * expression) {
+    Node * newNode = cons(expression, this->carPtr);
+    this->carPtr = newNode->carPtr;
+    this->cdrPtr = newNode->cdrPtr;
+}
+
+Expression * Node::pop() {
+    Expression * new_car = this->cdrPtr;
+    this->carPtr = this->cdrPtr;
+    this->cdrPtr = ((Node *) (new_car))->cdrPtr; 
+}
+
+Expression * Node::peek() {
+    return this;
+}
+
 void Node::print(){
     printf("(");
     this->carPtr->print();
