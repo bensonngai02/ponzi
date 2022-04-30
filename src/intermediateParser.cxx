@@ -5,13 +5,66 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include "node.cxx"
+#include "node.h"
+#include "atom.cxx"
+#include "atom.h"
+#include "expression.cxx"
+#include "expression.h"
 
-int skip(std::string* str, int)
+void skip(std::string* str, int* index)
 {
-
+    while(isspace((*str)[*index])) {
+        *index += 1;
+    }
 }
 
-void consumeExpression(){
+std::string consumeIdentifier(std::string* str, int* index)
+{
+    skip(str, index);
+    std::string newString = "";
+
+    if (isalpha((*str)[*index] ))
+    {
+        do
+        {
+            newString += (*str)[*index];
+            *index += 1;
+        } while (isalnum((*str)[*index]));
+        return newString;
+    }
+    else
+    {
+        return "";
+    }
+}
+
+std::string peek(std::string* str, int* index){
+    int start = *index;
+    std::string ret = consumeIdentifier(str, index);
+    *index = start;
+    return ret;
+}
+
+
+
+Expression* consume(std::string* str, int* index) {
+    if (peek(str, index) == ")") {
+        consumeIdentifier(str, index);
+        return new Atom();  // return nil type
+    }
+    else if (peek(str, index) == "(") {
+        while (peek(str, index) != ")") {
+            consume(str, index);
+        }
+    }
+    else {
+        Atom * new_atom = new Atom(consumeIdentifier(str, index));
+        Expression* cdr = consume(str, index);
+        if(cdr->expType == NIL_TYPE)
+            return new Node(new_atom, new Atom());
+        return new Node(new_atom, (Node*) cdr);
+    }
     
 }
 

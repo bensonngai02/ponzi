@@ -2,32 +2,36 @@
 #include "node.h"
 #include "atom.cxx"
 
-Atom * NIL_ATOM = new Atom();
 
-class Node: public Expression {
+class Node : public Expression {
     public:
         Expression * carPtr;
         Expression * cdrPtr;
     
+    Node() {
+        this->carPtr = new Atom();
+        this->cdrPtr = new Atom();
+    }
+
     Node(Atom * a1, Atom * a2){
         this->carPtr = (Expression *) a1;
         this-> cdrPtr = a2;
-        this->expType = NODE;
+        this->expType = NODE_TYPE;
     }
     Node(Atom * a1, Node * n2){
         this->carPtr = a1;
         this->cdrPtr = n2;
-        this->expType = NODE;
+        this->expType = NODE_TYPE;
     }
     Node(Node * n1, Atom * a2){
         this->carPtr = n1;
         this->cdrPtr = a2;
-        this->expType = NODE;
+        this->expType = NODE_TYPE;
     }
     Node(Node * n1, Node * n2){
         this->carPtr = n1;
         this->cdrPtr = n2;
-        this->expType = NODE;
+        this->expType = NODE_TYPE;
     }
 
     Expression * car() {
@@ -78,9 +82,12 @@ class Node: public Expression {
             return cons(zero_atom, cdr_atom);
         }
         else {
-            int z = location(target, cdr(list)) + 1;
-            Expression * recur_car_atom = car();
-            return cons(car(z), cdr(z));
+            Node * z = (location(target, cdr(list)));
+            Atom * car_z = (Atom *) z->car();
+            Atom * cdr_z = (Atom *) z->cdr();
+            Expression * new_car = new Atom(car_z->getAtomInteger() + 1);
+            Expression * new_cdr = new Atom(cdr_z->getAtomInteger());
+            return cons(new_car, new_cdr);
         }
     }
 

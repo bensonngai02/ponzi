@@ -21,7 +21,7 @@ class Atom : public Expression {
         this->expType = ATOM_TYPE;
     }
 
-    Atom(char * string) {
+    Atom(std::string string) {
         this->is_string = true;
         this->val->string = string;
         this->expType = ATOM_TYPE;

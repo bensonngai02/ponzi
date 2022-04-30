@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include <string.h>
 
 #define INTEGER 0
 #define STRING 1
@@ -19,6 +20,6 @@
 
 typedef union AtomVal {
     uint64_t integer;
-    char * string;
+    std::string string;
     bool boolean;
 } AtomVal;
