@@ -36,7 +36,7 @@ Expression * Node::cdr() {
     return this->cdrPtr;
 }
 
-Node * Node::cons(Expression *car, Expression * cdr) {
+Node * Node::cons(Expression * car, Expression * cdr) {
     Node * newNode;
     int car_type = car->expType;
     int cdr_type = cdr->expType;

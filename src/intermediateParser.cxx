@@ -10,14 +10,14 @@
 #include <sstream>
 #include <vector>
 
-void IntermediateParser::skip(std::string* str, int* index)
+void skip(std::string* str, int* index)
 {
     while(isspace((*str)[*index])) {
         *index += 1;
     }
 }
 
-std::string IntermediateParser::consumeIdentifier(std::string* str, int* index)
+std::string consumeIdentifier(std::string* str, int* index)
 {
     skip(str, index);
     std::string newString = "";
@@ -37,14 +37,14 @@ std::string IntermediateParser::consumeIdentifier(std::string* str, int* index)
     }
 }
 
-std::string IntermediateParser::peek(std::string* str, int* index){
+std::string peek(std::string* str, int* index){
     int start = *index;
     std::string ret = consumeIdentifier(str, index);
     *index = start;
     return ret;
 }
 
-Expression* IntermediateParser::consume(std::string* str, int* index) {
+Expression * consume(std::string* str, int* index) {
     if (peek(str, index) == ")") {
         consumeIdentifier(str, index);
         return new Atom();  // return nil type
@@ -62,7 +62,14 @@ Expression* IntermediateParser::consume(std::string* str, int* index) {
     }
 }
 
-std::string* IntermediateParser::createInterpretedString(){
+// (6 ())
+
+// returns pointer to beginning of instruction s-expression to the control register
+Expression * getControlPtr(std::string * string, int * index){
+    return consume(string, index);
+}
+
+std::string* createInterpretedString(){
     std::ifstream t("instructions.txt");
     std::stringstream buffer;
     buffer << t.rdbuf();
@@ -70,7 +77,7 @@ std::string* IntermediateParser::createInterpretedString(){
     return ret;
 }
 
-int IntermediateParser::main(){
+int main(){
     std::string* str = createInterpretedString();
     int i = 0;
     Expression* parsed = consume(str, &i);
