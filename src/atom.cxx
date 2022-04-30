@@ -3,24 +3,28 @@
 
 
 Atom::Atom() {
+    this->val = new AtomVal;
     this->is_string = true;
-    this->val->string = NIL;
+    this->val->string = "nil";
     this->expType = ATOM_TYPE;
 }
 
 Atom::Atom(uint64_t integer) {
+    this->val = new AtomVal;
     this->is_integer = true;
     this->val->integer = integer;
     this->expType = ATOM_TYPE;
 }
 
 Atom::Atom(std::string string) {
+    this->val = new AtomVal;
     this->is_string = true;
     this->val->string = string;
     this->expType = ATOM_TYPE;
 }
 
 Atom::Atom(Boolean boolean) {
+    this->val = new AtomVal;
     this->is_boolean = true;
     this->val->boolean = boolean;
     this->expType = ATOM_TYPE;
@@ -116,13 +120,16 @@ bool Atom::geq(Atom * op){
 
 void Atom::print(){
     if(this->is_boolean){
-        printf("%b ", this->get_atom_boolean());
+        std::cout << this->get_atom_boolean() << " ";
+        //printf("%b ", this->get_atom_boolean());
     }
     else if(this->is_integer){
-        printf("%d ", this->get_atom_integer());
+        std::cout << this->get_atom_integer() << " ";
+        //printf("%xd ", this->get_atom_integer());
     }
     else if(this->get_atom_string() != NIL){
-        printf("%s ", this->get_atom_string());
+        std::cout << this->get_atom_string() << " ";
+        //printf("%s ", this->get_atom_string());
     }
 }
 

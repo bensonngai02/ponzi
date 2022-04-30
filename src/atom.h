@@ -11,6 +11,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <string>
+#include <iostream>
 
 #include "expression.h"
 

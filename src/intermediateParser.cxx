@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <streambuf>
 #include <vector>
 
 void skip(std::string* str, int* index)
@@ -22,7 +23,7 @@ std::string consumeIdentifier(std::string* str, int* index)
     skip(str, index);
     std::string newString = "";
 
-    if (isalpha((*str)[*index] ))
+    if (isalnum((*str)[*index] ))
     {
         do
         {
@@ -37,28 +38,30 @@ std::string consumeIdentifier(std::string* str, int* index)
     }
 }
 
-std::string peek(std::string* str, int* index){
-    int start = *index;
-    std::string ret = consumeIdentifier(str, index);
-    *index = start;
-    return ret;
-}
-
 Expression * consume(std::string* str, int* index) {
-    if (peek(str, index) == ")") {
-        consumeIdentifier(str, index);
+    skip(str, index);
+    if ((*str)[*index] == ')' || *index == str->length()) {
+        *index += 1;
         return new Atom();  // return nil type
     }
-    else if (peek(str, index) == "(") {
-        consumeIdentifier(str, index);
-        return consume(str, index);
+    else if ((*str)[*index] == '(') {
+        *index += 1;
+        Expression* car = consume(str, index);
+        Expression* cdr = consume(str, index);
+        Node n;
+        return (Expression*) n.cons(car, cdr);
     }
     else {
-        Atom * new_atom = new Atom(consumeIdentifier(str, index));
+        std::string temp = consumeIdentifier(str, index);
+        if(temp.length() == 0){
+            std::cout << "Found non alnum atom -- not allowed: " << temp << " " << *index << std::endl;
+            exit(1);
+        }
+        Atom * new_atom = new Atom(temp);
         Expression* cdr = consume(str, index);
         if(cdr->expType == NIL_TYPE)
             return new Node(new_atom, new Atom());
-        return new Node(new_atom, (Node*) cdr);
+        return new Node(new_atom,  (Node*) cdr);
     }
 }
 
@@ -69,18 +72,34 @@ Expression * getControlPtr(std::string * string, int * index){
     return consume(string, index);
 }
 
-std::string* createInterpretedString(){
+std::string createInterpretedString(){
+    return "(6 (6 3 4) ADD )";
+}
+
+std::string createInterpretedString3(){
     std::ifstream t("instructions.txt");
     std::stringstream buffer;
     buffer << t.rdbuf();
     std::string* ret = new std::string(buffer.str());
-    return ret;
+    return *ret;
+}
+
+std::string createInterpretedString2(){
+    std::ifstream t("instructions.txt");
+    std::string str;
+
+    t.seekg(0, std::ios::end);   
+    str.reserve(t.tellg());
+    t.seekg(0, std::ios::beg);
+
+    str.assign((std::istreambuf_iterator<char>(t)),
+                std::istreambuf_iterator<char>());
+    return str;
 }
 
 int main(){
-    std::string* str = createInterpretedString();
+    std::string str2 = createInterpretedString();
     int i = 0;
-    Expression* parsed = consume(str, &i);
+    Expression* parsed = consume(&str2, &i);
     parsed->print();
-    std::cout << *str << std::endl;
 }

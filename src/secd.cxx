@@ -8,7 +8,8 @@
     contains a new stack with "NIL" as head.
 */
 
-std::string * input = createInterpretedString();
+std::string inputSStr = createInterpretedString();
+std::string* input = &inputSStr;
 int i = 0;
 
 // all instantiated to (NIL, NIL)
@@ -23,6 +24,7 @@ void execute(Node * inst_node) {
     int inst_type = inst->getType();
     if (inst_type == NIL_TYPE) {
         // stop the program
+        //above comment is wrong
     }
     else if (inst_type == ATOM_TYPE) {
 
