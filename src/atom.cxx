@@ -1,9 +1,6 @@
-#include "atom.h"
 #include "main.cxx"
-#include "expression.cxx"
-
-#include <string>
-
+#include "atom.h"
+#include "expression.h"
 
 Atom::Atom() {
     this->is_string = true;
@@ -23,7 +20,7 @@ Atom::Atom(std::string string) {
     this->expType = ATOM_TYPE;
 }
 
-Atom::Atom(bool boolean) {
+Atom::Atom(boolean boolean) {
     this->is_boolean = true;
     this->val->boolean = boolean;
     this->expType = ATOM_TYPE;
@@ -55,8 +52,8 @@ Atom* Atom::add(Atom* op){
         fail();
     }
     uint64_t sum = this->get_atom_integer() + op->get_atom_integer();
-    Atom ret = new Atom(sum);
-    return &ret;
+    Atom * ret = new Atom(sum);
+    return ret;
 }
 
 Atom* Atom::sub(Atom* op){
@@ -65,8 +62,8 @@ Atom* Atom::sub(Atom* op){
         fail();
     }
     uint64_t diff = this->get_atom_integer() - op->get_atom_integer();
-    Atom ret = new Atom(diff);
-    return &ret;
+    Atom * ret = new Atom(diff);
+    return ret;
 }
 
 Atom* Atom::mul(Atom* op){
@@ -75,8 +72,8 @@ Atom* Atom::mul(Atom* op){
         fail();
     }
     uint64_t prod = this->get_atom_integer() * op->get_atom_integer();
-    Atom ret = new Atom(prod);
-    return &ret;
+    Atom * ret = new Atom(prod);
+    return ret;
 }
 
 Atom* Atom::div(Atom* op){
@@ -85,8 +82,8 @@ Atom* Atom::div(Atom* op){
         fail();
     }
     uint64_t div = this->get_atom_integer() / op->get_atom_integer();
-    Atom ret = new Atom(div);
-    return &ret;
+    Atom * ret = new Atom(div);
+    return ret;
 }
 
 Atom* Atom::rem(Atom* op){
@@ -95,8 +92,8 @@ Atom* Atom::rem(Atom* op){
         fail();
     }
     uint64_t rem = this->get_atom_integer() % op->get_atom_integer();
-    Atom ret = new Atom(rem);
-    return &ret;
+    Atom * ret = new Atom(rem);
+    return ret;
 }
 
 bool Atom::eq(Expression* op){

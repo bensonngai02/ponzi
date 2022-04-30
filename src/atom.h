@@ -19,10 +19,15 @@
 #define NIL "nil"
 
 
+enum boolean {
+    f = 0,
+    t = 1
+};
+
 typedef struct AtomVal {
     uint64_t integer;
     std::string string;
-    bool boolean;
+    boolean boolean;
 };
 
 class Atom : public Expression {
@@ -35,7 +40,7 @@ public:
     Atom();
     Atom(uint64_t integer);
     Atom(std::string string);
-    Atom(bool boolean);
+    Atom(boolean boolean);
     AtomVal * get_atom();
     uint64_t get_atom_integer();
     std::string get_atom_string();

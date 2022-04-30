@@ -86,11 +86,11 @@ Node * Node::location(Node * target, Node * list) {
         return cons(car_atom, cdr_atom);
     }
     else {
-        Node * z = (location(target, (Node *) cdr(list)));
+        Node * z = (location(target, (Node *) list->cdr()));
         Atom * car_z = (Atom *) z->car();
         Atom * cdr_z = (Atom *) z->cdr();
-        Expression * new_car = new Atom(car_z->getAtomInteger() + 1);
-        Expression * new_cdr = new Atom(cdr_z->getAtomInteger());
+        Expression * new_car = new Atom(car_z->get_atom_integer() + 1);
+        Expression * new_cdr = new Atom(cdr_z->get_atom_integer());
         return cons(new_car, new_cdr);
     }
 }

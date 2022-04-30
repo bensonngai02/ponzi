@@ -1,25 +1,23 @@
+#include "node.h"
+#include "atom.h"
+#include "expression.h"
 #include "intermediateParser.h"
-#include <string.h>
+
+#include <string>
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include "node.cxx"
-#include "node.h"
-#include "atom.cxx"
-#include "atom.h"
-#include "expression.cxx"
-#include "expression.h"
 
-void skip(std::string* str, int* index)
+void IntermediateParser::skip(std::string* str, int* index)
 {
     while(isspace((*str)[*index])) {
         *index += 1;
     }
 }
 
-std::string consumeIdentifier(std::string* str, int* index)
+std::string IntermediateParser::consumeIdentifier(std::string* str, int* index)
 {
     skip(str, index);
     std::string newString = "";
@@ -39,16 +37,14 @@ std::string consumeIdentifier(std::string* str, int* index)
     }
 }
 
-std::string peek(std::string* str, int* index){
+std::string IntermediateParser::peek(std::string* str, int* index){
     int start = *index;
     std::string ret = consumeIdentifier(str, index);
     *index = start;
     return ret;
 }
 
-
-
-Expression* consume(std::string* str, int* index) {
+Expression* IntermediateParser::consume(std::string* str, int* index) {
     if (peek(str, index) == ")") {
         consumeIdentifier(str, index);
         return new Atom();  // return nil type
@@ -65,10 +61,9 @@ Expression* consume(std::string* str, int* index) {
             return new Node(new_atom, new Atom());
         return new Node(new_atom, (Node*) cdr);
     }
-    
 }
 
-std::string* createInterpretedString(){
+std::string* IntermediateParser::createInterpretedString(){
     std::ifstream t("instructions.txt");
     std::stringstream buffer;
     buffer << t.rdbuf();
@@ -76,7 +71,7 @@ std::string* createInterpretedString(){
     return ret;
 }
 
-int main(){
+int IntermediateParser::main(){
     std::string* str = createInterpretedString();
     std::cout << *str << std::endl;
 }

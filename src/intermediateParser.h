@@ -14,3 +14,13 @@
 #include <set>
 #include <stack>
 #include <string>
+
+class IntermediateParser {
+    void skip(std::string * str, int * index);
+    std::string consumeIdentifier(std::string * str, int * index);
+    std::string peek(std::string * str, int * index);
+    Expression * consume(std:: string * str, int * index);
+    std::string * createInterpretedString();
+    int main();
+
+};
