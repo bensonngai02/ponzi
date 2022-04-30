@@ -1,14 +1,10 @@
 #pragma once
 
-#include "atom.h"
-#include "node.h"
-
 class Expression {
     
-
 public: 
     int expType;
     int getType();
-    virtual void print();
-    virtual bool eq(Expression * op);
+    virtual void print() = 0;
+    virtual bool eq(Expression * op) = 0;
 };

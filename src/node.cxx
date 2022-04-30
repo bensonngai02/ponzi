@@ -1,7 +1,4 @@
-#include "expression.h"
 #include "node.h"
-#include "atom.h"
-
 
 Node::Node() {
     this->carPtr = (Expression *) new Atom();

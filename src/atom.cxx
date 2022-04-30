@@ -1,6 +1,6 @@
-#include "main.cxx"
 #include "atom.h"
 #include "expression.h"
+
 
 Atom::Atom() {
     this->is_string = true;
@@ -20,7 +20,7 @@ Atom::Atom(std::string string) {
     this->expType = ATOM_TYPE;
 }
 
-Atom::Atom(boolean boolean) {
+Atom::Atom(Boolean boolean) {
     this->is_boolean = true;
     this->val->boolean = boolean;
     this->expType = ATOM_TYPE;
@@ -49,7 +49,7 @@ int Atom::getType(){
 Atom* Atom::add(Atom* op){
     if(this->getType() != INTEGER || op->getType() != INTEGER){
         printf("Trying to add two non integers");
-        fail();
+        exit(1);
     }
     uint64_t sum = this->get_atom_integer() + op->get_atom_integer();
     Atom * ret = new Atom(sum);
@@ -59,7 +59,7 @@ Atom* Atom::add(Atom* op){
 Atom* Atom::sub(Atom* op){
     if(this->getType() != INTEGER || op->getType() != INTEGER){
         printf("Trying to sub two non integers");
-        fail();
+        exit(1);
     }
     uint64_t diff = this->get_atom_integer() - op->get_atom_integer();
     Atom * ret = new Atom(diff);
@@ -69,7 +69,7 @@ Atom* Atom::sub(Atom* op){
 Atom* Atom::mul(Atom* op){
     if(this->getType() != INTEGER || op->getType() != INTEGER){
         printf("Trying to mul two non integers");
-        fail();
+        exit(1);
     }
     uint64_t prod = this->get_atom_integer() * op->get_atom_integer();
     Atom * ret = new Atom(prod);
@@ -79,7 +79,7 @@ Atom* Atom::mul(Atom* op){
 Atom* Atom::div(Atom* op){
     if(this->getType() != INTEGER || op->getType() != INTEGER){
         printf("Trying to sub two non integers");
-        fail();
+        exit(1);
     }
     uint64_t div = this->get_atom_integer() / op->get_atom_integer();
     Atom * ret = new Atom(div);
@@ -89,7 +89,7 @@ Atom* Atom::div(Atom* op){
 Atom* Atom::rem(Atom* op){
     if(this->getType() != INTEGER || op->getType() != INTEGER){
         printf("Trying to sub two non integers");
-        fail();
+        exit(1);
     }
     uint64_t rem = this->get_atom_integer() % op->get_atom_integer();
     Atom * ret = new Atom(rem);
@@ -109,7 +109,7 @@ bool Atom::geq(Atom * op){
     bool is_integer = this->getType() == INTEGER;
     bool same_type = is_integer && this->getType() == op->getType();
     if (!same_type)
-        fail();
+        exit(1);
     bool intEq = this->get_atom_integer() >= ((Atom *) op)->get_atom_integer();
     return intEq;
 }

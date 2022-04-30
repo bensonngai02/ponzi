@@ -1,4 +1,6 @@
 #pragma once
+#include "expression.h"
+#include "atom.h"
 
 #define NODE_TYPE 1
 #define NIL_TYPE 2

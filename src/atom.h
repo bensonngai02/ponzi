@@ -12,6 +12,8 @@
 #include <stdbool.h>
 #include <string>
 
+#include "expression.h"
+
 #define INTEGER 0
 #define STRING 1
 #define BOOLEAN 2
@@ -19,7 +21,7 @@
 #define NIL "nil"
 
 
-enum boolean {
+enum Boolean {
     f = 0,
     t = 1
 };
@@ -27,8 +29,8 @@ enum boolean {
 typedef struct AtomVal {
     uint64_t integer;
     std::string string;
-    boolean boolean;
-};
+    Boolean boolean;
+} AtomVal;
 
 class Atom : public Expression {
     bool is_integer;
@@ -40,7 +42,7 @@ public:
     Atom();
     Atom(uint64_t integer);
     Atom(std::string string);
-    Atom(boolean boolean);
+    Atom(Boolean boolean);
     AtomVal * get_atom();
     uint64_t get_atom_integer();
     std::string get_atom_string();
