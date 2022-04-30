@@ -1,7 +1,7 @@
 #include "secd.h"
-#include "expression.cxx"
-#include "node.cxx"
+#include "expression.h"
 #include "node.h"
+#include "atom.h"
 
 class SECD {
     /* Upon instantiating new SECD, each S, E, C, D register

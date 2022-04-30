@@ -1,19 +1,10 @@
 #include "expression.h"
-#include "atom.h"
 
-class Expression {
-    public:
-        int expType;
-    
-    int getType() {
+
+int Expression::getType() {
         return expType;
     }
-    virtual void print();
-    virtual bool eq(Expression * op);
-
-
-};
-
+    
 
 
 
