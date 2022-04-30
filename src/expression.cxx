@@ -9,6 +9,7 @@ class Expression {
         return expType;
     }
     virtual void print();
+    virtual bool eq(Expression * op);
 
 
 };

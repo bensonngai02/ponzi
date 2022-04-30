@@ -1,4 +1,8 @@
 #include "expression.cxx"
+#include "node.h"
+#include "atom.cxx"
+
+Atom * NIL_ATOM = new Atom();
 
 class Node: public Expression {
     public:
@@ -34,9 +38,27 @@ class Node: public Expression {
         return this->cdrPtr;
     }
 
-    Node * cons(Expression  car, Expression * cdr) {
+    Node * cons(Expression car, Expression * cdr) {
         Node * newNode = new Node(car, cdr);
         return newNode;
+    }
+
+    bool eq(Expression * op){
+        if (this->getType != op->getType()) {
+            return false;
+        }
+        bool carPtrEq = this->carPtr == ((Node *) op)->carPtr;
+        bool cdrPtrEq = this->cdrPtr == ((Node *) op)->cdrPtr;
+        return carPtrEq && cdrPtrEq;
+    }
+
+    bool member(Node * target, Node * namelist) {
+        if (namelist->getType == NIL_TYPE)
+            return false;
+        if (target == namelist->car())
+            return true;
+        else 
+            member(target, namelist->cdr());
     }
 
     int position(Node * target, Node * list) {
@@ -46,6 +68,21 @@ class Node: public Expression {
             return 0;
         }
         return 1 + position(target, list->cdr());
+    }
+
+    Node * location(Node * target, Node * list) {
+        if (member(target, list)) {
+            int got_pos = position(target, list);
+            Atom * car_atom = new Atom(0);
+            Atom * cdr_atom = new Atom(got_pos);
+            return cons(zero_atom, cdr_atom);
+        }
+        else {
+            int z = location(target, cdr(list));
+            Atom * recur_car_atom = (Atom * (car(z))
+            Atom * 
+            return cons(car(z)+1, cdr(z));
+        }
     }
 
     void print(){

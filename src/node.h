@@ -1,3 +1,4 @@
 #pragma once
 
-#define NODE 1
+#define NODE_TYPE 1
+#define NIL_TYPE 2

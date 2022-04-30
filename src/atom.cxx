@@ -1,6 +1,6 @@
 #include "atom.h"
 #include "main.cxx"
-#include "expression.h"
+#include "expression.cxx"
 
 class Atom : public Expression {
     public:
@@ -12,25 +12,25 @@ class Atom : public Expression {
     Atom() {
         this->is_string = true;
         this->val->string = NIL;
-        this->expType = ATOM;
+        this->expType = ATOM_TYPE;
     }
     
     Atom(uint64_t integer) {
         this->is_integer = true;
         this->val->integer = integer;
-        this->expType = ATOM;
+        this->expType = ATOM_TYPE;
     }
 
     Atom(char * string) {
         this->is_string = true;
         this->val->string = string;
-        this->expType = ATOM;
+        this->expType = ATOM_TYPE;
     }
 
     Atom(bool boolean) {
         this->is_boolean = true;
         this->val->boolean = boolean;
-        this->expType = ATOM;
+        this->expType = ATOM_TYPE;
     }
 
     AtomVal * get_atom() {
@@ -103,11 +103,11 @@ class Atom : public Expression {
         return &ret;
     }
 
-    bool eq(Atom* op){
+    bool eq(Expression* op){
         bool same_type = this->getType() == op->getType();
-        bool intEq = this->get_atom_integer() == op->get_atom_integer();
-        bool strEq = this->get_atom_string() == op->get_atom_string();
-        bool boolEq = this->get_atom_boolean() == op->get_atom_boolean();
+        bool intEq = this->get_atom_integer() == ((Atom *) op)->get_atom_integer();
+        bool strEq = this->get_atom_string() == ((Atom *) op)->get_atom_string();
+        bool boolEq = this->get_atom_boolean() == ((Atom *) op)->get_atom_boolean();
         bool valEq = intEq || strEq || boolEq;
         return same_type && valEq;
     }
