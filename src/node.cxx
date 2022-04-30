@@ -78,9 +78,9 @@ class Node: public Expression {
             return cons(zero_atom, cdr_atom);
         }
         else {
-            int z = location(target, cdr(list));
-            Atom * recur_car_atom = (Atom * (car(z))
-            return cons(car(z)+1, cdr(z));
+            int z = location(target, cdr(list)) + 1;
+            Expression * recur_car_atom = car();
+            return cons(car(z), cdr(z));
         }
     }
 

@@ -1,0 +1,49 @@
+Your name: Benson Ngai
+
+Your CSID: bn6686
+
+Your team name: ponzi
+
+What do you plan on doing?
+Our project consists of two components: A compiler from Scheme, the functional
+programming language, to an intermediate representation that will be run by
+our SECD machine emulator that executes the code with its architecture that operates
+entirely off four registers (stack, environment, control, dump) and S-expressions.
+We plan to cover function definitions + calling (non-recursive + recursive), 
+integer operations, and hopefully writing output.
+
+How do you plan on doing it?
+We plan on creating the emulator first, since the machine architecture itself is the
+main part of the project we would definitely like to finish. The compiler would also
+rely on the machine to execute the code. We plan on going bottom-up, defining our
+structures needed for the machine, building the machine, writing our intermediate
+S-expression representation to test the machine, and then writing a compiler that 
+compiles Scheme to that intermed representation to create this end-to-end system.
+
+What research did you do?
+The majority of our work so far has been research. Since we have had very limited
+experience with functional programming and absolutely no understanding of LISP machines,
+we had to spend a lot of time learning both aspects. We have found various resources
+to understand how to recreate the SECD Machine, such as Peter Henderson's book on
+Functional Programming Application and Implementation.
+
+What alternatives did you consider?
+We spent some time considering which high-level functional programming language to
+compile, and ended up on Scheme since it's very simple and easy. Specifically, Dr. Gheith
+informed us that Scheme-48 is a very simple type of Scheme.
+
+What did you decide to do?
+So far, we both have researched SECD Machines and LISP languages equally, bouncing
+knowledge off of each other so we both have a solid understanding before we start
+to implement anything. I've created the Atom and Stack structures that are essential
+components in SECD machines.
+
+What did you you learn so far?
+I've learned how to code in Scheme at a very basic level (prefix notation, operations,
+functions, and the use of parentheses). I've also learned about how an SECD machine
+works with its four different registers and how it executes code in that recursive
+manner.
+
+Who are the team members? how much did each contribute?
+Anant. We have equally contributed an equal amount to the project in terms
+of research and code.
