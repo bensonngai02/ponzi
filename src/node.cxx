@@ -80,7 +80,6 @@ class Node: public Expression {
         else {
             int z = location(target, cdr(list));
             Atom * recur_car_atom = (Atom * (car(z))
-            Atom * 
             return cons(car(z)+1, cdr(z));
         }
     }
