@@ -6,12 +6,9 @@
 #include <sstream>
 #include <vector>
 
-void skip(std::string* str)
+int skip(std::string* str, int)
 {
-    while (isspace(*(compiler->current)))
-    {
-        compiler->current += 1;
-    }
+
 }
 
 void consumeExpression(){
