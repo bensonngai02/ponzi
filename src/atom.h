@@ -11,6 +11,12 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#define INTEGER 0
+#define STRING 1
+#define BOOLEAN 2
+#define ATOM 0
+#define NIL "nil"
+
 typedef union AtomVal {
     uint64_t integer;
     char * string;
