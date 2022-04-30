@@ -50,9 +50,8 @@ Expression* IntermediateParser::consume(std::string* str, int* index) {
         return new Atom();  // return nil type
     }
     else if (peek(str, index) == "(") {
-        while (peek(str, index) != ")") {
-            consume(str, index);
-        }
+        consumeIdentifier(str, index);
+        return consume(str, index);
     }
     else {
         Atom * new_atom = new Atom(consumeIdentifier(str, index));
@@ -73,5 +72,8 @@ std::string* IntermediateParser::createInterpretedString(){
 
 int IntermediateParser::main(){
     std::string* str = createInterpretedString();
+    int i = 0;
+    Expression* parsed = consume(str, &i);
+    parsed->print();
     std::cout << *str << std::endl;
 }
