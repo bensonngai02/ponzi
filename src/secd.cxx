@@ -18,7 +18,11 @@ Node * control = (Node *) getControlPtr(input, &i);
 Node * dump = new Node();
 
 
+void push(Expression * expression) {
 
+}
+
+void pop()
 
 
 
