@@ -63,7 +63,7 @@ bool Node::member(Node * target, Node * list) {
     if (target == list->car())
         return true;
     else 
-        member(target, (Node *) list->cdr());
+        return member(target, (Node *) list->cdr());
 }
 
 int Node::position(Node * target, Node * list) {

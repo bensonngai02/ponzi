@@ -1,7 +1,6 @@
 #pragma once
 
 class Expression {
-    
 public: 
     int expType;
     int getType();
