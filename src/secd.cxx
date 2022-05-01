@@ -54,7 +54,7 @@ void SECD::execute(Node * control) {
     }
 }
 
-void peekStackExpType(Node * stack, int expType) {
+void SECD::peekStackExpType(Node * stack, int expType) {
     if (stack->peek()->car()->getExpType() != expType) {
         std::cout << "Top of stack is not atom";
         exit(1);

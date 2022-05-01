@@ -17,5 +17,6 @@ class SECD {
         Node * dump;
     void execute(Node * inst_node);
     static void printStack(Node * node);
+    void peekStackExpType(Node * stack, int expType);
 
 };
