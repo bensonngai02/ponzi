@@ -20,7 +20,9 @@ SECD::SECD(){
 }
 
 void SECD::execute(Node * control) {
-    Expression * inst = Node::pop(&control);
+    Expression * inst = Node::pop(&control)->car();
+    inst->print();
+    std::cout << std::endl;
     int inst_type = inst->getExpType();
     if (inst_type != ATOM_TYPE) {
         std::cout << "Trying to execute a non instruction expression: ";
@@ -38,9 +40,17 @@ void SECD::execute(Node * control) {
         Atom* sum = Atom::add(op1, op2);
         Node::push(&stack, sum);
     }
-    if (atom_inst->get_atom_string() == "STOP") {
+    else if (atom_inst->get_atom_string() == "STOP") {
         // printStack(stack);
         exit(1);
+    }
+    else if(atom_inst->get_atom_string() == "LDC"){
+        if(stack->peek()->car()->getExpType() != ATOM_TYPE) {
+            std::cout << "Top of stack is not atom for LDC";
+            exit(1);
+        }
+        Atom* op1 = (Atom*) Node::pop(&stack);
+        Node::push(&stack, op1);
     }
 }
 
