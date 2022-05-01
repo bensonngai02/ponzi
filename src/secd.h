@@ -16,5 +16,6 @@ class SECD {
         Node * control;
         Node * dump;
     void execute(Node * inst_node);
+    static void printStack(Node * node);
 
 };

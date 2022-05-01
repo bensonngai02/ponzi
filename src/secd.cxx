@@ -8,8 +8,6 @@
     contains a new stack with "NIL" as head.
 */
 
-
-
 SECD::SECD(){
     i = 0;
     inputSStr = createInterpretedString();
@@ -33,7 +31,6 @@ void SECD::execute(Node * control) {
     Atom * atom_inst = (Atom *) inst;
     // consider integer, string, boolean cases
     if (atom_inst->get_atom_string() == "ADD") {   
-        // 
         if(stack->peek()->car()->getExpType() != ATOM_TYPE) {
             std::cout << "Top of stack is not atom";
             exit(1);
@@ -51,4 +48,29 @@ void SECD::execute(Node * control) {
         Atom* result = op1->add(op2);
         Node::push(&stack, result);
     }
+    if (atom_inst->get_atom_string() == "STOP") {
+        // printStack(stack);
+        exit(1);
+    }
+}
+
+// static void printStack(Node * node) {
+//     if (node->expType == NIL_TYPE) {
+//         std::cout << "Stack is empty. Only has nil atom.";
+//     }
+//     else {
+//         while () {
+//             node = 
+//         }
+//     }
+// }
+
+int main(){
+    std::string str2 = createInterpretedString();
+    int i = 0;
+    Expression* parsed = consume(&str2, &i);
+    parsed->print();
+    SECD * secd = new SECD();
+    secd->execute((Node *) parsed);
+
 }
