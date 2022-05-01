@@ -33,23 +33,8 @@ Expression * Node::cdr() {
     return this->cdrPtr;
 }
 
-Node * Node::cons(Expression * car, Expression * cdr) {
-    Node * newNode;
-    int car_type = car->expType;
-    int cdr_type = cdr->expType;
-    if (car_type == ATOM_TYPE && cdr_type == ATOM_TYPE)
-        newNode = new Node((Atom *) car, (Atom *) cdr);
-    else if (car_type == ATOM_TYPE && cdr_type == NODE_TYPE)
-        newNode = new Node((Atom *) car, (Node *) cdr);
-    else if (car_type == NODE_TYPE && cdr_type == ATOM_TYPE)
-        newNode = new Node((Node *) car, (Atom *) cdr);
-    else
-        newNode = new Node((Node *) car, (Node *) cdr);
-    return newNode;
-}
-
 bool Node::eq(Expression * op){
-    if (this->getType() != op->getType()) {
+    if (this->getExpType() != op->getExpType()) {
         return false;
     }
     bool carPtrEq = this->carPtr == ((Node *) op)->carPtr;
@@ -58,7 +43,7 @@ bool Node::eq(Expression * op){
 }
 
 bool Node::member(Node * target, Node * list) {
-    if (list->getType() == NIL_TYPE)
+    if (list->getExpType() == NIL_TYPE)
         return false;
     if (target == list->car())
         return true;
@@ -67,7 +52,7 @@ bool Node::member(Node * target, Node * list) {
 }
 
 int Node::position(Node * target, Node * list) {
-    bool type_eq = target->carPtr->getType() == list->carPtr->getType();
+    bool type_eq = target->carPtr->getExpType() == list->carPtr->getExpType();
     bool val_eq = target->car() == list->car();
     if (type_eq && val_eq) {
         return 0;
@@ -92,16 +77,30 @@ Node * Node::location(Node * target, Node * list) {
     }
 }
 
-void Node::push(Expression * expression) {
-    Node * newNode = cons(expression, this->carPtr);
-    this->carPtr = newNode->carPtr;
-    this->cdrPtr = newNode->cdrPtr;
+Node * Node::cons(Expression * car, Expression * cdr) {
+    Node * newNode;
+    int car_type = car->expType;
+    int cdr_type = cdr->expType;
+    if (car_type == ATOM_TYPE && cdr_type == ATOM_TYPE)
+        newNode = new Node((Atom *) car, (Atom *) cdr);
+    else if (car_type == ATOM_TYPE && cdr_type == NODE_TYPE)
+        newNode = new Node((Atom *) car, (Node *) cdr);
+    else if (car_type == NODE_TYPE && cdr_type == ATOM_TYPE)
+        newNode = new Node((Node *) car, (Atom *) cdr);
+    else
+        newNode = new Node((Node *) car, (Node *) cdr);
+    return newNode;
 }
 
-Expression * Node::pop() {
-    Expression * new_car = this->cdrPtr;
-    this->carPtr = this->cdrPtr;
-    this->cdrPtr = ((Node *) (new_car))->cdrPtr; 
+void Node::push(Node** headPtr, Expression * expression) {
+    *headPtr = cons(expression, *headPtr);
+}
+
+Expression * Node::pop(Node** headPtr) { //sketchy
+    Node * head = *headPtr;
+    *headPtr = (Node *) head->cdr(); //May not work if cdr is atom*
+    head->cdrPtr = new Atom();
+    return head->car();
 }
 
 Expression * Node::peek() {

@@ -73,7 +73,7 @@ Expression * getControlPtr(std::string * string, int * index){
 }
 
 std::string createInterpretedString(){
-    return "(6 (6 3 4) ADD )";
+    return "(6 3 ADD STOP)";
 }
 
 std::string createInterpretedString3(){
@@ -97,9 +97,3 @@ std::string createInterpretedString2(){
     return str;
 }
 
-int main(){
-    std::string str2 = createInterpretedString();
-    int i = 0;
-    Expression* parsed = consume(&str2, &i);
-    parsed->print();
-}

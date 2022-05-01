@@ -17,17 +17,19 @@ public:
     Node(Node * n1, Node * n2);
     Expression * car();
     Expression * cdr();
-    Node * cons(Expression * car, Expression * cdr);
+    
     bool eq(Expression * op);
 
     bool member(Node * target, Node * list);
     int position(Node * target, Node * list);
     Node * location(Node * target, Node * list);
 
-    void push(Expression * expression);
-    //Node* push(Expression* expression);
-    Expression * pop();
-    Expression * peek();
 
     void print();
+
+    static Node * cons(Expression * car, Expression * cdr);
+    static void push(Node** headPtr, Expression * expression);
+    static Expression * pop(Node** headPtr);
+    Expression * peek();
 };
+
