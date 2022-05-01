@@ -39,7 +39,7 @@ public:
             return same_type && valEq;
         }
         // both items on stack are nodes
-        else {
+        else if (op1->getExpType() == NODE_TYPE && op2->getExpType() == NODE_TYPE) {
             Node * nodeOp1 = (Node *) op1;
             Node * nodeOp2 = (Node *) op2;
 
