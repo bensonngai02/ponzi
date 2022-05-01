@@ -62,6 +62,7 @@ public:
     static Atom * div (Atom * op1, Atom * op2);
     static Atom * rem (Atom * op1, Atom * op2);
     static bool geq (Atom * op1, Atom * op2);
+    static void checkDataTypeEq(Atom * atom1, Atom * atom2, int targetDataType); 
 };
 
 

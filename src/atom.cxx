@@ -50,42 +50,42 @@ int Atom::getType(){
     return this->is_integer ? INTEGER : (this->is_string ? STRING : BOOLEAN);
 }
 
-void checkDataTypeEq(Atom * atom1, Atom * atom2, int targetDataType) {
+void Atom::checkDataTypeEq(Atom * atom1, Atom * atom2, int targetDataType) {
     if(atom1->getType() != INTEGER || atom2->getType() != targetDataType){
         printf("Trying to operate (+, -, *, /) on two non integers");
         exit(1);
     }
 }
 
-Atom* add(Atom * op1, Atom * op2){
+Atom* Atom::add(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
     int64_t sum = op1->get_atom_integer() + op2->get_atom_integer();
     Atom * ret = new Atom(sum);
     return ret;
 }
 
-static Atom* sub(Atom * op1, Atom * op2){
+Atom* Atom::sub(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
     int64_t diff = op1->get_atom_integer() - op2->get_atom_integer();
     Atom * ret = new Atom(diff);
     return ret;
 }
 
-Atom* mul(Atom * op1, Atom * op2){
+Atom* Atom::mul(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
     int64_t prod = op1->get_atom_integer() * op2->get_atom_integer();
     Atom * ret = new Atom(prod);
     return ret;
 }
 
-Atom* div(Atom * op1, Atom * op2){
+Atom* Atom::div(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
     int64_t div = op1->get_atom_integer() / op2->get_atom_integer();
     Atom * ret = new Atom(div);
     return ret;
 }
 
-Atom* rem(Atom * op1, Atom * op2){
+Atom* Atom::rem(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
     int64_t rem = op1->get_atom_integer() % op2->get_atom_integer();
     Atom * ret = new Atom(rem);
@@ -102,7 +102,7 @@ bool Atom::eq(Expression * op){
     return same_type && valEq;
 }
 
-bool geq(Atom * op1, Atom * op2){
+bool Atom::geq(Atom * op1, Atom * op2){
     bool op1_is_integer = op1->getType() == INTEGER;
     bool op2_is_integer = op2->getType() == INTEGER;
     bool same_type = op1_is_integer && op2_is_integer && op1->getType() == op2->getType();

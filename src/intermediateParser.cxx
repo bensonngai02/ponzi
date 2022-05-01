@@ -66,7 +66,7 @@ Expression * getControlPtr(std::string * string, int * index){
 }
 
 std::string createInterpretedString(){
-    return "(LDC 6 LDC 3 ADD STOP)";
+    return "LDC 6 LDC 3 ADD STOP";
 }
 
 std::string createInterpretedString3(){

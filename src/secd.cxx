@@ -75,8 +75,11 @@ int main(){
     std::string str2 = createInterpretedString();
     int i = 0;
     Node* parsed = (Node*) consume(&str2, &i);
+    std::cout << "Parsed: ";
     parsed->print();
+    std::cout << "CAR: ";
     parsed->car()->print();
+    std::cout << "CDR: ";
     parsed->cdr()->print();
     SECD * secd = new SECD();
     for(int i = 0; i < 4; i++){
