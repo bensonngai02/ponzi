@@ -107,9 +107,14 @@ Expression * Node::peek() {
     return this;
 }
 
-void Node::print(){
+void Node::printing(){
     printf("(");
     this->carPtr->print();
     this->cdrPtr->print();
     printf(")");
+}
+
+void Node::print(){
+    this->printing();
+    std::cout <<std::endl;
 }
