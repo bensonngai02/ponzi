@@ -17,7 +17,7 @@ public:
     Node(Node * n1, Node * n2);
     Expression * car();
     Expression * cdr();
-    
+
     bool eq(Expression * op);
 
     bool member(Node * target, Node * list);
@@ -33,3 +33,4 @@ public:
     Expression * peek();
 };
 
+    

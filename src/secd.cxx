@@ -2,7 +2,7 @@
 #include "expression.h"
 #include "node.h"
 #include "atom.h"
-#include "intermediateParser.cxx"
+#include "intermediateParser.h"
 
 /* Upon instantiating new SECD, each S, E, C, D register
     contains a new stack with "NIL" as head.
@@ -31,25 +31,22 @@ void SECD::execute(Node * control) {
     Atom * atom_inst = (Atom *) inst;
     // consider integer, string, boolean cases
     if (atom_inst->get_atom_string() == "ADD") {   
-        if(stack->peek()->car()->getExpType() != ATOM_TYPE) {
-            std::cout << "Top of stack is not atom";
-            exit(1);
-        }
+        peekStackExpType(stack, ATOM_TYPE);
         Atom* op1 = (Atom*) Node::pop(&stack);
-        if(stack->peek()->car()->getExpType() != ATOM_TYPE) {
-            std::cout << "Top of stack is not atom";
-            exit(1);
-        }
+        peekStackExpType(stack, ATOM_TYPE);
         Atom* op2 = (Atom*) Node::pop(&stack);
-        if(op1->getType() != INTEGER || op2->getType() != INTEGER) {
-            std::cout << "Operand values are not integer";
-            exit(1);
-        }
-        Atom* result = op1->add(op2);
-        Node::push(&stack, result);
+        Atom* sum = Atom::add(op1, op2);
+        Node::push(&stack, sum);
     }
     if (atom_inst->get_atom_string() == "STOP") {
         // printStack(stack);
+        exit(1);
+    }
+}
+
+void peekStackExpType(Node * stack, int expType) {
+    if (stack->peek()->car()->getExpType() != expType) {
+        std::cout << "Top of stack is not atom";
         exit(1);
     }
 }
@@ -59,7 +56,7 @@ void SECD::execute(Node * control) {
 //         std::cout << "Stack is empty. Only has nil atom.";
 //     }
 //     else {
-//         while () {
+        // while () {
 //             node = 
 //         }
 //     }
