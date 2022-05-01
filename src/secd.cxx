@@ -60,8 +60,7 @@ void SECD::boolOp(std::string operation) {
         bool equals = Expression::eq(op1, op2);
         result = new Atom(equals);
     }
-        
-
+    Node::push(&stack, result);
 }
 
 void SECD::execute(Node * control) {
@@ -77,25 +76,36 @@ void SECD::execute(Node * control) {
 
     Atom * atom_inst = (Atom *) inst;
     // consider integer, string, boolean cases
+    std::string atomInstString = atom_inst->get_atom_string();
 
-    if (atom_inst->get_atom_string() == "ADD")
+    if (atomInstString == "ADD")
         mathOp("ADD");
-    else if (atom_inst->get_atom_string() == "SUB")
+    else if (atomInstString== "SUB")
         mathOp("SUB");
-    else if (atom_inst->get_atom_string() == "MUL")
+    else if (atomInstString == "MUL")
         mathOp("MUL");
-    else if (atom_inst->get_atom_string() == "DIV")
+    else if (atomInstString == "DIV")
         mathOp("DIV");
-    else if (atom_inst->get_atom_string() == "REM")
+    else if (atomInstString == "REM")
         mathOp("REM");
-    else if (atom_inst->get_atom_string() == "STOP") {
+    else if (atomInstString == "EQ")
+        boolOp("EQ");
+    else if (atomInstString == "GT")
+        boolOp("GT");
+    else if (atomInstString == "LT")
+        boolOp("LT");
+    else if (atomInstString == "GEQ")
+        boolOp("GEQ");
+    else if (atomInstString == "LEQ")
+        boolOp("LEQ");
+    else if (atomInstString == "STOP") {
         // printStack(stack);
         std::cout << "Stack is: ";
         stack->print();
         std::cout << std::endl;
         exit(1);
     }
-    else if(atom_inst->get_atom_string() == "LDC"){
+    else if (atomInstString == "LDC"){
         Expression* op1 = Node::pop(&stack);
         Node::push(&stack, op1);
     }
