@@ -85,15 +85,12 @@ void SECD::execute() {
 
 int main(){
     SECD * secd = new SECD();
-    std::cout << "Initial Control: ";
-    secd->control->print();
-    std::cout << "Initial Stack: ";
     secd->stack->print();
     for(int i = 0; i < 4; i++){
-        secd->execute();
         std::cout << "Control: ";
         secd->control->print();
         std::cout << "Stack: ";
         secd->stack->print();
+        secd->execute();
     }
 }
