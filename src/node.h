@@ -2,9 +2,6 @@
 #include "expression.h"
 #include "atom.h"
 
-#define NODE_TYPE 1
-#define NIL_TYPE 2
-
 class Node : public Expression {
     Expression * carPtr;
     Expression * cdrPtr;
@@ -17,8 +14,6 @@ public:
     Node(Node * n1, Node * n2);
     Expression * car();
     Expression * cdr();
-
-    bool eq(Expression * op);
 
     bool member(Node * target, Node * list);
     int position(Node * target, Node * list);

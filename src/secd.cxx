@@ -19,7 +19,7 @@ SECD::SECD(){
     dump = new Node();
 }
 
-void SECD::math(std::string operation) {
+void SECD::mathOp(std::string operation) {
     peekStackExpType(stack, ATOM_TYPE);
     Atom* op1 = (Atom*) Node::pop(&stack);
     peekStackExpType(stack, ATOM_TYPE);
@@ -40,6 +40,30 @@ void SECD::math(std::string operation) {
     Node::push(&stack, result);
 }
 
+void SECD::boolOp(std::string operation) {
+    peekStackExpType(stack, ATOM_TYPE);
+    Atom* op1 = (Atom*) Node::pop(&stack);
+    peekStackExpType(stack, ATOM_TYPE);
+    Atom* op2 = (Atom*) Node::pop(&stack);
+
+    Atom * result;
+
+    if (operation == "GT")
+        result = Atom::gt(op1, op2);
+    else if (operation == "LT")
+        result = Atom::lt(op1, op2);
+    else if (operation == "GEQ")
+        result = Atom::geq(op1, op2);
+    else if (operation == "LEQ")
+        result = Atom::leq(op1, op2);
+    else if (operation == "EQ") {
+        bool equals = Expression::eq(op1, op2);
+        result = new Atom(equals);
+    }
+        
+
+}
+
 void SECD::execute(Node * control) {
     Expression * inst = Node::pop(&control)->car();
     inst->print();
@@ -55,15 +79,15 @@ void SECD::execute(Node * control) {
     // consider integer, string, boolean cases
 
     if (atom_inst->get_atom_string() == "ADD")
-        math("ADD");
+        mathOp("ADD");
     else if (atom_inst->get_atom_string() == "SUB")
-        math("SUB");
+        mathOp("SUB");
     else if (atom_inst->get_atom_string() == "MUL")
-        math("MUL");
+        mathOp("MUL");
     else if (atom_inst->get_atom_string() == "DIV")
-        math("DIV");
+        mathOp("DIV");
     else if (atom_inst->get_atom_string() == "REM")
-        math("REM");
+        mathOp("REM");
     else if (atom_inst->get_atom_string() == "STOP") {
         // printStack(stack);
         std::cout << "Stack is: ";
