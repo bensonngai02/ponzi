@@ -35,22 +35,12 @@ void SECD::execute(Node * control) {
     Atom * atom_inst = (Atom *) inst;
     // consider integer, string, boolean cases
     if (atom_inst->get_atom_string() == "ADD") {   
-        if(stack->peek()->car()->getExpType() != ATOM_TYPE) {
-            std::cout << "Top of stack is not atom for add";
-            exit(1);
-        }
+        peekStackExpType(stack, ATOM_TYPE);
         Atom* op1 = (Atom*) Node::pop(&stack);
-        if(stack->peek()->car()->getExpType() != ATOM_TYPE) {
-            std::cout << "Top of stack 2 is not atom for add";
-            exit(1);
-        }
+        peekStackExpType(stack, ATOM_TYPE);
         Atom* op2 = (Atom*) Node::pop(&stack);
-        if(op1->getType() != INTEGER || op2->getType() != INTEGER) {
-            std::cout << "Operand values are not integer";
-            exit(1);
-        }
-        Atom* result = op1->add(op2);
-        Node::push(&stack, result);
+        Atom* sum = Atom::add(op1, op2);
+        Node::push(&stack, sum);
     }
     else if (atom_inst->get_atom_string() == "STOP") {
         // printStack(stack);
@@ -64,6 +54,24 @@ void SECD::execute(Node * control) {
         Node::push(&stack, op1);
     }
 }
+
+void SECD::peekStackExpType(Node * stack, int expType) {
+    if (stack->peek()->car()->getExpType() != expType) {
+        std::cout << "Top of stack is not atom";
+        exit(1);
+    }
+}
+
+// static void printStack(Node * node) {
+//     if (node->expType == NIL_TYPE) {
+//         std::cout << "Stack is empty. Only has nil atom.";
+//     }
+//     else {
+        // while () {
+//             node = 
+//         }
+//     }
+// }
 
 int main(){
     std::string str2 = createInterpretedString();

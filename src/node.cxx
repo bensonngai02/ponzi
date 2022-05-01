@@ -37,8 +37,8 @@ bool Node::eq(Expression * op){
     if (this->getExpType() != op->getExpType()) {
         return false;
     }
-    bool carPtrEq = this->carPtr == ((Node *) op)->carPtr;
-    bool cdrPtrEq = this->cdrPtr == ((Node *) op)->cdrPtr;
+    bool carPtrEq = this->car() == ((Node *) op)->car();
+    bool cdrPtrEq = this->cdr() == ((Node *) op)->cdr();
     return carPtrEq && cdrPtrEq;
 }
 
