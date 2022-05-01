@@ -25,6 +25,7 @@ public:
     Node * location(Node * target, Node * list);
 
     void push(Expression * expression);
+    //Node* push(Expression* expression);
     Expression * pop();
     Expression * peek();
 
