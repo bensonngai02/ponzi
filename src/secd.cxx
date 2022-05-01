@@ -2,7 +2,7 @@
 #include "expression.h"
 #include "node.h"
 #include "atom.h"
-#include "intermediateParser.cxx"
+#include "intermediateParser.h"
 
 /* Upon instantiating new SECD, each S, E, C, D register
     contains a new stack with "NIL" as head.
@@ -20,7 +20,9 @@ SECD::SECD(){
 }
 
 void SECD::execute(Node * control) {
-    Expression * inst = Node::pop(&control);
+    Expression * inst = Node::pop(&control)->car();
+    inst->print();
+    std::cout << std::endl;
     int inst_type = inst->getExpType();
     if (inst_type != ATOM_TYPE) {
         std::cout << "Trying to execute a non instruction expression: ";
@@ -32,12 +34,12 @@ void SECD::execute(Node * control) {
     // consider integer, string, boolean cases
     if (atom_inst->get_atom_string() == "ADD") {   
         if(stack->peek()->car()->getExpType() != ATOM_TYPE) {
-            std::cout << "Top of stack is not atom";
+            std::cout << "Top of stack is not atom for add";
             exit(1);
         }
         Atom* op1 = (Atom*) Node::pop(&stack);
         if(stack->peek()->car()->getExpType() != ATOM_TYPE) {
-            std::cout << "Top of stack is not atom";
+            std::cout << "Top of stack 2 is not atom for add";
             exit(1);
         }
         Atom* op2 = (Atom*) Node::pop(&stack);
@@ -48,22 +50,19 @@ void SECD::execute(Node * control) {
         Atom* result = op1->add(op2);
         Node::push(&stack, result);
     }
-    if (atom_inst->get_atom_string() == "STOP") {
+    else if (atom_inst->get_atom_string() == "STOP") {
         // printStack(stack);
         exit(1);
     }
+    else if(atom_inst->get_atom_string() == "LDC"){
+        if(stack->peek()->car()->getExpType() != ATOM_TYPE) {
+            std::cout << "Top of stack is not atom for LDC";
+            exit(1);
+        }
+        Atom* op1 = (Atom*) Node::pop(&stack);
+        Node::push(&stack, op1);
+    }
 }
-
-// static void printStack(Node * node) {
-//     if (node->expType == NIL_TYPE) {
-//         std::cout << "Stack is empty. Only has nil atom.";
-//     }
-//     else {
-//         while () {
-//             node = 
-//         }
-//     }
-// }
 
 int main(){
     std::string str2 = createInterpretedString();
