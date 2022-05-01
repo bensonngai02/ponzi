@@ -19,6 +19,27 @@ SECD::SECD(){
     dump = new Node();
 }
 
+void SECD::math(std::string operation) {
+    peekStackExpType(stack, ATOM_TYPE);
+    Atom* op1 = (Atom*) Node::pop(&stack);
+    peekStackExpType(stack, ATOM_TYPE);
+    Atom* op2 = (Atom*) Node::pop(&stack);
+    
+    Atom* result;
+    if (operation == "ADD")
+        result = Atom::add(op1,op2);
+    else if (operation == "SUB")
+        result = Atom::sub(op1,op2);
+    else if (operation == "MUL")
+        result = Atom::mul(op1, op2);
+    else if (operation == "DIV")
+        result = Atom::div(op1, op2);
+    else
+        result = Atom::rem(op1, op2);
+
+    Node::push(&stack, result);
+}
+
 void SECD::execute(Node * control) {
     Expression * inst = Node::pop(&control)->car();
     inst->print();
@@ -32,14 +53,17 @@ void SECD::execute(Node * control) {
 
     Atom * atom_inst = (Atom *) inst;
     // consider integer, string, boolean cases
-    if (atom_inst->get_atom_string() == "ADD") {   
-        peekStackExpType(stack, ATOM_TYPE);
-        Atom* op1 = (Atom*) Node::pop(&stack);
-        peekStackExpType(stack, ATOM_TYPE);
-        Atom* op2 = (Atom*) Node::pop(&stack);
-        Atom* sum = Atom::add(op1, op2);
-        Node::push(&stack, sum);
-    }
+
+    if (atom_inst->get_atom_string() == "ADD")
+        math("ADD");
+    else if (atom_inst->get_atom_string() == "SUB")
+        math("SUB");
+    else if (atom_inst->get_atom_string() == "MUL")
+        math("MUL");
+    else if (atom_inst->get_atom_string() == "DIV")
+        math("DIV");
+    else if (atom_inst->get_atom_string() == "REM")
+        math("REM");
     else if (atom_inst->get_atom_string() == "STOP") {
         // printStack(stack);
         std::cout << "Stack is: ";
@@ -60,16 +84,6 @@ void SECD::peekStackExpType(Node * stack, int expType) {
     }
 }
 
-// static void printStack(Node * node) {
-//     if (node->expType == NIL_TYPE) {
-//         std::cout << "Stack is empty. Only has nil atom.";
-//     }
-//     else {
-        // while () {
-//             node = 
-//         }
-//     }
-// }
 
 int main(){
     std::string str2 = createInterpretedString();
