@@ -50,7 +50,13 @@ Expression * consume(std::string* str, int* index) {
             std::cout << "Found non alnum atom -- not allowed: " << temp << " " << *index << std::endl;
             exit(1);
         }
-        Atom * new_atom = new Atom(temp);
+        Atom * new_atom;
+        try{
+            int64_t val = (int64_t) std::stoi(temp);
+            new_atom  = new Atom(val);
+        }catch(...){
+            new_atom = new Atom(temp);
+        }
         Expression* cdr = consume(str, index);
         if(cdr->expType == NIL_TYPE)
             return new Node(new_atom, new Atom());

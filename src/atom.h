@@ -50,6 +50,7 @@ public:
     bool get_atom_boolean();
     int getType();
     void print();
+    void printRecur();
 
     Expression * car();
     Expression * cdr();

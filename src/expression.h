@@ -7,6 +7,7 @@ public:
         return expType;
     };
     virtual void print() = 0;
+    virtual void printRecur() = 0;
     virtual bool eq(Expression * op) = 0;
     virtual Expression * car() = 0;
     virtual Expression * cdr() = 0;

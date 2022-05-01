@@ -15,7 +15,7 @@ class SECD {
         // need to read in control 
         Node * control;
         Node * dump;
-    void execute(Node * inst_node);
+    void execute();
     static void printStack(Node * node);
     void peekStackExpType(Node * stack, int expType);
     void math(std::string operation);

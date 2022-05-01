@@ -107,14 +107,14 @@ Expression * Node::peek() {
     return this;
 }
 
-void Node::printing(){
+void Node::printRecur(){
     printf("(");
-    this->carPtr->print();
-    this->cdrPtr->print();
+    this->carPtr->printRecur();
+    this->cdrPtr->printRecur();
     printf(")");
 }
 
 void Node::print(){
-    this->printing();
+    this->printRecur();
     std::cout <<std::endl;
 }

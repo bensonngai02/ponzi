@@ -127,6 +127,10 @@ void Atom::print(){
     }
 }
 
+void Atom::printRecur(){
+    this->print();
+}
+
 Expression * Atom::car() {
     return this;
 }

@@ -19,11 +19,18 @@ SECD::SECD(){
     dump = new Node();
 }
 
+void SECD::peekStackExpType(Node * stack, int expType) {
+    if (stack->peek()->car()->getExpType() != expType) {
+        std::cout << "Top of stack is not atom";
+        exit(1);
+    }
+}
+
 void SECD::math(std::string operation) {
     peekStackExpType(stack, ATOM_TYPE);
-    Atom* op1 = (Atom*) Node::pop(&stack);
-    peekStackExpType(stack, ATOM_TYPE);
     Atom* op2 = (Atom*) Node::pop(&stack);
+    peekStackExpType(stack, ATOM_TYPE);
+    Atom* op1 = (Atom*) Node::pop(&stack);
     
     Atom* result;
     if (operation == "ADD")
@@ -40,10 +47,8 @@ void SECD::math(std::string operation) {
     Node::push(&stack, result);
 }
 
-void SECD::execute(Node * control) {
+void SECD::execute() {
     Expression * inst = Node::pop(&control)->car();
-    inst->print();
-    control->print();
     int inst_type = inst->getExpType();
     if (inst_type != ATOM_TYPE) {
         std::cout << "Trying to execute a non instruction expression: ";
@@ -72,32 +77,23 @@ void SECD::execute(Node * control) {
         exit(1);
     }
     else if(atom_inst->get_atom_string() == "LDC"){
-        Expression* op1 = Node::pop(&stack);
+        Expression* op1 = Node::pop(&control)->car();
         Node::push(&stack, op1);
-    }
-}
-
-void SECD::peekStackExpType(Node * stack, int expType) {
-    if (stack->peek()->car()->getExpType() != expType) {
-        std::cout << "Top of stack is not atom";
-        exit(1);
     }
 }
 
 
 int main(){
-    std::string str2 = createInterpretedString();
-    int i = 0;
-    Node* parsed = (Node*) consume(&str2, &i);
-    std::cout << "Parsed: ";
-    parsed->print();
-    std::cout << "CAR: ";
-    parsed->car()->print();
-    std::cout << "CDR: ";
-    parsed->cdr()->print();
     SECD * secd = new SECD();
+    std::cout << "Initial Control: ";
+    secd->control->print();
+    std::cout << "Initial Stack: ";
+    secd->stack->print();
     for(int i = 0; i < 4; i++){
-        secd->execute(parsed);
+        secd->execute();
+        std::cout << "Control: ";
+        secd->control->print();
+        std::cout << "Stack: ";
+        secd->stack->print();
     }
-    
 }
