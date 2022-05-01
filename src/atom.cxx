@@ -133,6 +133,14 @@ void Atom::print(){
     }
 }
 
+Expression * Atom::car() {
+    return this;
+}
+
+Expression * Atom::cdr(){
+    return new Atom();
+}
+
 
 
 

@@ -4,6 +4,7 @@
         "functional": "cpp",
         "sstream": "cpp",
         "vector": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "stack": "cpp"
     }
 }

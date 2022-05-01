@@ -58,4 +58,7 @@ public:
     bool geq (Atom * op);
     void print();
 
+    Expression * car();
+    Expression * cdr();
+
 };

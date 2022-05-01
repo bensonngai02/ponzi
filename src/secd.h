@@ -7,6 +7,14 @@
 class SECD {
     public:
         SECD();
+        int i;
+        std::string inputSStr;
+        std::string* input;
+        Node * stack;
+        Node * environment;
+        // need to read in control 
+        Node * control;
+        Node * dump;
     void execute(Node * inst_node);
 
 };
