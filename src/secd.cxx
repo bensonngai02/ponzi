@@ -23,6 +23,8 @@ void SECD::execute(Node * control) {
     Expression * inst = Node::pop(&control)->car();
     inst->print();
     std::cout << std::endl;
+    control->print();
+    std::cout <<std::endl;
     int inst_type = inst->getExpType();
     if (inst_type != ATOM_TYPE) {
         std::cout << "Trying to execute a non instruction expression: ";
@@ -52,14 +54,13 @@ void SECD::execute(Node * control) {
     }
     else if (atom_inst->get_atom_string() == "STOP") {
         // printStack(stack);
+        std::cout << "Stack is: ";
+        stack->print();
+        std::cout << std::endl;
         exit(1);
     }
     else if(atom_inst->get_atom_string() == "LDC"){
-        if(stack->peek()->car()->getExpType() != ATOM_TYPE) {
-            std::cout << "Top of stack is not atom for LDC";
-            exit(1);
-        }
-        Atom* op1 = (Atom*) Node::pop(&stack);
+        Expression* op1 = Node::pop(&stack);
         Node::push(&stack, op1);
     }
 }
@@ -67,9 +68,13 @@ void SECD::execute(Node * control) {
 int main(){
     std::string str2 = createInterpretedString();
     int i = 0;
-    Expression* parsed = consume(&str2, &i);
+    Node* parsed = (Node*) consume(&str2, &i);
     parsed->print();
+    parsed->car()->print();
+    parsed->cdr()->print();
     SECD * secd = new SECD();
-    secd->execute((Node *) parsed);
-
+    for(int i = 0; i < 4; i++){
+        secd->execute(parsed);
+    }
+    
 }
