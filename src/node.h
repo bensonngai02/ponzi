@@ -26,6 +26,7 @@ public:
 
 
     void print();
+    void printing();
 
     static Node * cons(Expression * car, Expression * cdr);
     static void push(Node** headPtr, Expression * expression);

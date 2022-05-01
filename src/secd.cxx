@@ -22,9 +22,7 @@ SECD::SECD(){
 void SECD::execute(Node * control) {
     Expression * inst = Node::pop(&control)->car();
     inst->print();
-    std::cout << std::endl;
     control->print();
-    std::cout <<std::endl;
     int inst_type = inst->getExpType();
     if (inst_type != ATOM_TYPE) {
         std::cout << "Trying to execute a non instruction expression: ";
