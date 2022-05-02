@@ -16,7 +16,7 @@ std::string consumeIdentifier(std::string* str, int* index)
     skip(str, index);
     std::string newString = "";
 
-    if (isalnum((*str)[*index] ))
+    if (isalnum((*str)[*index]) || (*str)[*index] == '-')
     {
         do
         {
@@ -72,7 +72,7 @@ Expression * getControlPtr(std::string * string, int * index){
 }
 
 std::string createInterpretedString(){
-    return "LDC 1 LDC 2 LDC 3 MUL SUB LDC 4 EQ STOP";
+    return "LDC 1 LDC 2 LDC 3 MUL SUB LDC -5 EQ STOP";
 }
 
 std::string createInterpretedString3(){

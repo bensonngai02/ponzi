@@ -215,7 +215,8 @@ void SECD::execute() {
         stack = Node::cons(new Atom(), new Atom());
     }
     else if (atomInstString == "RAP") {
-
+        Node* closure = (Node*) Node::pop(&stack);
+        Expression* v = Node::pop(&stack);
     }
     else if (atomInstString == "WRITEC") {
         Node * output = (Node *) Node::pop(&control);
