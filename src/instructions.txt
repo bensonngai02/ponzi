@@ -1,1 +1,1 @@
-(6 (6 3 4) ADD )
+LDC 6 LDC 4 ADD
