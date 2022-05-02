@@ -118,7 +118,7 @@ void SECD::execute() {
         Node::push(&stack, op1);
     }
     else if (atomInstString == "LD") {
-        Node * environment = Node::location();
+
     }
     else if (atomInstString == "SEL") {
 
