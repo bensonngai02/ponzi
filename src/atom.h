@@ -53,6 +53,7 @@ public:
 
     Expression * car();
     Expression * cdr();
+    Expression * copy();
 
     static void checkDataTypeEq(Atom* a1, Atom* a2, int t);
     static Atom * add (Atom * op1, Atom * op2);

@@ -14,6 +14,7 @@ public:
     Node(Node * n1, Node * n2);
     Expression * car();
     Expression * cdr();
+    Expression * copy();
 
     static bool member(Node * target, Node * list);
     static int position(Node * target, Node * list);

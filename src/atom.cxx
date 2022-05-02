@@ -163,6 +163,21 @@ Expression * Atom::cdr(){
     return new Atom();
 }
 
+Expression * Atom::copy(){
+    if(this->getType() == NIL_TYPE){
+        return new Atom();
+    }
+    if(this->is_boolean){
+        Boolean b = this->get_atom_boolean() ? t : f;
+        return new Atom(b);
+    }
+    if(this->is_integer){
+        return new Atom(this->get_atom_integer());
+    }
+    std::string * cpStr = new std::string(this->get_atom_string());
+    return new Atom(*cpStr);
+}
+
 
 
 

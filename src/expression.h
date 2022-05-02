@@ -21,4 +21,5 @@ public:
     virtual void printRecur() = 0;
     virtual Expression * car() = 0;
     virtual Expression * cdr() = 0;
+    virtual Expression * copy() = 0;
 };

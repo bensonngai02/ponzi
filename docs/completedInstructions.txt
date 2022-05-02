@@ -1,22 +1,24 @@
-LD
-LDC - done
-LDF
-AP
-RTN
-DUM
-RAP
-SEL
-JOIN
-CAR - done
-CDR - done
-ATOM - done
-CONS - done
-EQ - done
 ADD - done
 SUB - done
 MUL - done
 DIV - done
 REM - done
+EQ - done
 LEQ - done
-STOP - done
 NIL - done
+LDC - done
+SEL - done
+STOP - done
+CAR - done
+CDR - done
+CONS - done
+ATOM - done
+JOIN - done
+RTN - done
+DUM - done
+
+LD
+LDF
+AP
+RAP 
+

@@ -33,6 +33,10 @@ Expression * Node::cdr() {
     return this->cdrPtr;
 }
 
+Expression * Node::copy(){
+    return Node::cons(this->car()->copy(), this->cdr()->copy());
+}
+
 bool Node::member(Node * target, Node * list) {
     if (list->getExpType() == NIL_TYPE)
         return false;

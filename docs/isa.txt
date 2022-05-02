@@ -68,7 +68,7 @@ Table of Contents
             - Before this is done -> S, E, C pushed onto dump so continue execution after function is done
             - ((c'.e') v.s) e (AP.c) d -> NIL (v.e') c' (s e c.d)
 
-        RTN (Return)
+        RET (Return)
             - Expected at end of function list, returns a value
             - Top of stack 'v' is saved (value to return)
             - Restore S, E, C.

@@ -112,9 +112,6 @@ void SECD::execute() {
         Expression* op1 = Node::pop(&control)->car();
         Node::push(&stack, op1);
     }
-    else if (atomInstString == "LD") {
-        
-    }
     else if (atomInstString == "SEL") {
         Atom * popped = (Atom *) Node::pop(&stack);
         bool cond = popped->get_atom_boolean();
@@ -123,43 +120,21 @@ void SECD::execute() {
         Node::push(&dump, control);
         if (cond == t) {
             // if val = 1 -> replace control w 'ct'
-            if(ct->getExpType() != NODE_TYPE){
+            if (ct->getExpType() != NODE_TYPE){
                 std::cout << "SEL on non node";
                 exit(1);
             }
-            control = (Node*) ct;
+            control = (Node *) ct;
         }
         else {
             // if val = 0 -> replace control w 'cf'
-            if(cf->getExpType() != NODE_TYPE){
+            if (cf->getExpType() != NODE_TYPE){
                 std::cout << "SEL on non node";
                 exit(1);
             }
-            control = (Node*) cf;
+            control = (Node *) cf;
         }
     }
-    else if (atomInstString == "JOIN") {
-
-    }
-    else if (atomInstString == "LDF") {
-
-    }
-    else if (atomInstString == "AP") {
-
-    }
-    else if (atomInstString == "RET") {
-
-    }
-    else if (atomInstString == "DUM") {
-
-    }
-    else if (atomInstString == "RAP") {
-
-    }
-    else if (atomInstString == "WRITEC") {
-
-    }
-
     else if (atomInstString == "STOP") {
         // printStack(stack);
         std::cout << "Stack is: ";
@@ -187,7 +162,58 @@ void SECD::execute() {
         Atom* result = new Atom(b);
         Node::push(&stack, result);
     }
-    
+    else if (atomInstString == "JOIN") {
+        if (dump->peek()->getExpType() != NODE_TYPE) {
+            std::cout << "JOIN on non node (top of dump is not a node when it should be).";
+            exit(1);
+        }
+        control = (Node *) Node::pop(&dump);
+    }
+    else if (atomInstString == "RET") {
+        Expression* tempStack = Node::pop(&dump);
+        Expression* tempEnv = Node::pop(&dump);
+        Expression* tempControl = Node::pop(&dump);
+        if(tempStack->getExpType() != NODE_TYPE || 
+            tempEnv->getExpType() != NODE_TYPE || 
+            tempControl->getExpType() != NODE_TYPE){
+            std::cout << "RET prev values is not Node";
+            exit(1);
+        }
+        Node* prevStack = (Node*) tempStack;
+        environment = (Node*) tempEnv;
+        control = (Node*) tempControl;
+        Node::push(&prevStack, stack);
+        stack = prevStack;
+    }
+    else if (atomInstString == "DUM") {
+        Node * emptyList = Node::cons(new Atom(), new Atom()); // might be buggy
+        Node::push(&environment, emptyList);
+    }
+   
+    else if (atomInstString == "LD") {
+        Node * locationNode = (Node *) Node::pop(&stack);
+        Node * variables = Node::location(locationNode, control);
+        Node::push(&stack, variables);
+    }
+    else if (atomInstString == "LDF") {
+        Node * function = (Node *) Node::pop(&control);
+        Node * closure = Node::cons(function, environment->copy());
+        Node::push(&stack, closure);
+    }
+    else if (atomInstString == "AP") {
+        Node * function = (Node *) Node::pop(&stack);
+        Node * parameters = (Node *) Node::pop(&stack);
+        // to-do: install environment as the current one (load parameters)
+        Node::push(&dump, stack);
+        Node::push(&dump, environment);
+        Node::push(&dump, control);
+    }
+    else if (atomInstString == "RAP") {
+
+    }
+    else if (atomInstString == "WRITEC") {
+
+    }
 }
 
 
