@@ -223,19 +223,6 @@ void SECD::execute() {
     }
 }
 
-// static void println(Node * string){
-//     if (string->car()->getExpType() == NIL_TYPE || string->cdr()->getExpType() == NIL_TYPE)
-//         std::cout << "\n";
-//     if (((Atom *) string->car())->getType() != STRING) {
-//         std::cout << "Trying to print a non-string value";
-//         exit(1);
-//     }
-//     std::string s = ((Atom *) string->car())->get_atom_string();
-//     std::cout << s;
-//     println((Node *) string->cdr());
-// }
-
-
 int main(){
     SECD * secd = new SECD();
     secd->stack->print();
