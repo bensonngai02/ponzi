@@ -4,28 +4,28 @@
 
 Atom::Atom() {
     this->val = new AtomVal;
-    this->is_string = true;
+    this->type = NIL_TYPE;
     this->val->string = "nil";
-    this->expType = ATOM_TYPE;
+    this->expType = NIL_TYPE;
 }
 
 Atom::Atom(int64_t integer) {
     this->val = new AtomVal;
-    this->is_integer = true;
+    this->type = INTEGER;
     this->val->integer = integer;
     this->expType = ATOM_TYPE;
 }
 
 Atom::Atom(std::string string) {
     this->val = new AtomVal;
-    this->is_string = true;
+    this->type = STRING;
     this->val->string = string;
     this->expType = ATOM_TYPE;
 }
 
 Atom::Atom(Boolean boolean) {
     this->val = new AtomVal;
-    this->is_boolean = true;
+    this->type = BOOLEAN;
     this->val->boolean = boolean;
     this->expType = ATOM_TYPE;
 }
@@ -47,7 +47,7 @@ bool Atom::get_atom_boolean() {
 }
 
 int Atom::getType(){
-    return this->is_integer ? INTEGER : (this->is_string ? STRING : BOOLEAN);
+    return type;
 }
 
 void Atom::checkDataTypeEq(Atom * atom1, Atom * atom2, int targetDataType) {
@@ -137,15 +137,15 @@ Atom * Atom::leq(Atom * op1, Atom * op2){
 }
 
 void Atom::print(){
-    if(this->is_string && this->get_atom_string() != NIL){
+    if(this->type == STRING && this->get_atom_string() != NIL_STR){
         std::cout << this->get_atom_string() << " ";
         //printf("%s ", this->get_atom_string());
     }
-    if(this->is_boolean){
+    if(this->type == BOOLEAN){
         std::cout << this->get_atom_boolean() << " ";
         //printf("%b ", this->get_atom_boolean());
     }
-    else if(this->is_integer){
+    else if(this->type == INTEGER){
         std::cout << this->get_atom_integer() << " ";
         //printf("%xd ", this->get_atom_integer());
     }
@@ -171,11 +171,11 @@ Expression * Atom::copy(){
     if(this->getType() == NIL_TYPE){
         return new Atom();
     }
-    if(this->is_boolean){
+    if(this->type == BOOLEAN){
         Boolean b = this->get_atom_boolean() ? t : f;
         return new Atom(b);
     }
-    if(this->is_integer){
+    if(this->type == INTEGER){
         return new Atom(this->get_atom_integer());
     }
     std::string * cpStr = new std::string(this->get_atom_string());

@@ -18,7 +18,7 @@
 #define INTEGER 0
 #define STRING 1
 #define BOOLEAN 2
-#define NIL "nil"
+#define NIL_STR "nil"
 
 
 enum Boolean {
@@ -33,10 +33,8 @@ typedef struct AtomVal {
 } AtomVal;
 
 class Atom : public Expression {
-    bool is_integer;
-    bool is_string;
-    bool is_boolean;
     AtomVal * val;
+    int type;
 
 public:
     Atom();
