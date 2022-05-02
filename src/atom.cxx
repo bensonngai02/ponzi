@@ -137,6 +137,10 @@ Atom * Atom::leq(Atom * op1, Atom * op2){
 }
 
 void Atom::print(){
+    if(this->is_string && this->get_atom_string() != NIL){
+        std::cout << this->get_atom_string() << " ";
+        //printf("%s ", this->get_atom_string());
+    }
     if(this->is_boolean){
         std::cout << this->get_atom_boolean() << " ";
         //printf("%b ", this->get_atom_boolean());
@@ -145,9 +149,9 @@ void Atom::print(){
         std::cout << this->get_atom_integer() << " ";
         //printf("%xd ", this->get_atom_integer());
     }
-    else if(this->get_atom_string() != NIL){
-        std::cout << this->get_atom_string() << " ";
-        //printf("%s ", this->get_atom_string());
+    else{
+        std::cout <<"Printing something unknown";
+        exit(1);
     }
 }
 

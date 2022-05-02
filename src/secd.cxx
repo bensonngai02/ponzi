@@ -242,7 +242,7 @@ void SECD::execute() {
 }
 
 int main(){
-    SECD * secd = new SECD("tests/instructions.txt");
+    SECD * secd = new SECD("tests/leq");
     secd->stack->print();
     for(int i = 0; i < 4; i++){
         std::cout << "Control: ";
