@@ -118,7 +118,7 @@ void SECD::execute() {
         Expression * ct = Node::pop(&control);
         Expression * cf = Node::pop(&control);
         Node::push(&dump, control);
-        if (cond == t) {
+        if (cond) {
             // if val = 1 -> replace control w 'ct'
             if (ct->getExpType() != NODE_TYPE){
                 std::cout << "SEL on non node";
@@ -159,7 +159,8 @@ void SECD::execute() {
     else if(atomInstString == "ATOM"){
         Expression* op1 = Node::pop(&stack);
         bool b = op1->getExpType() == ATOM_TYPE;
-        Atom* result = new Atom(b);
+        Boolean bo = b ? t : f;
+        Atom* result = new Atom(bo);
         Node::push(&stack, result);
     }
     else if (atomInstString == "JOIN") {
@@ -204,36 +205,41 @@ void SECD::execute() {
         Node * function = (Node *) Node::pop(&stack);
         Node * parameters = (Node *) Node::pop(&stack);
         // to-do: install environment as the current one (load parameters)
-        Node::push(&dump, stack);
-        Node::push(&dump, environment);
         Node::push(&dump, control);
+        Node::push(&dump, environment);
+        Node::push(&dump, stack);
+        Node* newControl = (Node*) function->car();
+        Node* newEnv = Node::cons(parameters, function->cdr());
+        control = newControl;
+        environment = newEnv;
+        stack = Node::cons(new Atom(), new Atom());
     }
     else if (atomInstString == "RAP") {
 
     }
     else if (atomInstString == "WRITEC") {
         Node * output = (Node *) Node::pop(&control);
-        println(output);
+        output->print();
     }
 }
 
-static void println(Node * string){
-    if (string->car()->getExpType() == NIL_TYPE || string->cdr()->getExpType() == NIL_TYPE)
-        std::cout << "\n";
-    if (((Atom *) string->car())->getType() != STRING) {
-        std::cout << "Trying to print a non-string value";
-        exit(1);
-    }
-    std::string s = ((Atom *) string->car())->get_atom_string();
-    std::cout << s;
-    println((Node *) string->cdr());
-}
+// static void println(Node * string){
+//     if (string->car()->getExpType() == NIL_TYPE || string->cdr()->getExpType() == NIL_TYPE)
+//         std::cout << "\n";
+//     if (((Atom *) string->car())->getType() != STRING) {
+//         std::cout << "Trying to print a non-string value";
+//         exit(1);
+//     }
+//     std::string s = ((Atom *) string->car())->get_atom_string();
+//     std::cout << s;
+//     println((Node *) string->cdr());
+// }
 
 
 int main(){
     SECD * secd = new SECD();
     secd->stack->print();
-    for(int i = 0; i < 4; i++){
+    while(true){
         std::cout << "Control: ";
         secd->control->print();
         std::cout << "Stack: ";
