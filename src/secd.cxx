@@ -152,17 +152,26 @@ void SECD::execute() {
         std::cout << std::endl;
         exit(1);
     }
-    else if(atomInstString == "LDC"){
-        Expression* op1 = Node::pop(&control)->car();
-        Node::push(&stack, op1);
-    }
     else if(atomInstString == "CAR"){
-        Expression* op1 = Node::pop(&control)->car()->car();
+        Expression* op1 = Node::pop(&stack)->car();
         Node::push(&stack, op1);
     }
     else if(atomInstString == "CDR"){
-        Expression* op1 = Node::pop(&control)->car()->cdr();
+        Expression* op1 = Node::pop(&stack)->cdr();
         Node::push(&stack, op1);
+    }
+    else if(atomInstString == "CONS"){
+        Expression* op2 = Node::pop(&stack);
+        Expression* op1 = Node::pop(&stack);
+        Expression* result = Node::cons(op1, op2);
+        Node::push(&stack, result);
+    }
+    else if(atomInstString == "ATOM"){
+        Expression* op1 = Node::pop(&stack);
+        bool b = op1->getExpType() == ATOM_TYPE;
+        Atom* result = new Atom(b);
+        Node::push(&stack, result);
+
     }
     
 }
