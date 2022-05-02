@@ -5,6 +5,7 @@
         "sstream": "cpp",
         "vector": "cpp",
         "iosfwd": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "iostream": "cpp"
     }
 }

@@ -7,10 +7,10 @@ DUM
 RAP
 SEL
 JOIN
-CAR
-CDR
-ATOM
-CONS
+CAR - done
+CDR - done
+ATOM - done
+CONS - done
 EQ - done
 ADD - done
 SUB - done
@@ -19,3 +19,4 @@ DIV - done
 REM - done
 LEQ - done
 STOP - done
+NIL - done
