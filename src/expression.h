@@ -1,12 +1,7 @@
 #pragma once
 
-#define ATOM_TYPE 0
-#define NODE_TYPE 1
-#define NIL_TYPE 2
-
-#define INTEGER 0
-#define STRING 1
-#define BOOLEAN 2
+#define ATOM_TYPE 4
+#define NODE_TYPE 5
 
 #include <iostream>
 

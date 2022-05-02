@@ -18,6 +18,7 @@
 #define INTEGER 0
 #define STRING 1
 #define BOOLEAN 2
+#define NIL_TYPE 3
 #define NIL_STR "nil"
 
 

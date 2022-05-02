@@ -110,7 +110,7 @@ void SECD::execute() {
         Node::push(&stack, new Atom());
     }
     else if (atomInstString == "LDC"){
-        Expression* op1 = Node::pop(&control)->car();
+        Expression* op1 = Node::pop(&control);
         Node::push(&stack, op1);
     }
     else if (atomInstString == "SEL") {
@@ -242,9 +242,9 @@ void SECD::execute() {
 }
 
 int main(){
-    SECD * secd = new SECD("tests/leq");
+    SECD * secd = new SECD("tests/car.txt");
     secd->stack->print();
-    for(int i = 0; i < 4; i++){
+    while(true){
         std::cout << "Control: ";
         secd->control->print();
         std::cout << "Stack: ";
