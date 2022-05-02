@@ -118,10 +118,23 @@ void SECD::execute() {
         Node::push(&stack, op1);
     }
     else if (atomInstString == "LD") {
-
+        
     }
     else if (atomInstString == "SEL") {
-
+        Atom * popped = (Atom *) Node::pop(&stack);
+        Boolean cond = popped->get_atom_boolean;
+        Node * ct = Node::pop(&control);
+        Node * cf = Node::pop(&control);
+        Node * branchBack = Node::pop(&control);
+        Node::push(&dump, branchBack);
+        if (cond == t) {
+            // if val = 1 -> replace control w 'ct'
+            control = ct;
+        }
+        else {
+            // if val = 0 -> replace control w 'cf'
+            control = cf;
+        }
     }
     else if (atomInstString == "JOIN") {
 
@@ -152,18 +165,6 @@ void SECD::execute() {
         std::cout << std::endl;
         exit(1);
     }
-    else if(atomInstString == "LDC"){
-        Expression* op1 = Node::pop(&control)->car();
-        Node::push(&stack, op1);
-    }
-    else if(atomInstString == "CAR"){
-        Expression* op1 = Node::pop(&control)->car()->car();
-        Node::push(&stack, op1);
-    }
-    else if(atomInstString == "CDR"){
-        Expression* op1 = Node::pop(&control)->car()->cdr();
-        Node::push(&stack, op1);
-    }
     
 }
 
@@ -171,7 +172,7 @@ void SECD::execute() {
 int main(){
     SECD * secd = new SECD();
     secd->stack->print();
-    while(true){
+    for(int i = 0; i < 4; i++){
         std::cout << "Control: ";
         secd->control->print();
         std::cout << "Stack: ";
