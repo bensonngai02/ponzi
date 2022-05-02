@@ -46,9 +46,9 @@ void SECD::mathOp(std::string operation) {
 
 void SECD::boolOp(std::string operation) {
     peekStackExpType(stack, ATOM_TYPE);
-    Atom* op1 = (Atom*) Node::pop(&stack);
-    peekStackExpType(stack, ATOM_TYPE);
     Atom* op2 = (Atom*) Node::pop(&stack);
+    peekStackExpType(stack, ATOM_TYPE);
+    Atom* op1 = (Atom*) Node::pop(&stack);
 
     Atom * result;
 
@@ -111,13 +111,16 @@ void SECD::execute() {
         Expression* op1 = Node::pop(&control)->car();
         Node::push(&stack, op1);
     }
+    else if(atomInstString == "CAR"){
+        
+    }
 }
 
 
 int main(){
     SECD * secd = new SECD();
     secd->stack->print();
-    for(int i = 0; i < 4; i++){
+    while(true){
         std::cout << "Control: ";
         secd->control->print();
         std::cout << "Stack: ";
