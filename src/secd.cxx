@@ -215,26 +215,14 @@ void SECD::execute() {
         stack = Node::cons(new Atom(), new Atom());
     }
     else if (atomInstString == "RAP") {
-
+        Node* closure = (Node*) Node::pop(&stack);
+        Expression* v = Node::pop(&stack);
     }
     else if (atomInstString == "WRITEC") {
         Node * output = (Node *) Node::pop(&control);
         output->print();
     }
 }
-
-// static void println(Node * string){
-//     if (string->car()->getExpType() == NIL_TYPE || string->cdr()->getExpType() == NIL_TYPE)
-//         std::cout << "\n";
-//     if (((Atom *) string->car())->getType() != STRING) {
-//         std::cout << "Trying to print a non-string value";
-//         exit(1);
-//     }
-//     std::string s = ((Atom *) string->car())->get_atom_string();
-//     std::cout << s;
-//     println((Node *) string->cdr());
-// }
-
 
 int main(){
     SECD * secd = new SECD();

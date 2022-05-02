@@ -17,8 +17,8 @@ JOIN - done
 RTN - done
 DUM - done
 
-LD
-LDF
-AP
+LD - check
+LDF - done
+AP - done
 RAP 
 
