@@ -6,7 +6,6 @@
 
 class SECD {
     public:
-        SECD();
         SECD(std::string s);
         int i;
         std::string inputSStr;

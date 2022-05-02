@@ -18,8 +18,6 @@ SECD::SECD(std::string inputFile){
     dump = new Node();
 }
 
-SECD::SECD() : SECD("src/instructions.txt"){}
-
 void SECD::peekStackExpType(Node * stack, int expType) {
     if (stack->peek()->car()->getExpType() != expType) {
         std::cout << "Top of stack is not atom";
