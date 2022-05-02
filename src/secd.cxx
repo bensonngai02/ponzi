@@ -117,18 +117,25 @@ void SECD::execute() {
     }
     else if (atomInstString == "SEL") {
         Atom * popped = (Atom *) Node::pop(&stack);
-        Boolean cond = popped->get_atom_boolean;
-        Node * ct = Node::pop(&control);
-        Node * cf = Node::pop(&control);
-        Node * branchBack = Node::pop(&control);
-        Node::push(&dump, branchBack);
+        bool cond = popped->get_atom_boolean();
+        Expression * ct = Node::pop(&control);
+        Expression * cf = Node::pop(&control);
+        Node::push(&dump, control);
         if (cond == t) {
             // if val = 1 -> replace control w 'ct'
-            control = ct;
+            if(ct->getExpType() != NODE_TYPE){
+                std::cout << "SEL on non node";
+                exit(1);
+            }
+            control = (Node*) ct;
         }
         else {
             // if val = 0 -> replace control w 'cf'
-            control = cf;
+            if(cf->getExpType() != NODE_TYPE){
+                std::cout << "SEL on non node";
+                exit(1);
+            }
+            control = (Node*) cf;
         }
     }
     else if (atomInstString == "JOIN") {
