@@ -112,7 +112,12 @@ void SECD::execute() {
         Node::push(&stack, op1);
     }
     else if(atomInstString == "CAR"){
-        
+        Expression* op1 = Node::pop(&control)->car()->car();
+        Node::push(&stack, op1);
+    }
+    else if(atomInstString == "CDR"){
+        Expression* op1 = Node::pop(&control)->car()->cdr();
+        Node::push(&stack, op1);
     }
 }
 
