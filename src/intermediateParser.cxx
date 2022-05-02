@@ -83,6 +83,19 @@ std::string createInterpretedString3(){
     return *ret;
 }
 
+void createInterpretedString4() {
+    std::ifstream input;
+    input.open("instructions.txt");
+    std::string parsed;
+    if (input.is_open()) {
+        while (getline (input, parsed)) {
+            std::cout << parsed << '\n';
+        }
+        input.close();
+    }
+    
+}
+
 std::string createInterpretedString2(){
     std::ifstream t("instructions.txt");
     std::string str;

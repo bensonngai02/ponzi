@@ -15,6 +15,9 @@ public:
     Expression * car();
     Expression * cdr();
     Expression * copy();
+    void rplaca(Expression* c){
+        carPtr = c;
+    }
 
     static bool member(Node * target, Node * list);
     static int position(Node * target, Node * list);

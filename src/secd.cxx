@@ -8,7 +8,8 @@
 
 SECD::SECD(){
     i = 0;
-    inputSStr = createInterpretedString();
+    inputSStr = createInterpretedString3();
+    std::cout << "Constructor printing string: " << inputSStr << std::endl;
     input = &inputSStr;
     stack = new Node();
     environment = new Node();
@@ -187,13 +188,12 @@ void SECD::execute() {
         stack = prevStack;
     }
     else if (atomInstString == "DUM") {
-        Node * emptyList = Node::cons(new Atom(), new Atom()); // might be buggy
+        Node * emptyList = new Node(); // TODO: Check
         Node::push(&environment, emptyList);
     }
-   
     else if (atomInstString == "LD") {
-        Node * locationNode = (Node *) Node::pop(&stack);
-        Node * variables = Node::location(locationNode, control);
+        Node * locationNode = (Node *) Node::pop(&control);
+        Node * variables = Node::location(locationNode, environment);
         Node::push(&stack, variables);
     }
     else if (atomInstString == "LDF") {
@@ -204,7 +204,6 @@ void SECD::execute() {
     else if (atomInstString == "AP") {
         Node * function = (Node *) Node::pop(&stack);
         Node * parameters = (Node *) Node::pop(&stack);
-        // to-do: install environment as the current one (load parameters)
         Node::push(&dump, control);
         Node::push(&dump, environment);
         Node::push(&dump, stack);
@@ -212,15 +211,33 @@ void SECD::execute() {
         Node* newEnv = Node::cons(parameters, function->cdr());
         control = newControl;
         environment = newEnv;
-        stack = Node::cons(new Atom(), new Atom());
+        stack = new Node(); //TODO: Check
     }
     else if (atomInstString == "RAP") {
         Node* closure = (Node*) Node::pop(&stack);
         Expression* v = Node::pop(&stack);
+        // pop dummy environment off stack
+        Expression* omega = Node::pop(&environment);
+        if(!Node::eq(omega, new Node())){
+            std::cout << "RAP cannot be executed because the top of the enivronment stack is not omega";
+            exit(1);
+        }
+        Node::push(&dump, control);
+        Node::push(&dump, environment);
+        Node::push(&dump, stack);
+        stack = new Node();
+        control = (Node*) closure->car();
+        environment = (Node*) closure->cdr();   // omega should be first item of closure->cdr()
+        std::cout << "Environment' firt item: ";
+        environment->car()->print();
+        environment->rplaca(v);
     }
     else if (atomInstString == "WRITEC") {
         Node * output = (Node *) Node::pop(&control);
         output->print();
+    }
+    else if (atomInstString == "MJ") {
+        std::cout << "hee-hee";
     }
 }
 

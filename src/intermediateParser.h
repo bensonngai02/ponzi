@@ -29,4 +29,5 @@ Expression * getControlPtr(std::string * string, int * index);
 std::string createInterpretedString();
 std::string createInterpretedString2();
 std::string createInterpretedString3();
+void createInterpretedString4();
 
