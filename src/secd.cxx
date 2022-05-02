@@ -100,11 +100,6 @@ void SECD::execute() {
         boolOp("GEQ");
     else if (atomInstString == "LEQ")
         boolOp("LEQ");
-    else if (atomInstString == "ATOM") {
-        bool eq = stack->peek()->car()->getExpType() == ATOM_TYPE;
-        Boolean val = eq ? t : f;
-         Node::push(&stack, new Atom(val));
-    }
     else if (atomInstString == "NULL") {
         bool eq = stack->peek()->car()->getExpType() == NIL_TYPE;
         Boolean val = eq ? t : f;
@@ -164,6 +159,26 @@ void SECD::execute() {
         stack->print();
         std::cout << std::endl;
         exit(1);
+    }
+    else if(atomInstString == "CAR"){
+        Expression* op1 = Node::pop(&stack)->car();
+        Node::push(&stack, op1);
+    }
+    else if(atomInstString == "CDR"){
+        Expression* op1 = Node::pop(&stack)->cdr();
+        Node::push(&stack, op1);
+    }
+    else if(atomInstString == "CONS"){
+        Expression* op2 = Node::pop(&stack);
+        Expression* op1 = Node::pop(&stack);
+        Expression* result = Node::cons(op1, op2);
+        Node::push(&stack, result);
+    }
+    else if(atomInstString == "ATOM"){
+        Expression* op1 = Node::pop(&stack);
+        bool b = op1->getExpType() == ATOM_TYPE;
+        Atom* result = new Atom(b);
+        Node::push(&stack, result);
     }
     
 }
