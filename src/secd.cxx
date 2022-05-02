@@ -233,7 +233,7 @@ void SECD::execute() {
         environment->rplaca(v);
     }
     else if (atomInstString == "WRITEC") {
-        Node * output = (Node *) Node::pop(&control);
+        Node * output = (Node *) Node::pop(&stack);
         output->print();
     }
     else if (atomInstString == "MJ") {
@@ -242,7 +242,7 @@ void SECD::execute() {
 }
 
 int main(){
-    SECD * secd = new SECD("src/instructions.txt");
+    SECD * secd = new SECD("tests/instructions.txt");
     secd->stack->print();
     for(int i = 0; i < 4; i++){
         std::cout << "Control: ";
