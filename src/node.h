@@ -17,7 +17,7 @@ public:
 
     bool member(Node * target, Node * list);
     int position(Node * target, Node * list);
-    Node * location(Node * target, Node * list);
+    static Node * location(Node * target, Node * list);
 
     void print();
     void printRecur();
