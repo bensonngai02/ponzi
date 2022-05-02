@@ -18,7 +18,6 @@
 #define INTEGER 0
 #define STRING 1
 #define BOOLEAN 2
-#define ATOM_TYPE 0
 #define NIL "nil"
 
 
@@ -55,15 +54,16 @@ public:
     Expression * car();
     Expression * cdr();
 
-    bool eq (Expression * op);
-
+    static void checkDataTypeEq(Atom* a1, Atom* a2, int t);
     static Atom * add (Atom * op1, Atom * op2);
     static Atom * sub (Atom * op1, Atom * op2);
     static Atom * mul (Atom * op1, Atom * op2);
     static Atom * div (Atom * op1, Atom * op2);
     static Atom * rem (Atom * op1, Atom * op2);
-    static bool geq (Atom * op1, Atom * op2);
-    static void checkDataTypeEq(Atom * atom1, Atom * atom2, int targetDataType); 
+    static Atom * gt (Atom * op1, Atom * op2);
+    static Atom * lt (Atom * op1, Atom * op2);
+    static Atom * geq (Atom * op1, Atom * op2);
+    static Atom * leq (Atom * op1, Atom * op2);
 };
 
 

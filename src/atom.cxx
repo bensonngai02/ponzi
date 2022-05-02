@@ -92,24 +92,48 @@ Atom* Atom::rem(Atom * op1, Atom * op2){
     return ret;
 }
 
-bool Atom::eq(Expression * op){
-    Atom * atomOp = (Atom *) op;
-    bool same_type = this->getType() == atomOp->getType();
-    bool intEq = this->get_atom_integer() == atomOp->get_atom_integer();
-    bool strEq = this->get_atom_string() == atomOp->get_atom_string();
-    bool boolEq = this->get_atom_boolean() == atomOp->get_atom_boolean();
-    bool valEq = intEq || strEq || boolEq;
-    return same_type && valEq;
-}
-
-bool Atom::geq(Atom * op1, Atom * op2){
+Atom * Atom::gt(Atom * op1, Atom * op2){
     bool op1_is_integer = op1->getType() == INTEGER;
     bool op2_is_integer = op2->getType() == INTEGER;
     bool same_type = op1_is_integer && op2_is_integer && op1->getType() == op2->getType();
     if (!same_type)
         exit(1);
-    bool intEq = ((Atom *) op1)->get_atom_integer() >= ((Atom *) op2)->get_atom_integer();
-    return intEq;
+    bool val = ((Atom *) op1)->get_atom_integer() > ((Atom *) op2)->get_atom_integer();
+    Boolean result = val ? t : f;
+    return new Atom(result);
+}
+
+Atom * Atom::lt(Atom * op1, Atom * op2){
+    bool op1_is_integer = op1->getType() == INTEGER;
+    bool op2_is_integer = op2->getType() == INTEGER;
+    bool same_type = op1_is_integer && op2_is_integer && op1->getType() == op2->getType();
+    if (!same_type)
+        exit(1);
+    bool val = ((Atom *) op1)->get_atom_integer() < ((Atom *) op2)->get_atom_integer();
+    Boolean result = val ? t : f;
+    return new Atom(result);
+}
+
+Atom * Atom::geq(Atom * op1, Atom * op2){
+    bool op1_is_integer = op1->getType() == INTEGER;
+    bool op2_is_integer = op2->getType() == INTEGER;
+    bool same_type = op1_is_integer && op2_is_integer && op1->getType() == op2->getType();
+    if (!same_type)
+        exit(1);
+    bool val = ((Atom *) op1)->get_atom_integer() >= ((Atom *) op2)->get_atom_integer();
+    Boolean result = val ? t : f;
+    return new Atom(result);
+}
+
+Atom * Atom::leq(Atom * op1, Atom * op2){
+    bool op1_is_integer = op1->getType() == INTEGER;
+    bool op2_is_integer = op2->getType() == INTEGER;
+    bool same_type = op1_is_integer && op2_is_integer && op1->getType() == op2->getType();
+    if (!same_type)
+        exit(1);
+    bool val = ((Atom *) op1)->get_atom_integer() <= ((Atom *) op2)->get_atom_integer();
+    Boolean result = val ? t : f;
+    return new Atom(result);
 }
 
 void Atom::print(){

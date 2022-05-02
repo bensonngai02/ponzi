@@ -1,8 +1,7 @@
 #pragma once
 
-#include "atom.h"
 #include "node.h"
-#include "expression.h"
+
 
 class SECD {
     public:
@@ -18,6 +17,7 @@ class SECD {
     void execute();
     static void printStack(Node * node);
     void peekStackExpType(Node * stack, int expType);
-    void math(std::string operation);
+    void mathOp(std::string operation);
+    void boolOp(std::string operation);
 
 };

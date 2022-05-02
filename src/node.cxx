@@ -33,15 +33,6 @@ Expression * Node::cdr() {
     return this->cdrPtr;
 }
 
-bool Node::eq(Expression * op){
-    if (this->getExpType() != op->getExpType()) {
-        return false;
-    }
-    bool carPtrEq = this->car() == ((Node *) op)->car();
-    bool cdrPtrEq = this->cdr() == ((Node *) op)->cdr();
-    return carPtrEq && cdrPtrEq;
-}
-
 bool Node::member(Node * target, Node * list) {
     if (list->getExpType() == NIL_TYPE)
         return false;
