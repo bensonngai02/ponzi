@@ -100,6 +100,13 @@ void SECD::execute() {
         boolOp("GEQ");
     else if (atomInstString == "LEQ")
         boolOp("LEQ");
+    else if (atomInstString == "ATOM") {
+        return stack->peek()->car()->getExpType() == ATOM_TYPE;
+    }
+    else if (atomInstString == "NULL") {
+        return stack->peek()->car()->getExpType == NIL_TYPE;
+    }
+
     else if (atomInstString == "STOP") {
         // printStack(stack);
         std::cout << "Stack is: ";
