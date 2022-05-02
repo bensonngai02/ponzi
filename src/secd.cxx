@@ -123,11 +123,19 @@ void SECD::execute() {
         Node::push(&dump, control);
         if (cond == t) {
             // if val = 1 -> replace control w 'ct'
-            control = ct;
+            if(ct->getExpType() != NODE_TYPE){
+                std::cout << "SEL on non node";
+                exit(1);
+            }
+            control = (Node*) ct;
         }
         else {
             // if val = 0 -> replace control w 'cf'
-            control = cf;
+            if(cf->getExpType() != NODE_TYPE){
+                std::cout << "SEL on non node";
+                exit(1);
+            }
+            control = (Node*) cf;
         }
     }
     else if (atomInstString == "JOIN") {
