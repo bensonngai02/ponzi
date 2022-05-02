@@ -6,9 +6,9 @@
     contains a new stack with "NIL" as head.
 */
 
-SECD::SECD(){
+SECD::SECD(std::string inputFile){
     i = 0;
-    inputSStr = createInterpretedString3();
+    inputSStr = createInterpretedString(inputFile);
     std::cout << "Constructor printing string: " << inputSStr << std::endl;
     input = &inputSStr;
     stack = new Node();
@@ -17,6 +17,8 @@ SECD::SECD(){
     control = (Node *) getControlPtr(input, &i);
     dump = new Node();
 }
+
+SECD::SECD() : SECD("src/instructions.txt"){}
 
 void SECD::peekStackExpType(Node * stack, int expType) {
     if (stack->peek()->car()->getExpType() != expType) {
@@ -244,7 +246,7 @@ void SECD::execute() {
 int main(){
     SECD * secd = new SECD();
     secd->stack->print();
-    while(true){
+    for(int i = 0; i < 4; i++){
         std::cout << "Control: ";
         secd->control->print();
         std::cout << "Stack: ";

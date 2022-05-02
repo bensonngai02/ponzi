@@ -71,41 +71,10 @@ Expression * getControlPtr(std::string * string, int * index){
     return consume(string, index);
 }
 
-std::string createInterpretedString(){
-    return "LDC 1 LDC 2 LDC 3 MUL SUB LDC -5 EQ STOP";
-}
-
-std::string createInterpretedString3(){
-    std::ifstream t("instructions.txt");
+std::string createInterpretedString(std::string inputFile){
+    std::ifstream t(inputFile);
     std::stringstream buffer;
     buffer << t.rdbuf();
-    std::string* ret = new std::string(buffer.str());
-    return *ret;
-}
-
-void createInterpretedString4() {
-    std::ifstream input;
-    input.open("instructions.txt");
-    std::string parsed;
-    if (input.is_open()) {
-        while (getline (input, parsed)) {
-            std::cout << parsed << '\n';
-        }
-        input.close();
-    }
-    
-}
-
-std::string createInterpretedString2(){
-    std::ifstream t("instructions.txt");
-    std::string str;
-
-    t.seekg(0, std::ios::end);   
-    str.reserve(t.tellg());
-    t.seekg(0, std::ios::beg);
-
-    str.assign((std::istreambuf_iterator<char>(t)),
-                std::istreambuf_iterator<char>());
-    return str;
+    return buffer.str();
 }
 

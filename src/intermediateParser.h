@@ -26,8 +26,5 @@ void skip(std::string * str, int * index);
 std::string consumeIdentifier(std::string * str, int * index);
 Expression * consume(std::string * str, int * index);
 Expression * getControlPtr(std::string * string, int * index);
-std::string createInterpretedString();
-std::string createInterpretedString2();
-std::string createInterpretedString3();
-void createInterpretedString4();
+std::string createInterpretedString(std::string s);
 
