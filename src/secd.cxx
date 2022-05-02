@@ -100,6 +100,51 @@ void SECD::execute() {
         boolOp("GEQ");
     else if (atomInstString == "LEQ")
         boolOp("LEQ");
+    else if (atomInstString == "ATOM") {
+        bool eq = stack->peek()->car()->getExpType() == ATOM_TYPE;
+        Boolean val = eq ? t : f;
+         Node::push(&stack, new Atom(val));
+    }
+    else if (atomInstString == "NULL") {
+        bool eq = stack->peek()->car()->getExpType() == NIL_TYPE;
+        Boolean val = eq ? t : f;
+        Node::push(&stack, new Atom(val));
+    }
+    else if (atomInstString == "NIL") {
+        Node::push(&stack, new Atom());
+    }
+    else if (atomInstString == "LDC"){
+        Expression* op1 = Node::pop(&control)->car();
+        Node::push(&stack, op1);
+    }
+    else if (atomInstString == "LD") {
+
+    }
+    else if (atomInstString == "SEL") {
+
+    }
+    else if (atomInstString == "JOIN") {
+
+    }
+    else if (atomInstString == "LDF") {
+
+    }
+    else if (atomInstString == "AP") {
+
+    }
+    else if (atomInstString == "RET") {
+
+    }
+    else if (atomInstString == "DUM") {
+
+    }
+    else if (atomInstString == "RAP") {
+
+    }
+    else if (atomInstString == "WRITEC") {
+
+    }
+
     else if (atomInstString == "STOP") {
         // printStack(stack);
         std::cout << "Stack is: ";
@@ -119,6 +164,7 @@ void SECD::execute() {
         Expression* op1 = Node::pop(&control)->car()->cdr();
         Node::push(&stack, op1);
     }
+    
 }
 
 

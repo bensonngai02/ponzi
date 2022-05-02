@@ -15,12 +15,19 @@ bool Expression::eq(Expression * op1, Expression * op2) {
             return false;
         }
 
-        bool same_type = atomOp1->getType() == atomOp2->getType();
-        bool intEq = atomOp1->get_atom_integer() == atomOp2->get_atom_integer();
-        bool strEq = atomOp2->get_atom_string() == atomOp2->get_atom_string();
-        bool boolEq = atomOp1->get_atom_boolean() == atomOp2->get_atom_boolean();
-        bool valEq = intEq || strEq || boolEq;
-        return same_type && valEq;
+        int atomType = atomOp1->getType();
+
+        if (atomType == INTEGER) {
+            return atomOp1->get_atom_integer() == atomOp2->get_atom_integer();
+        }
+        else if (atomType == STRING) {
+            return atomOp1->get_atom_string() == atomOp2->get_atom_string();
+        }
+        else if (atomType == BOOLEAN) {
+            return atomOp1->get_atom_boolean() == atomOp2->get_atom_boolean();
+        }
+        
+        return false;
     }
     // both items on stack are nodes
     else {

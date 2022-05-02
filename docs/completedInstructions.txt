@@ -1,0 +1,21 @@
+LD
+LDC - done
+LDF
+AP
+RTN
+DUM
+RAP
+SEL
+JOIN
+CAR
+CDR
+ATOM
+CONS
+EQ - done
+ADD - done
+SUB - done
+MUL - done
+DIV - done
+REM - done
+LEQ - done
+STOP - done
