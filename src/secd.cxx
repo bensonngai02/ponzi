@@ -8,8 +8,7 @@
 
 SECD::SECD(){
     i = 0;
-    inputSStr = createInterpretedString3();
-    std::cout << "Constructor printing string: " << inputSStr << std::endl;
+    inputSStr = createInterpretedString();
     input = &inputSStr;
     stack = new Node();
     environment = new Node();
@@ -122,7 +121,7 @@ void SECD::execute() {
         if (cond) {
             // if val = 1 -> replace control w 'ct'
             if (ct->getExpType() != NODE_TYPE){
-                std::cout << "SEL on non node";
+                std::cout << "SEL on non-node\n";
                 exit(1);
             }
             control = (Node *) ct;

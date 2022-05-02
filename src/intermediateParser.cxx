@@ -72,7 +72,9 @@ Expression * getControlPtr(std::string * string, int * index){
 }
 
 std::string createInterpretedString(){
-    return "LDC 1 LDC 2 LDC 3 MUL SUB LDC -5 EQ STOP";
+    return "MJ MJ MJ STOP";
+    // return "LDC 1 LDC 2 GT SEL (LDC 3 JOIN) (LDC 10 JOIN) STOP";
+    // return "LDC 1 LDC 2 LDC 3 MUL SUB LDC -5 EQ STOP";
 }
 
 std::string createInterpretedString3(){
