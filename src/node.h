@@ -30,6 +30,13 @@ public:
     static void push(Node** headPtr, Expression * expression);
     static Expression * pop(Node** headPtr);
     Expression * peek();
+    Expression * cadr();
+    Expression * cddr();
+    Expression * cdar();
+    Expression * caar();
+    Expression * caddr();
+    Expression * cadddr();
+
 };
 
     

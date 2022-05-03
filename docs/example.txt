@@ -17,6 +17,9 @@
 x + y = 35
 5 ^ 2 = 25
 
+/* compiled version of square */
+
+
 
 /* s-expression code */
 (EQ LDC 0 SUB LDC 10 ADD LDC 3 LDC 7)

@@ -109,3 +109,22 @@ void Node::print(){
     this->printRecur();
     std::cout <<std::endl;
 }
+
+Expression * Node::cadr(){
+    return car()->cdr();
+}
+Expression * Node::caddr(){
+    return cdr()->car();
+}
+Expression * Node::cdar(){
+    return cdr()->car();
+}
+Expression * Node::caar(){
+    return car()->car();
+}
+Expression * Node::caddr(){
+    return car()->cdr()->cdr();
+}
+Expression * Node::cadddr(){
+    return car()->cdr()->cdr()->cdr();
+}
