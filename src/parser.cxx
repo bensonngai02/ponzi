@@ -1,7 +1,7 @@
 #include "node.h"
 #include "atom.h"
 #include "expression.h"
-#include "intermediateParser.h"
+#include "parser.h"
 
 
 void skip(std::string* str, int* index)

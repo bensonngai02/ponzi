@@ -1,7 +1,7 @@
 #include "secd.h"
 #include "expression.h"
 #include "atom.h"
-#include "intermediateParser.h"
+#include "parser.h"
 /* Upon instantiating new SECD, each S, E, C, D register
     contains a new stack with "NIL" as head.
 */
