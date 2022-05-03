@@ -7,14 +7,20 @@
 */
 
 SECD::SECD(std::string inputFile){
-    i = 0;
-    inputSStr = createInterpretedString(inputFile);
-    std::cout << "Constructor printing string: " << inputSStr << std::endl;
-    input = &inputSStr;
+    int i = 0;
+    std::string inputSStr = createInterpretedString(inputFile);
     stack = new Node();
     environment = new Node();
     // need to read in control 
-    control = (Node *) getControlPtr(input, &i);
+    control = (Node *) getControlPtr(&inputSStr, &i);
+    dump = new Node();
+}
+
+SECD::SECD(Node* con){
+    stack = new Node();
+    environment = new Node();
+    // need to read in control 
+    control = con;
     dump = new Node();
 }
 
@@ -241,14 +247,14 @@ void SECD::execute() {
     }
 }
 
-int main(){
-    SECD * secd = new SECD("tests/car");
-    secd->stack->print();
-    while(true){
-        std::cout << "Control: ";
-        secd->control->print();
-        std::cout << "Stack: ";
-        secd->stack->print();
-        secd->execute();
-    }
-}
+// int main(){
+//     SECD * secd = new SECD("tests/car");
+//     secd->stack->print();
+//     while(true){
+//         std::cout << "Control: ";
+//         secd->control->print();
+//         std::cout << "Stack: ";
+//         secd->stack->print();
+//         secd->execute();
+//     }
+// }

@@ -7,9 +7,7 @@
 class SECD {
     public:
         SECD(std::string s);
-        int i;
-        std::string inputSStr;
-        std::string* input;
+        SECD(Node* con);
         Node * stack;
         Node * environment;
         // need to read in control 

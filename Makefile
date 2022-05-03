@@ -3,7 +3,7 @@ run:
 	./run
 
 compile:
-	g++ -ggdb -o compile src/compiler.cxx src/intermediateParser.cxx src/atom.cxx src/node.cxx src/expression.cxx
+	g++ -ggdb -o compile src/compiler.cxx src/secd.cxx src/intermediateParser.cxx src/atom.cxx src/node.cxx src/expression.cxx
 	./compile
 
 clean:

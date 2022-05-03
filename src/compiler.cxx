@@ -1,5 +1,6 @@
 #include "compiler.h"
 #include "intermediateParser.h"
+#include "secd.h"
 
 Compiler::Compiler(std::string inputFile){
     std::string c = createInterpretedString(inputFile);
@@ -76,4 +77,12 @@ int main(){
     Compiler* compile = new Compiler("src/lispcode.txt");
     Expression* result = Compiler::comp(compile->code, new Atom(), new Atom());
     result->print();
+    SECD machine((Node* )result);
+    while(true){
+        std::cout << "Control: ";
+        machine.control->print();
+        std::cout << "Stack: ";
+        machine.stack->print();
+        machine.execute();
+    }
 }
