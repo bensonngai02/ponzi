@@ -30,10 +30,10 @@ Expression * Compiler::complis(Expression * expressions, Expression * namelist, 
 
 Expression * Compiler::comp(Expression * expressions, Expression * namelist, Expression * codelist) {
     std::cout << "Expression: "; expressions->print();
-    std::cout << "Name Lise: ";namelist->print();
+    std::cout << "Name List: ";namelist->print();
     std::cout << "Code List: ";codelist->print();
     if (expressions->getExpType() != NODE_TYPE) {
-        return Node::cons(new Atom("LD"), Node::cons(Node::location( (Node*)expressions, (Node*) namelist), codelist ));
+        return Node::cons(new Atom("LD"), Node::cons(Node::location((Node*) expressions, (Node*) namelist), codelist ));
     }
     else if (((Atom *) expressions->car())->get_atom_string() == "QUOTE") {
         return Node::cons(new Atom("LDC"), Node::cons(expressions->cadr(), codelist));
