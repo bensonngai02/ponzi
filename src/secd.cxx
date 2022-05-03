@@ -7,14 +7,20 @@
 */
 
 SECD::SECD(std::string inputFile){
-    i = 0;
-    inputSStr = createInterpretedString(inputFile);
-    std::cout << "Constructor printing string: " << inputSStr << std::endl;
-    input = &inputSStr;
+    int i = 0;
+    std::string inputSStr = createInterpretedString(inputFile);
     stack = new Node();
     environment = new Node();
     // need to read in control 
-    control = (Node *) getControlPtr(input, &i);
+    control = (Node *) getControlPtr(&inputSStr, &i);
+    dump = new Node();
+}
+
+SECD::SECD(Node* con){
+    stack = new Node();
+    environment = new Node();
+    // need to read in control 
+    control = con;
     dump = new Node();
 }
 
@@ -63,7 +69,8 @@ void SECD::boolOp(std::string operation) {
         result = Atom::leq(op1, op2);
     else if (operation == "EQ") {
         bool equals = Expression::eq(op1, op2);
-        result = new Atom(equals);
+        Boolean bo = equals ? t: f;
+        result = new Atom(bo);
     }
     Node::push(&stack, result);
 }
@@ -137,7 +144,6 @@ void SECD::execute() {
         }
     }
     else if (atomInstString == "STOP") {
-        // printStack(stack);
         std::cout << "Stack is: ";
         stack->print();
         std::cout << std::endl;
@@ -241,14 +247,26 @@ void SECD::execute() {
     }
 }
 
-int main(){
-    SECD * secd = new SECD("tests/car");
-    secd->stack->print();
-    while(true){
-        std::cout << "Control: ";
-        secd->control->print();
-        std::cout << "Stack: ";
-        secd->stack->print();
-        secd->execute();
-    }
+void SECD::print(){
+    std::cout << "Stack: ";
+    stack->print();
+    std::cout << "Environment: ";
+    stack->print();
+    std::cout << "Control: ";
+    control->print();
+    std::cout << "Dump: ";
+    stack->print();
+    std::cout << std::endl;
 }
+
+// int main(){
+//     SECD * secd = new SECD("tests/car");
+//     secd->stack->print();
+//     while(true){
+//         std::cout << "Control: ";
+//         secd->control->print();
+//         std::cout << "Stack: ";
+//         secd->stack->print();
+//         secd->execute();
+//     }
+// }
