@@ -34,7 +34,6 @@ std::string consumeIdentifier(std::string* str, int* index)
 Expression * consume(std::string* str, int* index) {
     skip(str, index);
     if ((*str)[*index] == ')' || *index == str->length()) {
-        std::cout << "Got here" << std::endl;
         *index += 1;
         return new Atom();  // return nil type
     }
@@ -54,11 +53,9 @@ Expression * consume(std::string* str, int* index) {
         Atom * new_atom;
         try{
             int64_t val = (int64_t) std::stoi(temp);
-            std::cout << "Found an int!!" << val << std::endl;
             new_atom  = new Atom(val);
         }catch(...){
             new_atom = new Atom(temp);
-            std::cout << "Found an instruction!!" << temp << std::endl;
         }
         Expression* cdr = consume(str, index);
         if(cdr->expType == NIL_TYPE)

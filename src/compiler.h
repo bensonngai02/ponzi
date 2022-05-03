@@ -14,14 +14,18 @@
 #include <set>
 #include <stack>
 #include <string>
+#include "string.h"
 
 #include "expression.h"
 #include "node.h"
 #include "atom.h"
 
 class Compiler {
-    static Expression * vars(Node * d);
-    static Expression * exprs(Node * d);
+    public:
+        Compiler(std::string inputFile);
+        Expression * code;
+    static Expression * vars(Expression * d);
+    static Expression * exprs(Expression * d);
     static Expression * complis(Expression * expressions, Expression * nodelist, Expression * controllist);
     static Expression * comp(Expression * expressions, Expression * namelist, Expression * codelist);
 };

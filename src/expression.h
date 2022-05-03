@@ -17,4 +17,11 @@ public:
     virtual Expression * car() = 0;
     virtual Expression * cdr() = 0;
     virtual Expression * copy() = 0;
+
+    Expression * cadr();
+    Expression * cddr();
+    Expression * cdar();
+    Expression * caar();
+    Expression * caddr();
+    Expression * cadddr();
 };

@@ -242,7 +242,7 @@ void SECD::execute() {
 }
 
 int main(){
-    SECD * secd = new SECD("tests/car.txt");
+    SECD * secd = new SECD("tests/car");
     secd->stack->print();
     while(true){
         std::cout << "Control: ";

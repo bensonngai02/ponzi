@@ -137,6 +137,11 @@ Atom * Atom::leq(Atom * op1, Atom * op2){
 }
 
 void Atom::print(){
+    this->printRecur();
+    std::cout << std::endl;
+}
+
+void Atom::printRecur(){
     if(this->type == STRING){
         std::cout << this->get_atom_string() << " ";
         //printf("%s ", this->get_atom_string());
@@ -153,10 +158,6 @@ void Atom::print(){
         std::cout <<"Printing something unknown: " << this->type << " " << (this->type == STRING) << "\n";
         exit(1);
     }
-}
-
-void Atom::printRecur(){
-    this->print();
 }
 
 Expression * Atom::car() {

@@ -40,7 +40,7 @@ Expression * Node::copy(){
 bool Node::member(Node * target, Node * list) {
     if (list->getExpType() == NIL_TYPE)
         return false;
-    if (target == list->car())
+    if (Node::eq(target, list->car()))
         return true;
     else 
         return member(target, (Node *) list->cdr());
@@ -98,6 +98,7 @@ Expression * Node::peek() {
     return this;
 }
 
+
 void Node::printRecur(){
     printf("(");
     this->carPtr->printRecur();
@@ -108,23 +109,4 @@ void Node::printRecur(){
 void Node::print(){
     this->printRecur();
     std::cout <<std::endl;
-}
-
-Expression * Node::cadr(){
-    return car()->cdr();
-}
-Expression * Node::caddr(){
-    return cdr()->car();
-}
-Expression * Node::cdar(){
-    return cdr()->car();
-}
-Expression * Node::caar(){
-    return car()->car();
-}
-Expression * Node::caddr(){
-    return car()->cdr()->cdr();
-}
-Expression * Node::cadddr(){
-    return car()->cdr()->cdr()->cdr();
 }

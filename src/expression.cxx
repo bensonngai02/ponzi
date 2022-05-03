@@ -42,4 +42,23 @@ bool Expression::eq(Expression * op1, Expression * op2) {
 
         return carPtrEq && cdrPtrEq;
     }
-};
+}
+
+Expression * Expression::cadr(){
+    return this->cdr()->car();
+}
+Expression * Expression::cddr(){
+    return this->cdr()->cdr();
+}
+Expression * Expression::cdar(){
+    return this->car()->cdr();
+}
+Expression * Expression::caar(){
+    return this->car()->car();
+}
+Expression * Expression::caddr(){
+    return this->cdr()->cdr()->car();
+}
+Expression * Expression::cadddr(){
+    return this->cdr()->cdr()->cdr()->car();
+}
