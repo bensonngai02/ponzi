@@ -69,7 +69,8 @@ void SECD::boolOp(std::string operation) {
         result = Atom::leq(op1, op2);
     else if (operation == "EQ") {
         bool equals = Expression::eq(op1, op2);
-        result = new Atom(equals);
+        Boolean bo = equals ? t: f;
+        result = new Atom(bo);
     }
     Node::push(&stack, result);
 }
@@ -143,7 +144,6 @@ void SECD::execute() {
         }
     }
     else if (atomInstString == "STOP") {
-        // printStack(stack);
         std::cout << "Stack is: ";
         stack->print();
         std::cout << std::endl;
@@ -245,6 +245,18 @@ void SECD::execute() {
     else if (atomInstString == "MJ") {
         std::cout << "hee-hee";
     }
+}
+
+void SECD::print(){
+    std::cout << "Stack: ";
+    stack->print();
+    std::cout << "Environment: ";
+    stack->print();
+    std::cout << "Control: ";
+    control->print();
+    std::cout << "Dump: ";
+    stack->print();
+    std::cout << std::endl;
 }
 
 // int main(){

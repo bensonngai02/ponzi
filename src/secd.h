@@ -14,7 +14,7 @@ class SECD {
         Node * control;
         Node * dump;
     void execute();
-    static void printStack(Node * node);
+    void print();
     void peekStackExpType(Node * stack, int expType);
     void mathOp(std::string operation);
     void boolOp(std::string operation);

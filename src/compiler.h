@@ -28,4 +28,5 @@ class Compiler {
     static Expression * exprs(Expression * d);
     static Expression * complis(Expression * expressions, Expression * nodelist, Expression * controllist);
     static Expression * comp(Expression * expressions, Expression * namelist, Expression * codelist);
+    static Expression * binaryOp(Expression * expressions, Expression * namelist, Expression * codelist, std::string s);
 };

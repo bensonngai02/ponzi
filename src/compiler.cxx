@@ -29,40 +29,78 @@ Expression * Compiler::complis(Expression * expressions, Expression * namelist, 
     return complis(expressions->cdr(), namelist, comp(expressions->car(), namelist, Node::cons(new Atom("CONS"), codelist)));
 }
 
+Expression * Compiler::binaryOp(Expression * expressions, Expression * namelist, Expression * codelist, std::string operation){
+    Expression * newCodeList = comp(expressions->caddr(), namelist, Node::cons(new Atom(operation), codelist));
+    return comp(expressions->cadr(), namelist, newCodeList);
+}
+
 Expression * Compiler::comp(Expression * expressions, Expression * namelist, Expression * codelist) {
-    std::cout << "Expression: "; expressions->print();
-    std::cout << "Name Lise: ";namelist->print();
-    std::cout << "Code List: ";codelist->print();
     if (expressions->getExpType() != NODE_TYPE) {
         return Node::cons(new Atom("LD"), Node::cons(Node::location( (Node*)expressions, (Node*) namelist), codelist ));
     }
-    else if (((Atom *) expressions->car())->get_atom_string() == "QUOTE") {
+    std::string checkStr = ((Atom *) expressions->car())->get_atom_string();
+    if ( checkStr == "QUOTE") {
         return Node::cons(new Atom("LDC"), Node::cons(expressions->cadr(), codelist));
     }
-    else if (((Atom *) expressions->car())->get_atom_string() == "ADD") {
-        Expression * newCodeList = comp(expressions->caddr(), namelist, Node::cons(new Atom("ADD"), codelist));
-        return comp(expressions->cadr(), namelist, newCodeList);
+    else if (checkStr == "ADD") {
+        return binaryOp(expressions, namelist, codelist, "ADD");
     }
-    else if ( ((Atom *) expressions->car())->get_atom_string() == "CONS") {
+    else if (checkStr == "SUB") {
+        return binaryOp(expressions, namelist, codelist, "SUB");
+    }
+    else if (checkStr == "MUL") {
+        return binaryOp(expressions, namelist, codelist, "MUL");
+    }
+    else if (checkStr == "DIV") {
+        return binaryOp(expressions, namelist, codelist, "DIV");
+    }
+    else if (checkStr == "REM") {
+        return binaryOp(expressions, namelist, codelist, "REM");
+    }
+    else if (checkStr == "EQ") {
+        return binaryOp(expressions, namelist, codelist, "EQ");
+    }
+    else if (checkStr == "LEQ") {
+        return binaryOp(expressions, namelist, codelist, "LEQ");
+    }
+    else if (checkStr == "GEQ") {
+        return binaryOp(expressions, namelist, codelist, "GEQ");
+    }
+    else if (checkStr == "LT") {
+        return binaryOp(expressions, namelist, codelist, "LT");
+    }
+    else if (checkStr == "LT") {
+        return binaryOp(expressions, namelist, codelist, "LT");
+    }
+    else if ( checkStr == "CAR") {
+        return comp(expressions->cadr(), namelist, Node::cons(new Atom("CAR"), codelist));
+    }
+    else if ( checkStr == "CDR") {
+        return comp(expressions->cadr(), namelist, Node::cons(new Atom("CDR"), codelist));
+    }
+    else if ( checkStr == "ATOM") {
+        return comp(expressions->cadr(), namelist, Node::cons(new Atom("ATOM"), codelist));
+    }
+    else if ( checkStr == "CONS") {
         Expression * newCodeList = comp(expressions->cadr(), namelist, Node::cons(new Atom("CONS"), codelist));
         return comp(expressions->caddr(), namelist, newCodeList);
     }
-    else if (((Atom *) expressions->car())->get_atom_string() == "IF") {
+    else if (checkStr == "IF") {
         Expression * thenPt = comp(expressions->caddr(), namelist, Node::cons(new Atom("JOIN"), new Atom()) );
         Expression * elsePt = comp(expressions->cadddr(), namelist, Node::cons(new Atom("JOIN"), new Atom()) );
         return comp(expressions->cadr(), namelist, Node::cons(new Atom("SEL"), Node::cons(thenPt, Node::cons(elsePt, codelist))));
     }
-    else if (((Atom *) expressions->car())->get_atom_string() == "LAMBDA") {
+    else if (checkStr == "LAMBDA") {
         Expression * body = comp(expressions->caddr(), Node::cons(expressions->cadr(), namelist), Node::cons(new Atom("RET"), new Atom()) );
         return Node::cons(new Atom("LDF"), Node::cons(body, codelist));
     }
-    else if (((Atom *) expressions->car())->get_atom_string() == "LET") {
+    else if (checkStr == "LET") {
         Expression * m = Node::cons(vars(expressions->cddr()), namelist);
         Expression * args = exprs(expressions->cddr());
         Expression * body = comp(expressions->cadr(), m, Node::cons(new Atom("RET"), new Atom()) );
         return complis(args, namelist, Node::cons(new Atom("LDF"), Node::cons(body, Node::cons(new Atom("AP"), codelist))));
     }
-    else if (((Atom *) expressions->car())->get_atom_string() == "LETREC") {
+    else if (checkStr == "LETREC") {
         Expression * m = Node::cons(vars(expressions->cddr()), namelist);
         Expression * args = exprs(expressions->cddr());
         Expression * body = comp(expressions->cadr(), m, Node::cons(new Atom("RET"), new Atom()));
@@ -75,14 +113,10 @@ Expression * Compiler::comp(Expression * expressions, Expression * namelist, Exp
 
 int main(){
     Compiler* compile = new Compiler("src/lispcode.txt");
-    Expression* result = Compiler::comp(compile->code, new Atom(), new Atom());
-    result->print();
+    Expression* result = Compiler::comp(compile->code, new Atom(), new Atom("STOP"));
     SECD machine((Node* )result);
     while(true){
-        std::cout << "Control: ";
-        machine.control->print();
-        std::cout << "Stack: ";
-        machine.stack->print();
+        machine.print();
         machine.execute();
     }
 }
