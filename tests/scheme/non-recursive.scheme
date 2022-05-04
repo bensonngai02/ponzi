@@ -1,6 +1,1 @@
-LET SUM 
-    (SUM LAMBDA(A B)
-        (ADD A B)
-        )
-
-(SUM (QUOTE 10) (QUOTE 25))
+ADD (QUOTE 3) (QUOTE 4) 

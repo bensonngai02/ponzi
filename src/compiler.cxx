@@ -8,6 +8,7 @@ Compiler::Compiler(std::string inputFile){
     std::string c = createInterpretedString(inputFile);
     int i = 0;
     code = consume(&c, &i);
+    code->print();
 }
 
 Expression * Compiler::vars(Expression * d){
@@ -25,7 +26,7 @@ Expression * Compiler::exprs(Expression * d) {
 }
 
 Expression * Compiler::complis(Expression * expressions, Expression * namelist, Expression * codelist) {
-    if (expressions->getExpType() == NIL_TYPE) {
+    if (expressions->getExpType() == NIL_TYPE || Node::eq(expressions, new Node())) {
         return Node::cons(new Atom("LDC"), Node::cons(new Atom(), codelist));
     }
     return complis(expressions->cdr(), namelist, comp(expressions->car(), namelist, Node::cons(new Atom("CONS"), codelist)));
@@ -40,7 +41,12 @@ Expression * Compiler::comp(Expression * expressions, Expression * namelist, Exp
     if (expressions->getExpType() != NODE_TYPE) {
         return Node::cons(new Atom("LD"), Node::cons(SECD::location((Node*) expressions, (Node*) namelist), codelist));
     }
+    std::cout << "Type: " << expressions->car()->getExpType() << std::endl;
     std::string checkStr = ((Atom *) expressions->car())->get_atom_string();
+    std::cout << "Check String: " << checkStr << std::endl;
+    std::string checkStr2 = ((Atom *) expressions->cdr())->get_atom_string();
+    std::cout << "Check String 2: " << checkStr2 << std::endl;
+
     if (checkStr == "QUOTE") {
         return Node::cons(new Atom("LDC"), Node::cons(expressions->cadr(), codelist));
     }
@@ -122,6 +128,7 @@ Expression * Compiler::comp(Expression * expressions, Expression * namelist, Exp
         return Node::cons(m, codelist);
     }
     else {
+        std::cout << "Expressions: " << checkStr << " "; expressions->print();
         return complis(expressions->cdr(), namelist, comp(expressions->car(), namelist, Node::cons(new Atom("AP"), codelist)));
     }
 }
@@ -132,7 +139,7 @@ int main(int argc, char** argv){
     Expression* result = Compiler::comp(compile->code, new Atom(), new Atom("STOP"));
     SECD machine((Node* )result);
     while(true){
-        machine.print(argv[INPUT_ARG]);
+        machine.print();
         machine.execute();
     }
     

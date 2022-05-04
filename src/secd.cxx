@@ -328,7 +328,7 @@ Node * SECD::location(Node * target, Node * list) {
     }
 }
 
-void SECD::print(std::string fileName){
+void SECD::print(){
     std::cout << &stack << &environment << &control << &dump << std::endl;
     std::cout << "Stack: (";
     stack->printRecur();
