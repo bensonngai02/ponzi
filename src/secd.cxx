@@ -242,8 +242,13 @@ void SECD::execute() {
         Node * output = (Node *) Node::pop(&stack);
         output->print();
     }
-    else if (atomInstString == "MJ") {
-        std::cout << "hee-hee";
+    else if (atomInstString == "MICHAEL") {
+        std::cout << "Ode to MJ" << std::endl;
+        std::cout << "He sing" << std::endl;
+        std::cout << "He dance" << std::endl;
+        std::cout << "But most importantly" << std::endl;
+        std::cout << "He hee" << std::endl;
+        std::cout << "https://www.youtube.com/watch?v=GCUz359flrM" <<std::endl;
     }
     else if (atomInstString == "FINN") {
         std::ifstream finn;
