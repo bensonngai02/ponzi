@@ -80,6 +80,10 @@ Atom* Atom::mul(Atom * op1, Atom * op2){
 
 Atom* Atom::div(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
+    if (op2->get_atom_integer() == 0) {
+        std::cout << "Error: Divide by zero";
+        exit(1);
+    }
     int64_t div = op1->get_atom_integer() / op2->get_atom_integer();
     Atom * ret = new Atom(div);
     return ret;
@@ -144,15 +148,12 @@ void Atom::print(){
 void Atom::printRecur(){
     if(this->type == STRING){
         std::cout << this->get_atom_string() << " ";
-        //printf("%s ", this->get_atom_string());
     }
     else if(this->type == BOOLEAN){
         std::cout << this->get_atom_boolean() << " ";
-        //printf("%b ", this->get_atom_boolean());
     }
     else if(this->type == INTEGER){
         std::cout << this->get_atom_integer() << " ";
-        //printf("%xd ", this->get_atom_integer());
     }
     else if( this-> type != NIL_TYPE){
         std::cout <<"Printing something unknown: " << this->type << " " << (this->type == STRING) << "\n";

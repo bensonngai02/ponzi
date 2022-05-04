@@ -1,6 +1,8 @@
 #include "compiler.h"
-#include "intermediateParser.h"
+#include "parser.h"
 #include "secd.h"
+
+#define INPUT_ARG 1
 
 Compiler::Compiler(std::string inputFile){
     std::string c = createInterpretedString(inputFile);
@@ -36,10 +38,10 @@ Expression * Compiler::binaryOp(Expression * expressions, Expression * namelist,
 
 Expression * Compiler::comp(Expression * expressions, Expression * namelist, Expression * codelist) {
     if (expressions->getExpType() != NODE_TYPE) {
-        return Node::cons(new Atom("LD"), Node::cons(Node::location( (Node*)expressions, (Node*) namelist), codelist ));
+        return Node::cons(new Atom("LD"), Node::cons(Node::location((Node*) expressions, (Node*) namelist), codelist ));
     }
     std::string checkStr = ((Atom *) expressions->car())->get_atom_string();
-    if ( checkStr == "QUOTE") {
+    if (checkStr == "QUOTE") {
         return Node::cons(new Atom("LDC"), Node::cons(expressions->cadr(), codelist));
     }
     else if (checkStr == "ADD") {
@@ -111,8 +113,9 @@ Expression * Compiler::comp(Expression * expressions, Expression * namelist, Exp
     }
 }
 
-int main(){
-    Compiler* compile = new Compiler("src/lispcode.txt");
+int main(int argc, char** argv){
+    std::string input(argv[INPUT_ARG]);
+    Compiler* compile = new Compiler(input);
     Expression* result = Compiler::comp(compile->code, new Atom(), new Atom("STOP"));
     SECD machine((Node* )result);
     while(true){
