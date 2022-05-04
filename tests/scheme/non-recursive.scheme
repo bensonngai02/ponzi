@@ -1,0 +1,10 @@
+(LET (sum (a b))                                                       // how to define a function. function name = sum. parameters = a, b                                        // function body
+    (ADD a b))
+
+(sum 10 25)                                                             // or written as apply(sum (10 25))
+
+
+(LET (square(n))
+    (MUL n n)
+
+(square 5)

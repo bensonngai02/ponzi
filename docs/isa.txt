@@ -145,6 +145,6 @@ Auxiliary instructions:
         - Priting to the screen is a recursive action.
         - Accepts 1 argument (first character)
         - Tail recursion into sequence is empty -> print \n
-READC  - Read character
+
 
 STOP   - Stop execution
