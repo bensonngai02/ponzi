@@ -38,7 +38,7 @@ Expression * Compiler::binaryOp(Expression * expressions, Expression * namelist,
 
 Expression * Compiler::comp(Expression * expressions, Expression * namelist, Expression * codelist) {
     if (expressions->getExpType() != NODE_TYPE) {
-        return Node::cons(new Atom("LD"), Node::cons(SECD::location((Node*) expressions, (Node*) namelist), codelist ));
+        return Node::cons(new Atom("LD"), Node::cons(SECD::location((Node*) expressions, (Node*) namelist), codelist));
     }
     std::string checkStr = ((Atom *) expressions->car())->get_atom_string();
     if (checkStr == "QUOTE") {
@@ -132,7 +132,8 @@ int main(int argc, char** argv){
     Expression* result = Compiler::comp(compile->code, new Atom(), new Atom("STOP"));
     SECD machine((Node* )result);
     while(true){
-        machine.print();
+        machine.print(argv[INPUT_ARG]);
         machine.execute();
     }
+    
 }

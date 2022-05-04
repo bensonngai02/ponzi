@@ -2,6 +2,9 @@
 #include "expression.h"
 #include "atom.h"
 
+#include <iostream>
+#include <fstream>
+
 class Node : public Expression {
     Expression * carPtr;
     Expression * cdrPtr;
@@ -18,7 +21,7 @@ public:
     void rplaca(Expression * c);
     void print();
     void printRecur();
-
+    
     static Node * cons(Expression * car, Expression * cdr);
     static void push(Node** headPtr, Expression * expression);
     static Expression * pop(Node** headPtr);

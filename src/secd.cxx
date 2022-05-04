@@ -3,6 +3,10 @@
 #include "atom.h"
 #include "parser.h"
 #include "node.h"
+
+#include <iostream>
+#include <fstream>
+
 /* Upon instantiating new SECD, each S, E, C, D register
     contains a new stack with "NIL" as head.
 */
@@ -80,7 +84,7 @@ void SECD::execute() {
     Expression * inst = Node::pop(&control)->car();
     int inst_type = inst->getExpType();
     if (inst_type != ATOM_TYPE) {
-        std::cout << "Trying to execute a non instruction expression: ";
+        std::cout << "Trying to execute a non instruction expression: " ;
         inst->print();
         exit(1);
     }
@@ -316,7 +320,7 @@ Node * SECD::location(Node * target, Node * list) {
     }
 }
 
-void SECD::print(){
+void SECD::print(std::string fileName){
     std::cout << &stack << &environment << &control << &dump << std::endl;
     std::cout << "Stack: ";
     stack->print();
@@ -328,6 +332,7 @@ void SECD::print(){
     dump->print();
     std::cout << std::endl;
 }
+
 
 
 

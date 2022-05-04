@@ -1,6 +1,7 @@
 #include "node.h"
 #include "secd.h"
 
+
 Node::Node() {
     this->carPtr = (Expression *) new Atom();
     this->cdrPtr = (Expression *) new Atom();
@@ -83,5 +84,5 @@ void Node::printRecur(){
 
 void Node::print(){
     this->printRecur();
-    std::cout <<std::endl;
+    std::cout << std::endl;
 }

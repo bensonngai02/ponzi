@@ -1,4 +1,5 @@
-(LET SQUARE (LAMBDA(N))
-    (MUL N N)
+LET SQUARE 
+    (SQUARE LAMBDA(N)
+        (MUL N N))
 
-(SQUARE 5)
+(SQUARE QUOTE 5)
