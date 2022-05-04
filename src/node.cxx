@@ -52,6 +52,10 @@ int Node::position(Node * target, Node * list) {
 }
 
 Node * Node::location(Node * target, Node * list) {
+    if(eq(new Atom(), list->car())){
+            std::cout << "Reached end of list without finding locaiton";
+            exit(1);
+        }
     if (member(target, (Node *) list->car())) {
         int got_pos = position(target, (Node *) list->car());
         Atom * car_atom = new Atom(0);
@@ -59,7 +63,7 @@ Node * Node::location(Node * target, Node * list) {
         return cons(car_atom, cdr_atom);
     }
     else {
-        Node * z = (location(target, (Node *) list->cdr()));
+        Node * z = location(target, (Node *) list->cdr());
         Atom * car_z = (Atom *) z->car();
         Atom * cdr_z = (Atom *) z->cdr();
         Atom * new_car = new Atom(car_z->get_atom_integer() + 1);
