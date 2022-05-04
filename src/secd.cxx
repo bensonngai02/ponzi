@@ -2,6 +2,7 @@
 #include "expression.h"
 #include "atom.h"
 #include "parser.h"
+#include "node.h"
 /* Upon instantiating new SECD, each S, E, C, D register
     contains a new stack with "NIL" as head.
 */
@@ -205,7 +206,7 @@ void SECD::execute() {
     }
     else if (atomInstString == "LD") {
         Node * locationNode = (Node *) Node::pop(&control);
-        Node * variables = Node::location(locationNode, environment);
+        Node * variables = SECD::location(locationNode, environment);
         Node::push(&stack, variables);
     }
     else if (atomInstString == "LDF") {
@@ -280,6 +281,41 @@ void SECD::execute() {
     }
 }
 
+bool SECD::member(Node * target, Node * list) {
+    if (list->getExpType() == NIL_TYPE)
+        return false;
+    if (Node::eq(target, list->car()))
+        return true;
+    else 
+        return member(target, (Node *) list->cdr());
+}
+
+int SECD::position(Node * target, Node * list) {
+    bool val_eq = Node::eq(target, list->car());
+    return val_eq? 0 : 1 + position(target, (Node *) list->cdr());
+}
+
+Node * SECD::location(Node * target, Node * list) {
+    if(Node::eq(new Atom(), list->car())){
+            std::cout << "Reached end of list without finding location. Printing environment list: " << std::endl;
+            exit(1);
+        }
+    if (member(target, (Node *) list->car())) {
+        int got_pos = position(target, (Node *) list->car());
+        Atom * car_atom = new Atom(0);
+        Atom * cdr_atom = new Atom(got_pos);
+        return Node::cons(car_atom, cdr_atom);
+    }
+    else {
+        Node * z = (SECD::location(target, (Node *) list->cdr()));
+        Atom * car_z = (Atom *) z->car();
+        Atom * cdr_z = (Atom *) z->cdr();
+        Atom * new_car = new Atom(car_z->get_atom_integer() + 1);
+        Atom * new_cdr = new Atom(cdr_z->get_atom_integer());
+        return Node::cons(new_car, new_cdr);
+    }
+}
+
 void SECD::print(){
     std::cout << &stack << &environment << &control << &dump << std::endl;
     std::cout << "Stack: ";
@@ -292,6 +328,10 @@ void SECD::print(){
     dump->print();
     std::cout << std::endl;
 }
+
+
+
+
 
 // int main(int argc, char** argv){
 //     SECD * secd = new SECD(argv[1]);

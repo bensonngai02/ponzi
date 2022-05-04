@@ -1,4 +1,5 @@
 #include "node.h"
+#include "secd.h"
 
 Node::Node() {
     this->carPtr = (Expression *) new Atom();
@@ -38,40 +39,6 @@ Expression * Node::copy(){
     return Node::cons(this->car()->copy(), this->cdr()->copy());
 }
 
-bool Node::member(Node * target, Node * list) {
-    if (list->getExpType() == NIL_TYPE)
-        return false;
-    if (Node::eq(target, list->car()))
-        return true;
-    else 
-        return member(target, (Node *) list->cdr());
-}
-
-int Node::position(Node * target, Node * list) {
-    bool val_eq = Node::eq(target, list->car());
-    return val_eq? 0 : 1 + position(target, (Node *) list->cdr());
-}
-
-Node * Node::location(Node * target, Node * list) {
-    if(eq(new Atom(), list->car())){
-            std::cout << "Reached end of list without finding locaiton";
-            exit(1);
-        }
-    if (member(target, (Node *) list->car())) {
-        int got_pos = position(target, (Node *) list->car());
-        Atom * car_atom = new Atom(0);
-        Atom * cdr_atom = new Atom(got_pos);
-        return cons(car_atom, cdr_atom);
-    }
-    else {
-        Node * z = (location(target, (Node *) list->cdr()));
-        Atom * car_z = (Atom *) z->car();
-        Atom * cdr_z = (Atom *) z->cdr();
-        Atom * new_car = new Atom(car_z->get_atom_integer() + 1);
-        Atom * new_cdr = new Atom(cdr_z->get_atom_integer());
-        return cons(new_car, new_cdr);
-    }
-}
 
 Node * Node::cons(Expression * car, Expression * cdr) {
     Node * newNode;
@@ -103,6 +70,9 @@ Expression * Node::peek() {
     return this;
 }
 
+void Node::rplaca(Expression* c){
+    this->carPtr = c;
+}
 
 void Node::printRecur(){
     printf("(");

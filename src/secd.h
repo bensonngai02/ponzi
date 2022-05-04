@@ -20,4 +20,7 @@ class SECD {
     void boolOp(std::string operation);
     static void println(Node * string);
 
+    static bool member(Node * target, Node * list);
+    static int position(Node * target, Node * list);
+    static Node * location(Node * target, Node * list);
 };
