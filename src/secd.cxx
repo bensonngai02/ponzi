@@ -200,7 +200,7 @@ void SECD::execute() {
         stack = prevStack;
     }
     else if (atomInstString == "DUM") {
-        Node * emptyList = Node::cons(new Atom(1), new Atom(1)); // TODO: Check
+        Node * emptyList = Node::cons(new Atom(), new Atom()); // TODO: Check
         Node::push(&environment, emptyList);
     }
     else if (atomInstString == "LD") {
