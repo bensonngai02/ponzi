@@ -1,0 +1,4 @@
+Implement booleans in consume
+Implement NIL in consume
+Implement NULL instruction (?)
+

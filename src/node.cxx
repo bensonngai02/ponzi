@@ -3,6 +3,7 @@
 Node::Node() {
     this->carPtr = (Expression *) new Atom();
     this->cdrPtr = (Expression *) new Atom();
+    // this->expType = NODE_TYPE;
 }
 
 Node::Node(Atom * a1, Atom * a2){
@@ -52,6 +53,10 @@ int Node::position(Node * target, Node * list) {
 }
 
 Node * Node::location(Node * target, Node * list) {
+    if(eq(new Atom(), list->car())){
+            std::cout << "Reached end of list without finding locaiton";
+            exit(1);
+        }
     if (member(target, (Node *) list->car())) {
         int got_pos = position(target, (Node *) list->car());
         Atom * car_atom = new Atom(0);

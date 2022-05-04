@@ -161,7 +161,7 @@ void Atom::printRecur(){
     else if(this->type == INTEGER){
         std::cout << this->get_atom_integer() << " ";
     }
-    else if (this->type == NIL_TYPE) {
+    else if(this->type == NIL_TYPE){
         std::cout << "NIL ";
     }
     else if( this-> type != NIL_TYPE){

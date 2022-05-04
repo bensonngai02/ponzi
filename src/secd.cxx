@@ -200,7 +200,7 @@ void SECD::execute() {
         stack = prevStack;
     }
     else if (atomInstString == "DUM") {
-        Node * emptyList = new Node(); // TODO: Check
+        Node * emptyList = Node::cons(new Atom(1), new Atom(1)); // TODO: Check
         Node::push(&environment, emptyList);
     }
     else if (atomInstString == "LD") {
@@ -281,25 +281,22 @@ void SECD::execute() {
 }
 
 void SECD::print(){
+    std::cout << &stack << &environment << &control << &dump << std::endl;
     std::cout << "Stack: ";
     stack->print();
     std::cout << "Environment: ";
-    stack->print();
+    environment->print();
     std::cout << "Control: ";
     control->print();
     std::cout << "Dump: ";
-    stack->print();
+    dump->print();
     std::cout << std::endl;
 }
 
 int main(int argc, char** argv){
     SECD * secd = new SECD(argv[1]);
-    secd->stack->print();
     while(true){
-        std::cout << "Control: ";
-        secd->control->print();
-        std::cout << "Stack: ";
-        secd->stack->print();
+        secd->print();
         secd->execute();
     }
 }
