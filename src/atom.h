@@ -21,7 +21,6 @@
 #define NIL_TYPE 3
 #define NIL_STR "nil"
 
-
 enum Boolean {
     f = 0,
     t = 1

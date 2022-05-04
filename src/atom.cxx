@@ -2,6 +2,7 @@
 #include "expression.h"
 
 
+/* Default constructor defaults to NIL type*/
 Atom::Atom() {
     this->val = new AtomVal;
     this->type = NIL_TYPE;
@@ -96,6 +97,7 @@ Atom* Atom::rem(Atom * op1, Atom * op2){
     return ret;
 }
 
+/* Greater than */
 Atom * Atom::gt(Atom * op1, Atom * op2){
     bool op1_is_integer = op1->getType() == INTEGER;
     bool op2_is_integer = op2->getType() == INTEGER;
@@ -107,6 +109,7 @@ Atom * Atom::gt(Atom * op1, Atom * op2){
     return new Atom(result);
 }
 
+/* Less than */
 Atom * Atom::lt(Atom * op1, Atom * op2){
     bool op1_is_integer = op1->getType() == INTEGER;
     bool op2_is_integer = op2->getType() == INTEGER;
@@ -118,6 +121,7 @@ Atom * Atom::lt(Atom * op1, Atom * op2){
     return new Atom(result);
 }
 
+/* Greater than or equal to */
 Atom * Atom::geq(Atom * op1, Atom * op2){
     bool op1_is_integer = op1->getType() == INTEGER;
     bool op2_is_integer = op2->getType() == INTEGER;
@@ -129,6 +133,7 @@ Atom * Atom::geq(Atom * op1, Atom * op2){
     return new Atom(result);
 }
 
+/* Less than or equal to */
 Atom * Atom::leq(Atom * op1, Atom * op2){
     bool op1_is_integer = op1->getType() == INTEGER;
     bool op2_is_integer = op2->getType() == INTEGER;
@@ -140,6 +145,7 @@ Atom * Atom::leq(Atom * op1, Atom * op2){
     return new Atom(result);
 }
 
+/* Recursion-based print method */
 void Atom::print(){
     this->printRecur();
     std::cout << std::endl;
@@ -161,10 +167,12 @@ void Atom::printRecur(){
     }
 }
 
+/* Returns the first (head) part of a node */
 Expression * Atom::car() {
     return this;
 }
 
+/* Returns the second (tail) part of a node */
 Expression * Atom::cdr(){
     return new Atom();
 }

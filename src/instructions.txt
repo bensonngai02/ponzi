@@ -1,1 +1,0 @@
-LDC 6 LDC 4 ADD
