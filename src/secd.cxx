@@ -146,6 +146,12 @@ void SECD::execute() {
     else if (atomInstString == "STOP") {
         std::cout << "Stack is: ";
         stack->print();
+        std::cout << "Environment is: ";
+        environment->print();
+        std::cout << "Control is: ";
+        control->print();
+        std::cout << "Dump is: ";
+        dump->print();
         std::cout << std::endl;
         exit(1);
     }
@@ -279,11 +285,11 @@ void SECD::print(){
     std::cout << "Stack: ";
     stack->print();
     std::cout << "Environment: ";
-    stack->print();
+    environment->print();
     std::cout << "Control: ";
     control->print();
     std::cout << "Dump: ";
-    stack->print();
+    dump->print();
     std::cout << std::endl;
 }
 
