@@ -293,10 +293,10 @@ void SECD::print(){
     std::cout << std::endl;
 }
 
-int main(int argc, char** argv){
-    SECD * secd = new SECD(argv[1]);
-    while(true){
-        secd->print();
-        secd->execute();
-    }
-}
+// int main(int argc, char** argv){
+//     SECD * secd = new SECD(argv[1]);
+//     while(true){
+//         secd->print();
+//         secd->execute();
+//     }
+// }

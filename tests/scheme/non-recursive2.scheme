@@ -1,0 +1,4 @@
+(LET SQUARE (LAMBDA(N))
+    (MUL N N)
+
+(SQUARE 5)

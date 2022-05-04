@@ -105,6 +105,22 @@ Expression * Compiler::comp(Expression * expressions, Expression * namelist, Exp
         Expression * body = comp(expressions->cadr(), m, Node::cons(new Atom("RET"), new Atom()));
         return Node::cons(new Atom("DUM"), complis(args, m, Node::cons(new Atom("LDF"), Node::cons(body, Node::cons(new Atom("RAP"), codelist)))));
     }
+    else if (checkStr == "FINN") {
+        Expression * m = new Atom("FINN");
+        return Node::cons(m, codelist);
+    }
+    else if (checkStr == "LEO") {
+        Expression * m = new Atom("LEO");
+        return Node::cons(m, codelist);
+    }
+    else if (checkStr == "NIKITA") {
+        Expression * m = new Atom("NIKITA");
+        return Node::cons(m, codelist);
+    }
+    else if (checkStr == "MICHAEL") {
+        Expression * m = new Atom("MICHAEL");
+        return Node::cons(m, codelist);
+    }
     else {
         return complis(expressions->cdr(), namelist, comp(expressions->car(), namelist, Node::cons(new Atom("AP"), codelist)));
     }

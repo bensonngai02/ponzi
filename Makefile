@@ -1,10 +1,10 @@
 run: 
 	g++ -ggdb -o run src/secd.cxx src/parser.cxx src/atom.cxx src/node.cxx src/expression.cxx
-	./run tests/ponzi/dum.ponzi
+	./run tests/ponzi/finn.ponzi
 
 compile: 
 	g++ -ggdb -o compile src/compiler.cxx src/secd.cxx src/parser.cxx src/atom.cxx src/node.cxx src/expression.cxx
-	./compile tests/scheme/dum.scheme
+	./compile tests/scheme/finn.scheme
 
 clean: 
 	rm -rf ./run ./compile

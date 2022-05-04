@@ -1,10 +1,5 @@
-(LET (sum (a b))                                                       // how to define a function. function name = sum. parameters = a, b                                        // function body
-    (ADD a b))
+(LET SUM (LAMBDA(A B))
+    (ADD A B)
+    )
 
-(sum 10 25)                                                             // or written as apply(sum (10 25))
-
-
-(LET (square(n))
-    (MUL n n)
-
-(square 5)
+(SUM 10 25)
