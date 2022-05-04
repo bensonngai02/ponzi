@@ -205,7 +205,7 @@ void SECD::execute() {
         stack = prevStack;
     }
     else if (atomInstString == "DUM") {
-        Node * emptyList = Node::cons(new Atom(1), new Atom(1)); // TODO: Check
+        Node * emptyList = Node::cons(new Atom(), new Atom()); // TODO: Check
         Node::push(&environment, emptyList);
     }
     else if (atomInstString == "LD") {
@@ -235,6 +235,10 @@ void SECD::execute() {
         Expression* v = Node::pop(&stack);
         // pop dummy environment off stack
         Expression* omega = Node::pop(&environment);
+        Node* newNode = new Node();
+        omega->print();
+        std::cout << omega->getExpType() << omega->car()->getExpType() << omega->cdr()->getExpType() << std::endl;
+        std::cout << newNode->getExpType() << newNode->car()->getExpType() << newNode->cdr()->getExpType() << std::endl;
         if(!Node::eq(omega, new Node())){
             std::cout << "RAP cannot be executed because the top of the enivronment stack is not omega";
             exit(1);
@@ -254,12 +258,16 @@ void SECD::execute() {
         output->print();
     }
     else if (atomInstString == "MICHAEL") {
-        std::cout << "Ode to MJ" << std::endl;
-        std::cout << "He sing" << std::endl;
-        std::cout << "He dance" << std::endl;
-        std::cout << "But most importantly" << std::endl;
-        std::cout << "He hee" << std::endl;
-        std::cout << "https://www.youtube.com/watch?v=GCUz359flrM" <<std::endl;
+        std::cout << "|     Ode to MJ     |" << std::endl;
+        std::cout << "---------------------" << std::endl;
+        std::cout << "  He sing" << std::endl;
+        std::cout << "  He dance" << std::endl;
+        std::cout << "  But most importantly" << std::endl;
+        std::cout << "  He hee" << std::endl;
+        std::cout << "---------------------" << std::endl;
+        std::cout << "Click for a surprise: https://www.youtube.com/watch?v=GCUz359flrM" << std::endl;
+        std::cout << "---------------------" << std::endl;
+        
     }
     else if (atomInstString == "FINN") {
         std::ifstream finn;
@@ -322,20 +330,20 @@ Node * SECD::location(Node * target, Node * list) {
 
 void SECD::print(std::string fileName){
     std::cout << &stack << &environment << &control << &dump << std::endl;
-    std::cout << "Stack: ";
-    stack->print();
-    std::cout << "Environment: ";
-    environment->print();
-    std::cout << "Control: ";
-    control->print();
-    std::cout << "Dump: ";
-    dump->print();
+    std::cout << "Stack: (";
+    stack->printRecur();
+    std::cout << ")" << std::endl;
+    std::cout << "Environment: (";
+    environment->printRecur();
+    std::cout << ")" << std::endl;
+    std::cout << "Control: (";
+    control->printRecur();
+    std::cout << ")" << std::endl;
+    std::cout << "Dump: (";
+    dump->printRecur();
+    std::cout << ")" << std::endl;
     std::cout << std::endl;
 }
-
-
-
-
 
 
 // int main(int argc, char** argv){

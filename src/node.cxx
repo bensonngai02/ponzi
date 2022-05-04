@@ -1,11 +1,10 @@
 #include "node.h"
 #include "secd.h"
 
-
 Node::Node() {
     this->carPtr = (Expression *) new Atom();
     this->cdrPtr = (Expression *) new Atom();
-    // this->expType = NODE_TYPE;
+    this->expType = NODE_TYPE;
 }
 
 Node::Node(Atom * a1, Atom * a2){
@@ -39,7 +38,6 @@ Expression * Node::cdr() {
 Expression * Node::copy(){
     return Node::cons(this->car()->copy(), this->cdr()->copy());
 }
-
 
 Node * Node::cons(Expression * car, Expression * cdr) {
     Node * newNode;
@@ -76,10 +74,14 @@ void Node::rplaca(Expression* c){
 }
 
 void Node::printRecur(){
-    printf("(");
+    if(this->carPtr->getExpType() == NODE_TYPE){
+        printf("(");
+    }
     this->carPtr->printRecur();
+    if(this->carPtr->getExpType() == NODE_TYPE){
+        printf(")");
+    }
     this->cdrPtr->printRecur();
-    printf(")");
 }
 
 void Node::print(){

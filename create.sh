@@ -4,5 +4,5 @@ echo -e "run: \n\tg++ -ggdb -o run src/secd.cxx src/parser.cxx src/atom.cxx src/
 
 echo -e "compile: \n\tg++ -ggdb -o compile src/compiler.cxx src/secd.cxx src/parser.cxx src/atom.cxx src/node.cxx src/expression.cxx\n\t./compile tests/scheme/$1.scheme > tests/scheme/$1.out\n " >> Makefile
 
-echo -e "clean: \n\trm -rf ./run ./compile" >> Makefile
+echo -e "clean: \n\trm -rf ./run ./compile tests/scheme/*.out tests/ponzi/*.out" >> Makefile
 

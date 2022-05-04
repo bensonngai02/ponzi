@@ -1,7 +1,6 @@
 #include "atom.h"
 #include "expression.h"
 
-
 /* Default constructor defaults to NIL type*/
 Atom::Atom() {
     this->val = new AtomVal;
@@ -160,9 +159,6 @@ void Atom::printRecur(){
     }
     else if(this->type == INTEGER){
         std::cout << this->get_atom_integer() << " ";
-    }
-    else if(this->type == NIL_TYPE){
-        std::cout << "NIL ";
     }
     else if( this-> type != NIL_TYPE){
         std::cout <<"Printing something unknown: " << this->type << " " << (this->type == STRING) << "\n";

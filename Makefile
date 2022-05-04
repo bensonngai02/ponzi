@@ -7,4 +7,4 @@ compile:
 	./compile tests/scheme/non-recursive.scheme > tests/scheme/non-recursive.out
  
 clean: 
-	rm -rf ./run ./compile
+	rm -rf ./run ./compile tests/scheme/*.out tests/ponzi/*.out

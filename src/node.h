@@ -2,9 +2,6 @@
 #include "expression.h"
 #include "atom.h"
 
-#include <iostream>
-#include <fstream>
-
 class Node : public Expression {
     Expression * carPtr;
     Expression * cdrPtr;
