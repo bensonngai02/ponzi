@@ -194,7 +194,7 @@ void SECD::execute() {
         stack = prevStack;
     }
     else if (atomInstString == "DUM") {
-        Atom * emptyList = new Atom(); // TODO: Check
+        Node * emptyList = Node::cons(new Atom(1), new Atom(1)); // TODO: Check
         Node::push(&environment, emptyList);
     }
     else if (atomInstString == "LD") {
@@ -224,7 +224,7 @@ void SECD::execute() {
         Expression* v = Node::pop(&stack);
         // pop dummy environment off stack
         Expression* omega = Node::pop(&environment);
-        if(!Node::eq(omega, new Atom())){
+        if(!Node::eq(omega, new Node())){
             std::cout << "RAP cannot be executed because the top of the enivronment stack is not omega";
             exit(1);
         }
@@ -275,6 +275,7 @@ void SECD::execute() {
 }
 
 void SECD::print(){
+    std::cout << &stack << &environment << &control << &dump << std::endl;
     std::cout << "Stack: ";
     stack->print();
     std::cout << "Environment: ";
@@ -288,12 +289,8 @@ void SECD::print(){
 
 int main(int argc, char** argv){
     SECD * secd = new SECD(argv[1]);
-    secd->stack->print();
     while(true){
-        std::cout << "Control: ";
-        secd->control->print();
-        std::cout << "Stack: ";
-        secd->stack->print();
+        secd->print();
         secd->execute();
     }
 }

@@ -7,6 +7,9 @@ bool Expression::eq(Expression * op1, Expression * op2) {
         return false;
     }
     // both items on stack are atoms
+    if(op1->getExpType() == NIL_TYPE && op2->getExpType() == NIL_TYPE){
+        return true;
+    }
     if (op1->getExpType() == ATOM_TYPE && op2->getExpType() == ATOM_TYPE) {
         Atom * atomOp1 = (Atom *) op1;
         Atom * atomOp2 = (Atom *) op2;
@@ -37,8 +40,8 @@ bool Expression::eq(Expression * op1, Expression * op2) {
         if (nodeOp1->getExpType() != nodeOp2->getExpType()) {
             return false;
         }
-        bool carPtrEq = nodeOp1->Node::car() == nodeOp2->Node::car(); 
-        bool cdrPtrEq = nodeOp1->Node::cdr() == nodeOp2->Node::cdr();
+        bool carPtrEq = Node::eq(nodeOp1->car(), nodeOp2->car()); 
+        bool cdrPtrEq = Node::eq(nodeOp1->cdr(), nodeOp2->cdr());
 
         return carPtrEq && cdrPtrEq;
     }

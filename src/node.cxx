@@ -3,6 +3,7 @@
 Node::Node() {
     this->carPtr = (Expression *) new Atom();
     this->cdrPtr = (Expression *) new Atom();
+    //this->expType = NODE_TYPE;
 }
 
 Node::Node(Atom * a1, Atom * a2){
@@ -63,7 +64,7 @@ Node * Node::location(Node * target, Node * list) {
         return cons(car_atom, cdr_atom);
     }
     else {
-        Node * z = location(target, (Node *) list->cdr());
+        Node * z = (location(target, (Node *) list->cdr()));
         Atom * car_z = (Atom *) z->car();
         Atom * cdr_z = (Atom *) z->cdr();
         Atom * new_car = new Atom(car_z->get_atom_integer() + 1);
