@@ -71,9 +71,6 @@ Expression * Compiler::comp(Expression * expressions, Expression * namelist, Exp
     else if (checkStr == "LT") {
         return binaryOp(expressions, namelist, codelist, "LT");
     }
-    else if (checkStr == "LT") {
-        return binaryOp(expressions, namelist, codelist, "LT");
-    }
     else if ( checkStr == "CAR") {
         return comp(expressions->cadr(), namelist, Node::cons(new Atom("CAR"), codelist));
     }

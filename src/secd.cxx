@@ -245,6 +245,28 @@ void SECD::execute() {
     else if (atomInstString == "MJ") {
         std::cout << "hee-hee";
     }
+    else if (atomInstString == "FINN") {
+        std::ifstream finn;
+        finn.open("docs/finn.txt");
+        std::string line;
+        if (finn.is_open()) {
+            while(getline(finn, line)) {
+                std::cout << line << std::endl;
+            }
+            finn.close();
+        }
+    }
+    else if (atomInstString == "LEO") {
+        std::ifstream leo;
+        leo.open("docs/leo.txt");
+        std::string line;
+        if (leo.is_open()) {
+            while(getline(leo, line)) {
+                std::cout << line << std::endl;
+            }
+            leo.close();
+        }
+    }
 }
 
 void SECD::print(){
@@ -259,14 +281,14 @@ void SECD::print(){
     std::cout << std::endl;
 }
 
-// int main(){
-//     SECD * secd = new SECD("tests/car");
-//     secd->stack->print();
-//     while(true){
-//         std::cout << "Control: ";
-//         secd->control->print();
-//         std::cout << "Stack: ";
-//         secd->stack->print();
-//         secd->execute();
-//     }
-// }
+int main(int argc, char** argv){
+    SECD * secd = new SECD(argv[1]);
+    secd->stack->print();
+    while(true){
+        std::cout << "Control: ";
+        secd->control->print();
+        std::cout << "Stack: ";
+        secd->stack->print();
+        secd->execute();
+    }
+}
