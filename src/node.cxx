@@ -3,7 +3,7 @@
 Node::Node() {
     this->carPtr = (Expression *) new Atom();
     this->cdrPtr = (Expression *) new Atom();
-    // this->expType = NODE_TYPE;
+    this->expType = NODE_TYPE;
 }
 
 Node::Node(Atom * a1, Atom * a2){
@@ -105,10 +105,14 @@ Expression * Node::peek() {
 
 
 void Node::printRecur(){
-    printf("(");
+    if(this->carPtr->getExpType() == NODE_TYPE){
+        printf("(");
+    }
     this->carPtr->printRecur();
+    if(this->carPtr->getExpType() == NODE_TYPE){
+        printf(")");
+    }
     this->cdrPtr->printRecur();
-    printf(")");
 }
 
 void Node::print(){

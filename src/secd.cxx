@@ -230,6 +230,10 @@ void SECD::execute() {
         Expression* v = Node::pop(&stack);
         // pop dummy environment off stack
         Expression* omega = Node::pop(&environment);
+        Node* newNode = new Node();
+        omega->print();
+        std::cout << omega->getExpType() << omega->car()->getExpType() << omega->cdr()->getExpType() << std::endl;
+        std::cout << newNode->getExpType() << newNode->car()->getExpType() << newNode->cdr()->getExpType() << std::endl;
         if(!Node::eq(omega, new Node())){
             std::cout << "RAP cannot be executed because the top of the enivronment stack is not omega";
             exit(1);
@@ -282,14 +286,18 @@ void SECD::execute() {
 
 void SECD::print(){
     std::cout << &stack << &environment << &control << &dump << std::endl;
-    std::cout << "Stack: ";
-    stack->print();
-    std::cout << "Environment: ";
-    environment->print();
-    std::cout << "Control: ";
-    control->print();
-    std::cout << "Dump: ";
-    dump->print();
+    std::cout << "Stack: (";
+    stack->printRecur();
+    std::cout << ")" << std::endl;
+    std::cout << "Environment: (";
+    environment->printRecur();
+    std::cout << ")" << std::endl;
+    std::cout << "Control: (";
+    control->printRecur();
+    std::cout << ")" << std::endl;
+    std::cout << "Dump: (";
+    dump->printRecur();
+    std::cout << ")" << std::endl;
     std::cout << std::endl;
 }
 
