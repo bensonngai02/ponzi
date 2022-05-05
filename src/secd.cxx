@@ -2,6 +2,11 @@
 #include "expression.h"
 #include "atom.h"
 #include "parser.h"
+#include "node.h"
+
+#include <iostream>
+#include <fstream>
+
 /* Upon instantiating new SECD, each S, E, C, D register
     contains a new stack with "NIL" as head.
 */
@@ -110,7 +115,7 @@ void SECD::execute() {
     Expression * inst = Node::pop(&control)->car();
     int inst_type = inst->getExpType();
     if (inst_type != ATOM_TYPE) {
-        std::cout << "Trying to execute a non instruction expression: ";
+        std::cout << "Trying to execute a non instruction expression: " ;
         inst->print();
         exit(1);
     }
@@ -292,14 +297,6 @@ void SECD::execute() {
         Node * output = (Node *) Node::pop(&stack);
         output->print();
     }
-    else if (atomInstString == "MICHAEL") {
-        std::cout << "Ode to MJ" << std::endl;
-        std::cout << "He sing" << std::endl;
-        std::cout << "He dance" << std::endl;
-        std::cout << "But most importantly" << std::endl;
-        std::cout << "He hee" << std::endl;
-        std::cout << "https://www.youtube.com/watch?v=GCUz359flrM" <<std::endl;
-    }
     else if (atomInstString == "FINN") {
         std::ifstream finn;
         finn.open("docs/finn.txt");
@@ -322,7 +319,100 @@ void SECD::execute() {
             leo.close();
         }
     }
+    else if (atomInstString == "NIKITA") {
+        std::cout << "|     ALL HAIL PIAZZA PROFILE PICS     |" << std::endl;
+        std::ifstream nikita;
+        nikita.open("docs/nikita.txt");
+        std::string line;
+        if (nikita.is_open()) {
+            while(getline(nikita, line)) {
+                std::cout << line << std::endl;
+            }
+            nikita.close();
+        }
+    }
+    else if (atomInstString == "MICHAEL") {
+        std::cout << "|     Ode to MJ     |" << std::endl;
+        std::cout << "---------------------" << std::endl;
+        std::cout << "  He sing" << std::endl;
+        std::cout << "  He dance" << std::endl;
+        std::cout << "  But most importantly" << std::endl;
+        std::cout << "  He hee" << std::endl;
+        std::cout << "---------------------" << std::endl;
+        std::cout << "Click for a surprise: https://www.youtube.com/watch?v=GCUz359flrM" << std::endl;
+        std::cout << "---------------------" << std::endl;
+
+        std::ifstream michael;
+        michael.open("docs/michael.txt");
+        std::string line;
+        if (michael.is_open()) {
+            while(getline(michael, line)) {
+                std::cout << line << std::endl;
+            }
+            michael.close();
+        }
+    }
 }
+
+bool SECD::member(Node * target, Node * list) {
+    if (list->getExpType() == NIL_TYPE)
+        return false;
+    if (Node::eq(target, list->car()))
+        return true;
+    else 
+        return member(target, (Node *) list->cdr());
+}
+
+int SECD::position(Node * target, Node * list) {
+    bool val_eq = Node::eq(target, list->car());
+    return val_eq? 0 : 1 + position(target, (Node *) list->cdr());
+}
+
+Node * SECD::location(Node * target, Node * list) {
+    if(Node::eq(new Atom(), list->car())){
+            std::cout << "Reached end of list without finding location. Printing environment list: " << std::endl;
+            exit(1);
+        }
+    if (member(target, (Node *) list->car())) {
+        int got_pos = position(target, (Node *) list->car());
+        Atom * car_atom = new Atom(0);
+        Atom * cdr_atom = new Atom(got_pos);
+        return Node::cons(car_atom, cdr_atom);
+    }
+    else {
+        Node * z = (SECD::location(target, (Node *) list->cdr()));
+        Atom * car_z = (Atom *) z->car();
+        Atom * cdr_z = (Atom *) z->cdr();
+        Atom * new_car = new Atom(car_z->get_atom_integer() + 1);
+        Atom * new_cdr = new Atom(cdr_z->get_atom_integer());
+        return Node::cons(new_car, new_cdr);
+    }
+}
+
+Expression * SECD::index(Atom* n, Node * list) {
+    if (Node::eq(n, new Atom(0))) {
+        return list->car();
+    }
+    else {
+        Atom* temp = new Atom(n->get_atom_integer() - 1);
+        return SECD::index(temp, ((Node *) list->cdr()));
+    }
+}
+
+Atom * SECD::locate(Node * coordinates, Node * environment) {
+    if(coordinates->car()->getExpType() != ATOM_TYPE || coordinates->cadr()->getExpType() != ATOM_TYPE){
+        std::cout << "Calling location on a non-2-tuple";
+        std::cout << "Car: ";
+        coordinates->car()->print();
+        std::cout << "Cadr: ";
+        coordinates->cadr()->print();
+        exit(1);
+    }
+    Atom * b = (Atom*) coordinates->car();
+    Atom * n = (Atom*) coordinates->cdr();
+    return (Atom*) index(n, (Node*) index(b, environment));
+}
+
 
 void SECD::print(){
     std::cout << &stack << &environment << &control << &dump << std::endl;

@@ -1,7 +1,6 @@
 #include "atom.h"
 #include "expression.h"
 
-
 /* Default constructor defaults to NIL type*/
 Atom::Atom() {
     this->val = new AtomVal;

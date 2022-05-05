@@ -27,7 +27,7 @@ public:
 
     void print();
     void printRecur();
-
+    
     static Node * cons(Expression * car, Expression * cdr);
     static void push(Node** headPtr, Expression * expression);
     static Expression * pop(Node** headPtr);

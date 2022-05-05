@@ -1,4 +1,2 @@
-(LET SQUARE (LAMBDA(N))
-    (MUL N N)
+(LAMBDA (A B) (MUL A B))(QUOTE 6)(QUOTE 3)
 
-(SQUARE 5)

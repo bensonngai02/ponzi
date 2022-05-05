@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 LAMBDA (A) (ADD A (QUOTE 1)) (QUOTE 4)
+=======
+(LAMBDA (A) (ADD A (QUOTE 1)))(QUOTE 5)
+>>>>>>> 210208d9e176bfdd6bec0db4f6ba87463d7b9c84

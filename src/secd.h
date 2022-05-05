@@ -22,4 +22,9 @@ class SECD {
     static Expression * index(Atom* n, Node * list);
     static Atom * locate(Node * coordinates, Node * environment);
 
+    static Expression * index(Atom* n, Node * list);
+    static Atom* locate(Node* coordinates, Node* list);
+    static bool member(Node * target, Node * list);
+    static int position(Node * target, Node * list);
+    static Node * location(Node * target, Node * list);
 };
