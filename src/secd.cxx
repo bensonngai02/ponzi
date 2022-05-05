@@ -49,7 +49,7 @@ Expression * SECD::index(Atom* n, Node * list) {
     }
 }
 
-Atom * SECD::locate(Node * coordinates, Node * environment) {
+Expression * SECD::locate(Node * coordinates, Node * environment) { //wrong
     if(coordinates->car()->getExpType() != ATOM_TYPE || coordinates->cadr()->getExpType() != ATOM_TYPE){
         std::cout << "Calling location on a non-2-tuple";
         std::cout << "Car: ";
@@ -60,8 +60,7 @@ Atom * SECD::locate(Node * coordinates, Node * environment) {
     }
     Atom * b = (Atom*) coordinates->car();
     Atom * n = (Atom*) coordinates->cadr();
-    Atom* ret = (Atom*) index(n, (Node*) index(b, environment));
-    std::cout << "Atom value: " << ret->get_atom_integer() << std::endl;
+    Expression* ret = index(n, (Node*) index(b, environment));
     ret->print();
     return ret;
 }
@@ -220,24 +219,28 @@ void SECD::execute() {
         control = (Node *) Node::pop(&dump);
     }
     else if (atomInstString == "RET") {
-        Expression* tempStack = Node::pop(&dump);
-        Expression* tempEnv = Node::pop(&dump);
-        Expression* tempControl = Node::pop(&dump);
-        if(tempStack->getExpType() != NODE_TYPE || 
-            tempEnv->getExpType() != NODE_TYPE || 
-            tempControl->getExpType() != NODE_TYPE){
-            std::cout << "RET prev values is not Node";
-            std::cout << tempStack->getExpType() << " " << tempEnv->getExpType() << " " << tempControl->getExpType() << std::endl;
-            tempStack->print();
-            tempEnv->print();
-            tempControl->print();
-            exit(1);
-        }
-        Node* prevStack = (Node*) tempStack;
-        environment = (Node*) tempEnv;
-        control = (Node*) tempControl;
-        Node::push(&prevStack, stack);
-        stack = prevStack;
+        // Expression* tempStack = Node::pop(&dump);
+        // Expression* tempEnv = Node::pop(&dump);
+        // Expression* tempControl = Node::pop(&dump);
+        // if(tempStack->getExpType() != NODE_TYPE || 
+        //     tempEnv->getExpType() != NODE_TYPE || 
+        //     tempControl->getExpType() != NODE_TYPE){
+        //     std::cout << "RET prev values is not Node";
+        //     std::cout << tempStack->getExpType() << " " << tempEnv->getExpType() << " " << tempControl->getExpType() << std::endl;
+        //     tempStack->print();
+        //     tempEnv->print();
+        //     tempControl->print();
+        //     exit(1);
+        // }
+        // Node* prevStack = (Node*) tempStack;
+        // environment = (Node*) tempEnv;
+        // control = (Node*) tempControl;
+        // Node::push(&prevStack, stack->car());
+        // stack = prevStack;
+        stack = Node::cons(stack->car(), dump->car());
+        environment = (Node*) dump->cadr();
+        control = (Node* ) dump->caddr();
+        dump = (Node*) dump->cddr()->cdr();
     }
     else if (atomInstString == "DUM") {
         Node * emptyList = Node::cons(new Atom(), new Atom()); // TODO: Check
@@ -245,8 +248,8 @@ void SECD::execute() {
     }
     else if (atomInstString == "LD") {
         Node * locationNode = (Node *) Node::pop(&control);
-        Atom * variable = locate(locationNode, environment);
-        Node::push(&stack, new Atom(variable->get_atom_integer()));
+        Expression * variable = locate(locationNode, environment);
+        Node::push(&stack, variable);
     }
     else if (atomInstString == "LDF") {
         Node * function = (Node *) Node::pop(&control);
