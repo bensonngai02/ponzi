@@ -19,5 +19,7 @@ class SECD {
     void mathOp(std::string operation);
     void boolOp(std::string operation);
     static void println(Node * string);
+    static Expression * index(Atom* n, Node * list);
+    static Atom * locate(Node * coordinates, Node * environment);
 
 };

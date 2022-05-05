@@ -14,6 +14,8 @@ bool Expression::eq(Expression * op1, Expression * op2) {
         Atom * atomOp1 = (Atom *) op1;
         Atom * atomOp2 = (Atom *) op2;
         if (atomOp1->getType() != atomOp2->getType()) {
+            op1->print();
+            op2->print();
             std::cout << "Atoms are not the same datatype (int, string, bool) so they cannot be compared";
             return false;
         }

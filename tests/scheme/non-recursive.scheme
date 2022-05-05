@@ -1,5 +1,1 @@
-(LET SUM (LAMBDA(A B))
-    (ADD A B)
-    )
-
-(SUM 10 25)
+LAMBDA (A) (ADD A (QUOTE 1)) (QUOTE 4)

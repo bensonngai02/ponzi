@@ -4,27 +4,32 @@ Node::Node() {
     this->carPtr = (Expression *) new Atom();
     this->cdrPtr = (Expression *) new Atom();
     this->expType = NODE_TYPE;
+    this->rplacable = true;
 }
 
 Node::Node(Atom * a1, Atom * a2){
     this->carPtr = (Expression *) a1;
     this-> cdrPtr = (Expression *) a2;
     this->expType = NODE_TYPE;
+    this->rplacable = false;
 }
 Node::Node(Atom * a1, Node * n2){
     this->carPtr = (Expression *) a1;
     this->cdrPtr = (Expression *) n2;
     this->expType = NODE_TYPE;
+    this->rplacable = false;
 }
 Node::Node(Node * n1, Atom * a2){
     this->carPtr = (Expression *) n1;
     this->cdrPtr = (Expression *) a2;
     this->expType = NODE_TYPE;
+    this->rplacable = false;
 }
 Node::Node(Node * n1, Node * n2){
     this->carPtr = (Expression *) n1;
     this->cdrPtr = (Expression *) n2;
     this->expType = NODE_TYPE;
+    this->rplacable = false;
 }
 
 Expression * Node::car() {
@@ -75,6 +80,10 @@ Node * Node::location(Node * target, Node * list) {
 
 Node * Node::cons(Expression * car, Expression * cdr) {
     Node * newNode;
+    if(cdr->expType == NODE_TYPE && ((Node*) cdr)->rplacable){
+        ((Node*)cdr)->rplaca(car);
+        return (Node*) cdr;
+    }
     int car_type = car->expType;
     int cdr_type = cdr->expType;
     if (car_type == ATOM_TYPE && cdr_type == ATOM_TYPE)
@@ -95,6 +104,9 @@ void Node::push(Node** headPtr, Expression * expression) {
 Expression * Node::pop(Node** headPtr) { //sketchy
     Node * head = *headPtr;
     *headPtr = (Node *) head->cdr(); //May not work if cdr is atom*
+    if((*headPtr)->getExpType() == NIL_TYPE){
+        *headPtr = new Node();
+    }
     head->cdrPtr = new Atom();
     return head->car();
 }
@@ -105,14 +117,10 @@ Expression * Node::peek() {
 
 
 void Node::printRecur(){
-    if(this->carPtr->getExpType() == NODE_TYPE){
-        printf("(");
-    }
+    printf("(");
     this->carPtr->printRecur();
-    if(this->carPtr->getExpType() == NODE_TYPE){
-        printf(")");
-    }
     this->cdrPtr->printRecur();
+    printf(")");
 }
 
 void Node::print(){

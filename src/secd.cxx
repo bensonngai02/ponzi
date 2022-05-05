@@ -30,6 +30,37 @@ void SECD::peekStackExpType(Node * stack, int expType) {
         exit(1);
     }
 }
+
+Expression * SECD::index(Atom* n, Node * list) {
+    if (Node::eq(n, new Atom(0))) {
+        std::cout << "Returing: " << list->cadr()->getExpType();
+        list->car()->print();
+        return list->car();
+    }
+    else {
+        Atom* temp = new Atom(n->get_atom_integer() - 1);
+        list->print();
+        return SECD::index(temp, ((Node *) list->cdr()));
+    }
+}
+
+Atom * SECD::locate(Node * coordinates, Node * environment) {
+    if(coordinates->car()->getExpType() != ATOM_TYPE || coordinates->cadr()->getExpType() != ATOM_TYPE){
+        std::cout << "Calling location on a non-2-tuple";
+        std::cout << "Car: ";
+        coordinates->car()->print();
+        std::cout << "Cadr: ";
+        coordinates->cadr()->print();
+        exit(1);
+    }
+    Atom * b = (Atom*) coordinates->car();
+    Atom * n = (Atom*) coordinates->cadr();
+    Atom* ret = (Atom*) index(n, (Node*) index(b, environment));
+    std::cout << "Atom value: " << ret->get_atom_integer() << std::endl;
+    ret->print();
+    return ret;
+}
+
 void SECD::mathOp(std::string operation) {
     peekStackExpType(stack, ATOM_TYPE);
     Atom* op2 = (Atom*) Node::pop(&stack);
@@ -166,7 +197,7 @@ void SECD::execute() {
     else if(atomInstString == "CONS"){
         Expression* op2 = Node::pop(&stack);
         Expression* op1 = Node::pop(&stack);
-        Expression* result = Node::cons(op1, op2);
+        Expression* result = Node::cons(op2, op1);
         Node::push(&stack, result);
     }
     else if(atomInstString == "ATOM"){
@@ -191,6 +222,10 @@ void SECD::execute() {
             tempEnv->getExpType() != NODE_TYPE || 
             tempControl->getExpType() != NODE_TYPE){
             std::cout << "RET prev values is not Node";
+            std::cout << tempStack->getExpType() << " " << tempEnv->getExpType() << " " << tempControl->getExpType() << std::endl;
+            tempStack->print();
+            tempEnv->print();
+            tempControl->print();
             exit(1);
         }
         Node* prevStack = (Node*) tempStack;
@@ -205,8 +240,8 @@ void SECD::execute() {
     }
     else if (atomInstString == "LD") {
         Node * locationNode = (Node *) Node::pop(&control);
-        Node * variables = Node::location(locationNode, environment);
-        Node::push(&stack, variables);
+        Atom * variable = locate(locationNode, environment);
+        Node::push(&stack, new Atom(variable->get_atom_integer()));
     }
     else if (atomInstString == "LDF") {
         Node * function = (Node *) Node::pop(&control);
@@ -220,7 +255,12 @@ void SECD::execute() {
         Node::push(&dump, environment);
         Node::push(&dump, stack);
         Node* newControl = (Node*) function->car();
+        std::cout << "Function cdr: ";
+        function->cdr()->print();
+        parameters->print();
         Node* newEnv = Node::cons(parameters, function->cdr());
+        std::cout << "NewEnv: ";
+        newEnv->print();
         control = newControl;
         environment = newEnv;
         stack = new Node(); //TODO: Check
@@ -286,25 +326,25 @@ void SECD::execute() {
 
 void SECD::print(){
     std::cout << &stack << &environment << &control << &dump << std::endl;
-    std::cout << "Stack: (";
-    stack->printRecur();
-    std::cout << ")" << std::endl;
-    std::cout << "Environment: (";
-    environment->printRecur();
-    std::cout << ")" << std::endl;
-    std::cout << "Control: (";
-    control->printRecur();
-    std::cout << ")" << std::endl;
-    std::cout << "Dump: (";
-    dump->printRecur();
-    std::cout << ")" << std::endl;
+    std::cout << "Stack: ";
+    stack->print();
+
+    std::cout << "Environment: ";
+    environment->print();
+
+    std::cout << "Control: ";
+    control->print();
+
+    std::cout << "Dump: ";
+    dump->print();
+
     std::cout << std::endl;
 }
 
-// int main(int argc, char** argv){
-//     SECD * secd = new SECD(argv[1]);
-//     while(true){
-//         secd->print();
-//         secd->execute();
-//     }
-// }
+int main(int argc, char** argv){
+    SECD * secd = new SECD(argv[1]);
+    while(true){
+        secd->print();
+        secd->execute();
+    }
+}
