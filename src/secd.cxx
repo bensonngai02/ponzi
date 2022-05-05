@@ -171,7 +171,7 @@ void SECD::execute() {
     else if(atomInstString == "CONS"){
         Expression* op2 = Node::pop(&stack);
         Expression* op1 = Node::pop(&stack);
-        Expression* result = Node::cons(op1, op2);
+        Expression* result = Node::cons(op2, op1);
         Node::push(&stack, result);
     }
     else if(atomInstString == "ATOM"){
@@ -210,8 +210,8 @@ void SECD::execute() {
     }
     else if (atomInstString == "LD") {
         Node * locationNode = (Node *) Node::pop(&control);
-        Node * variables = SECD::location(locationNode, environment);
-        Node::push(&stack, variables);
+        Atom * variable = SECD::locate(locationNode, environment);
+        Node::push(&stack, variable);
     }
     else if (atomInstString == "LDF") {
         Node * function = (Node *) Node::pop(&control);
@@ -257,18 +257,6 @@ void SECD::execute() {
         Node * output = (Node *) Node::pop(&stack);
         output->print();
     }
-    else if (atomInstString == "MICHAEL") {
-        std::cout << "|     Ode to MJ     |" << std::endl;
-        std::cout << "---------------------" << std::endl;
-        std::cout << "  He sing" << std::endl;
-        std::cout << "  He dance" << std::endl;
-        std::cout << "  But most importantly" << std::endl;
-        std::cout << "  He hee" << std::endl;
-        std::cout << "---------------------" << std::endl;
-        std::cout << "Click for a surprise: https://www.youtube.com/watch?v=GCUz359flrM" << std::endl;
-        std::cout << "---------------------" << std::endl;
-        
-    }
     else if (atomInstString == "FINN") {
         std::ifstream finn;
         finn.open("docs/finn.txt");
@@ -289,6 +277,39 @@ void SECD::execute() {
                 std::cout << line << std::endl;
             }
             leo.close();
+        }
+    }
+    else if (atomInstString == "NIKITA") {
+        std::cout << "|     ALL HAIL PIAZZA PROFILE PICS     |" << std::endl;
+        std::ifstream nikita;
+        nikita.open("docs/nikita.txt");
+        std::string line;
+        if (nikita.is_open()) {
+            while(getline(nikita, line)) {
+                std::cout << line << std::endl;
+            }
+            nikita.close();
+        }
+    }
+    else if (atomInstString == "MICHAEL") {
+        std::cout << "|     Ode to MJ     |" << std::endl;
+        std::cout << "---------------------" << std::endl;
+        std::cout << "  He sing" << std::endl;
+        std::cout << "  He dance" << std::endl;
+        std::cout << "  But most importantly" << std::endl;
+        std::cout << "  He hee" << std::endl;
+        std::cout << "---------------------" << std::endl;
+        std::cout << "Click for a surprise: https://www.youtube.com/watch?v=GCUz359flrM" << std::endl;
+        std::cout << "---------------------" << std::endl;
+
+        std::ifstream michael;
+        michael.open("docs/michael.txt");
+        std::string line;
+        if (michael.is_open()) {
+            while(getline(michael, line)) {
+                std::cout << line << std::endl;
+            }
+            michael.close();
         }
     }
 }
@@ -327,6 +348,31 @@ Node * SECD::location(Node * target, Node * list) {
         return Node::cons(new_car, new_cdr);
     }
 }
+
+Expression * SECD::index(Atom* n, Node * list) {
+    if (Node::eq(n, new Atom(0))) {
+        return list->car();
+    }
+    else {
+        Atom* temp = new Atom(n->get_atom_integer() - 1);
+        return SECD::index(temp, ((Node *) list->cdr()));
+    }
+}
+
+Atom * SECD::locate(Node * coordinates, Node * environment) {
+    if(coordinates->car()->getExpType() != ATOM_TYPE || coordinates->cadr()->getExpType() != ATOM_TYPE){
+        std::cout << "Calling location on a non-2-tuple";
+        std::cout << "Car: ";
+        coordinates->car()->print();
+        std::cout << "Cadr: ";
+        coordinates->cadr()->print();
+        exit(1);
+    }
+    Atom * b = (Atom*) coordinates->car();
+    Atom * n = (Atom*) coordinates->cdr();
+    return (Atom*) index(n, (Node*) index(b, environment));
+}
+
 
 void SECD::print(){
     std::cout << &stack << &environment << &control << &dump << std::endl;

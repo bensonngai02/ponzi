@@ -27,7 +27,7 @@ Expression * Compiler::exprs(Expression * d) {
 
 Expression * Compiler::complis(Expression * expressions, Expression * namelist, Expression * codelist) {
     if (expressions->getExpType() == NIL_TYPE || Node::eq(expressions, new Node())) {
-        return Node::cons(new Atom("LDC"), Node::cons(new Atom(), codelist));
+        return Node::cons(new Atom("NIL"), codelist);
     }
     return complis(expressions->cdr(), namelist, comp(expressions->car(), namelist, Node::cons(new Atom("CONS"), codelist)));
 }
@@ -43,11 +43,16 @@ Expression * Compiler::comp(Expression * expressions, Expression * namelist, Exp
     }
     std::cout << "Type: " << expressions->car()->getExpType() << std::endl;
     std::string checkStr = ((Atom *) expressions->car())->get_atom_string();
-    std::cout << "Check String: " << checkStr << std::endl;
-    std::string checkStr2 = ((Atom *) expressions->cdr())->get_atom_string();
-    std::cout << "Check String 2: " << checkStr2 << std::endl;
+    std::cout << "Check CAR: " << checkStr << std::endl;
+    std::string checkStr2 = ((Atom *) expressions->car()->car())->get_atom_string();
+    std::cout << "Check CARCAR: " << checkStr2 << std::endl;
+    std::string checkStr3 = ((Atom *) expressions->cdr()->cdr())->get_atom_string();
+    std::cout << "Check CDRCDR: " << checkStr3 << std::endl;
+    std::string checkStr4 = ((Atom *) expressions->cdr())->get_atom_string();
+    std::cout << "Check CDR: " << checkStr4 << std::endl;
 
     if (checkStr == "QUOTE") {
+        std::cout << "QUOTE!" << std::endl;
         return Node::cons(new Atom("LDC"), Node::cons(expressions->cadr(), codelist));
     }
     else if (checkStr == "ADD") {
@@ -136,7 +141,13 @@ Expression * Compiler::comp(Expression * expressions, Expression * namelist, Exp
 int main(int argc, char** argv){
     std::string input(argv[INPUT_ARG]);
     Compiler* compile = new Compiler(input);
+    std::cout << "PARSED, ready to compile (final): ";
+    compile->code->print();
+    std::cout << std::endl;
     Expression* result = Compiler::comp(compile->code, new Atom(), new Atom("STOP"));
+    std::cout << "COMPILED, ready to execute: ";
+    result->print();
+    std::cout << std::endl;
     SECD machine((Node* )result);
     while(true){
         machine.print();
