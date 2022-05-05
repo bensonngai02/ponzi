@@ -81,10 +81,6 @@ Expression * Node::peek() {
     return this;
 }
 
-void Node::rplaca(Expression* c){
-    this->carPtr = c;
-}
-
 void Node::printRecur(){
     printf("(");
     this->carPtr->printRecur();

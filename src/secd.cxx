@@ -389,30 +389,6 @@ Node * SECD::location(Node * target, Node * list) {
     }
 }
 
-Expression * SECD::index(Atom* n, Node * list) {
-    if (Node::eq(n, new Atom(0))) {
-        return list->car();
-    }
-    else {
-        Atom* temp = new Atom(n->get_atom_integer() - 1);
-        return SECD::index(temp, ((Node *) list->cdr()));
-    }
-}
-
-Atom * SECD::locate(Node * coordinates, Node * environment) {
-    if(coordinates->car()->getExpType() != ATOM_TYPE || coordinates->cadr()->getExpType() != ATOM_TYPE){
-        std::cout << "Calling location on a non-2-tuple";
-        std::cout << "Car: ";
-        coordinates->car()->print();
-        std::cout << "Cadr: ";
-        coordinates->cadr()->print();
-        exit(1);
-    }
-    Atom * b = (Atom*) coordinates->car();
-    Atom * n = (Atom*) coordinates->cdr();
-    return (Atom*) index(n, (Node*) index(b, environment));
-}
-
 
 void SECD::print(){
     std::cout << &stack << &environment << &control << &dump << std::endl;
