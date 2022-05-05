@@ -5,6 +5,7 @@
 class Node : public Expression {
     Expression * carPtr;
     Expression * cdrPtr;
+    bool rplacable;
 
 public:
     Node();
@@ -15,7 +16,15 @@ public:
     Expression * car();
     Expression * cdr();
     Expression * copy();
-    void rplaca(Expression * c);
+    void rplaca(Expression* c){
+        carPtr = c;
+        rplacable = false;
+    }
+
+    static bool member(Node * target, Node * list);
+    static int position(Node * target, Node * list);
+    static Node * location(Node * target, Node * list);
+
     void print();
     void printRecur();
     
