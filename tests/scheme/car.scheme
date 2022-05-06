@@ -1,2 +1,1 @@
-LET list (1 2 (three) "four" 5 true)
-(CAR list)
+(CAR ((QUOTE 1) (QUOTE 2)))

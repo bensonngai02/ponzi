@@ -21,6 +21,8 @@ public:
         rplacable = false;
     }
 
+    bool getRplacable();
+
     static bool member(Node * target, Node * list);
     static int position(Node * target, Node * list);
     static Node * location(Node * target, Node * list);

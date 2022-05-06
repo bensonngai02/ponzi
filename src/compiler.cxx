@@ -129,7 +129,7 @@ Expression * Compiler::comp(Expression * expressions, Expression * namelist, Exp
         return Node::cons(m, codelist);
     }
     else {
-        // std::cout << "Expressions: " << checkStr << " "; expressions->print();
+        std::cout << "Expressions: " << checkStr << " "; expressions->print();
         return complis(expressions->cdr(), namelist, comp(expressions->car(), namelist, Node::cons(new Atom("AP"), codelist)));
     }
 }
@@ -147,5 +147,4 @@ int main(int argc, char** argv){
         machine.print();
         machine.execute();
     }
-    
 }

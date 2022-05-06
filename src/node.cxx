@@ -50,6 +50,7 @@ Node * Node::cons(Expression * car, Expression * cdr) {
         ((Node*)cdr)->rplaca(car);
         return (Node*) cdr;
     }
+
     int car_type = car->expType;
     int cdr_type = cdr->expType;
     if (car_type == ATOM_TYPE && cdr_type == ATOM_TYPE)
@@ -79,6 +80,10 @@ Expression * Node::pop(Node** headPtr) { //sketchy
 
 Expression * Node::peek() {
     return this;
+}
+
+bool Node::getRplacable() {
+    return rplacable;
 }
 
 void Node::printRecur(){

@@ -1,7 +1,7 @@
-LETREC FIB
+(LETREC FIB
   (FIB LAMBDA (A)
     (IF (LEQ A (QUOTE 1))
         (QUOTE 1)
         (FIB (SUB A (QUOTE 1)))
-    )
-  ) 
+    ))
+    )(QUOTE 2)

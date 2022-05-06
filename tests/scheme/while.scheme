@@ -1,0 +1,7 @@
+(LETREC WHILE
+  (WHILE LAMBDA (A)
+    (IF (LEQ A (QUOTE 5))
+        (QUOTE 1)
+        (WHILE (SUB A (QUOTE 1)))
+    ))
+    )(QUOTE 6)

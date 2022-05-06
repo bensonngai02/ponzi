@@ -1,0 +1,1 @@
+(NIL (LDC (5 (CONS (DUM (NIL (LDF ((LD ((0 0 )(LDC (4 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))(CONS (LDF ((LD ((0 0 )(RET )))(RAP (STOP )))))))))))))

@@ -280,12 +280,10 @@ void SECD::execute() {
         Node* closure = (Node*) Node::pop(&stack);
         Expression* v = Node::pop(&stack);
         // pop dummy environment off stack
-        Expression* omega = Node::pop(&environment);
+        Expression* omega = environment->peek();
         Node* newNode = new Node();
-        omega->print();
-        std::cout << omega->getExpType() << omega->car()->getExpType() << omega->cdr()->getExpType() << std::endl;
-        std::cout << newNode->getExpType() << newNode->car()->getExpType() << newNode->cdr()->getExpType() << std::endl;
-        if(!Node::eq(omega, new Node())){
+        // std::cout << omega->getExpType() << omega->car()->getExpType() << omega->cdr()->getExpType();
+        if(omega->car()->getExpType() != 3 && omega->cdr()->getExpType() != 3){
             std::cout << "RAP cannot be executed because the top of the enivronment stack is not omega";
             exit(1);
         }
@@ -295,9 +293,11 @@ void SECD::execute() {
         stack = new Node();
         control = (Node*) closure->car();
         environment = (Node*) closure->cdr();   // omega should be first item of closure->cdr()
-        std::cout << "Environment' firt item: ";
+        std::cout << "Environment' first item: ";
         environment->car()->print();
         environment->rplaca(v);
+
+        
     }
     else if (atomInstString == "WRITE") {
         Node * output = (Node *) Node::pop(&stack);
