@@ -1,4 +1,4 @@
-Tython Instruction Set Architecture (ISA)
+PONZI Instruction Set Architecture (ISA)
 -------------------------------------------
 
 Table of Contents

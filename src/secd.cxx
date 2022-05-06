@@ -179,13 +179,16 @@ void SECD::execute() {
         }
     }
     else if (atomInstString == "STOP") {
-        std::cout << "Stack is: ";
+        std::cout << "------------------------------------" << std::endl;
+        std::cout << "OUTPUT" << std::endl;
+        std::cout << "------------------------------------" << std::endl;
+        std::cout << "Stack: ";
         stack->print();
-        std::cout << "Environment is: ";
+        std::cout << "Environment: ";
         environment->print();
-        std::cout << "Control is: ";
+        std::cout << "Control: ";
         control->print();
-        std::cout << "Dump is: ";
+        std::cout << "Dump: ";
         dump->print();
         std::cout << std::endl;
         exit(1);
@@ -263,12 +266,12 @@ void SECD::execute() {
         Node::push(&dump, environment);
         Node::push(&dump, stack);
         Node* newControl = (Node*) function->car();
-        std::cout << "Function cdr: ";
-        function->cdr()->print();
+        // std::cout << "Function cdr: ";
+        // function->cdr()->print();
         parameters->print();
         Node* newEnv = Node::cons(parameters, function->cdr());
-        std::cout << "NewEnv: ";
-        newEnv->print();
+        // std::cout << "NewEnv: ";
+        // newEnv->print();
         control = newControl;
         environment = newEnv;
         stack = new Node(); //TODO: Check
@@ -296,7 +299,7 @@ void SECD::execute() {
         environment->car()->print();
         environment->rplaca(v);
     }
-    else if (atomInstString == "WRITEC") {
+    else if (atomInstString == "WRITE") {
         Node * output = (Node *) Node::pop(&stack);
         output->print();
     }
@@ -410,10 +413,10 @@ void SECD::print(){
     std::cout << std::endl;
 }
 
-int main(int argc, char** argv){
-    SECD * secd = new SECD(argv[1]);
-    while(true){
-        secd->print();
-        secd->execute();
-    }
-}
+// int main(int argc, char** argv){
+//     SECD * secd = new SECD(argv[1]);
+//     while(true){
+//         secd->print();
+//         secd->execute();
+//     }
+// }

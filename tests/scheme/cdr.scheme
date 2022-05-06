@@ -1,2 +1,2 @@
-LET list (1 2 (three) "four" 5 true))
-(CAR list)
+LET list (1 2 (three) "four" 5 true)
+(CDR list)

@@ -1,2 +1,0 @@
-(LAMBDA (A B) (MUL A B))(QUOTE 6)(QUOTE 3)
-

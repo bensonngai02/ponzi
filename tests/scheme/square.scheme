@@ -1,0 +1,1 @@
+(LAMBDA (A) (MUL A A))(QUOTE 7)

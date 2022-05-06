@@ -8,6 +8,7 @@ Compiler::Compiler(std::string inputFile){
     std::string c = createInterpretedString(inputFile);
     int i = 0;
     code = consume(&c, &i);
+    std::cout << "Parsed Scheme: ";
     code->print();
 }
 
@@ -41,18 +42,9 @@ Expression * Compiler::comp(Expression * expressions, Expression * namelist, Exp
     if (expressions->getExpType() != NODE_TYPE) {
         return Node::cons(new Atom("LD"), Node::cons(SECD::location((Node*) expressions, (Node*) namelist), codelist));
     }
-    std::cout << "Type: " << expressions->car()->getExpType() << std::endl;
     std::string checkStr = ((Atom *) expressions->car())->get_atom_string();
-    std::cout << "Check CAR: " << checkStr << std::endl;
-    std::string checkStr2 = ((Atom *) expressions->car()->car())->get_atom_string();
-    std::cout << "Check CARCAR: " << checkStr2 << std::endl;
-    std::string checkStr3 = ((Atom *) expressions->cdr()->cdr())->get_atom_string();
-    std::cout << "Check CDRCDR: " << checkStr3 << std::endl;
-    std::string checkStr4 = ((Atom *) expressions->cdr())->get_atom_string();
-    std::cout << "Check CDR: " << checkStr4 << std::endl;
 
     if (checkStr == "QUOTE") {
-        std::cout << "QUOTE!" << std::endl;
         return Node::cons(new Atom("LDC"), Node::cons(expressions->cadr(), codelist));
     }
     else if (checkStr == "ADD") {
@@ -116,6 +108,10 @@ Expression * Compiler::comp(Expression * expressions, Expression * namelist, Exp
         Expression * body = comp(expressions->cadr(), m, Node::cons(new Atom("RET"), new Atom()));
         return Node::cons(new Atom("DUM"), complis(args, m, Node::cons(new Atom("LDF"), Node::cons(body, Node::cons(new Atom("RAP"), codelist)))));
     }
+    else if (checkStr == "WRITE") {
+        Expression * m = new Atom("WRITE");
+        return Node:: cons(m, codelist);
+    }   
     else if (checkStr == "FINN") {
         Expression * m = new Atom("FINN");
         return Node::cons(m, codelist);
@@ -133,7 +129,7 @@ Expression * Compiler::comp(Expression * expressions, Expression * namelist, Exp
         return Node::cons(m, codelist);
     }
     else {
-        std::cout << "Expressions: " << checkStr << " "; expressions->print();
+        // std::cout << "Expressions: " << checkStr << " "; expressions->print();
         return complis(expressions->cdr(), namelist, comp(expressions->car(), namelist, Node::cons(new Atom("AP"), codelist)));
     }
 }
@@ -141,11 +137,9 @@ Expression * Compiler::comp(Expression * expressions, Expression * namelist, Exp
 int main(int argc, char** argv){
     std::string input(argv[INPUT_ARG]);
     Compiler* compile = new Compiler(input);
-    std::cout << "PARSED, ready to compile (final): ";
-    compile->code->print();
     std::cout << std::endl;
     Expression* result = Compiler::comp(compile->code, new Atom(), new Atom("STOP"));
-    std::cout << "COMPILED, ready to execute: ";
+    std::cout << "Compiled Scheme into PONZI: ";
     result->print();
     std::cout << std::endl;
     SECD machine((Node* )result);
