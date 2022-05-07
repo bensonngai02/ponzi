@@ -122,7 +122,6 @@ void SECD::execute() {
     Atom * atom_inst = (Atom *) inst;
     // consider integer, string, boolean cases
     std::string atomInstString = atom_inst->get_atom_string();
-
     if (atomInstString == "ADD")
         mathOp("ADD");
     else if (atomInstString== "SUB")
@@ -148,13 +147,16 @@ void SECD::execute() {
         Boolean val = eq ? t : f;
         Node::push(&stack, new Atom(val));
     }
+    // NIL - pushes NIL onto stack
     else if (atomInstString == "NIL") {
         Node::push(&stack, new Atom());
     }
+    // LDC - loads constant from control flow to stack
     else if (atomInstString == "LDC"){
         Expression* op1 = Node::pop(&control);
         Node::push(&stack, op1);
     }
+    // SEL - if top of stack is 1, runs If-statement. Else, runs Else-statement.
     else if (atomInstString == "SEL") {
         Atom * popped = (Atom *) Node::pop(&stack);
         bool cond = popped->get_atom_boolean();
@@ -178,6 +180,7 @@ void SECD::execute() {
             control = (Node *) cf;
         }
     }
+    // STOP - ends execution of program
     else if (atomInstString == "STOP") {
         std::cout << "------------------------------------" << std::endl;
         std::cout << "OUTPUT" << std::endl;
@@ -193,20 +196,24 @@ void SECD::execute() {
         std::cout << std::endl;
         exit(1);
     }
+    // CAR - gets the head of list
     else if(atomInstString == "CAR"){
         Expression* op1 = Node::pop(&stack)->car();
         Node::push(&stack, op1);
     }
+    // CDR - gets the tail of list (rest of list besides first item (atom/node))
     else if(atomInstString == "CDR"){
         Expression* op1 = Node::pop(&stack)->cdr();
         Node::push(&stack, op1);
     }
+    // CONS - pops two items off stack and combines them, pushing result to stack
     else if(atomInstString == "CONS"){
         Expression* op2 = Node::pop(&stack);
         Expression* op1 = Node::pop(&stack);
         Expression* result = Node::cons(op2, op1);
         Node::push(&stack, result);
     }
+    // ATOM - checks whether top of stack is an atom type, pushing result to stack
     else if(atomInstString == "ATOM"){
         Expression* op1 = Node::pop(&stack);
         bool b = op1->getExpType() == ATOM_TYPE;
@@ -214,13 +221,16 @@ void SECD::execute() {
         Atom* result = new Atom(bo);
         Node::push(&stack, result);
     }
+    // JOIN returns to default program control flow after If-Else statement is run
     else if (atomInstString == "JOIN") {
         if (dump->peek()->getExpType() != NODE_TYPE) {
-            std::cout << "JOIN on non node (top of dump is not a node when it should be).";
+            std::cout << "JOIN on non-node (top of dump is not a node when it should be).";
             exit(1);
         }
         control = (Node *) Node::pop(&dump);
     }
+    // RET - return needed at end of function code to return out of function
+    // needed to restore stack, environment, and control stacks previously stored on dump
     else if (atomInstString == "RET") {
         // Expression* tempStack = Node::pop(&dump);
         // Expression* tempEnv = Node::pop(&dump);
@@ -245,20 +255,27 @@ void SECD::execute() {
         control = (Node* ) dump->caddr();
         dump = (Node*) dump->cddr()->cdr();
     }
+    // DUM - pushes dummy environment, needed for recursively apply
     else if (atomInstString == "DUM") {
         Node * emptyList = new Node(); // TODO: Check
         Node::push(&environment, emptyList);
     }
+    // LD - loads variables from a specific environment
     else if (atomInstString == "LD") {
         Node * locationNode = (Node *) Node::pop(&control);
         Expression * variable = locate(locationNode, environment);
         Node::push(&stack, variable);
     }
+    // LD - loads function by creating closure with function code + environment,
+    //      pushing the closure (pair) to stack
     else if (atomInstString == "LDF") {
         Node * function = (Node *) Node::pop(&control);
         Node * closure = Node::cons(function, environment->copy());
         Node::push(&stack, closure);
     }
+    // AP - applies function with parameters located directly below function code in stack
+    //      saves state of S, E, C onto dump before function application
+    //      sets new state of S, E, C with locally scoped data in function (parameters)
     else if (atomInstString == "AP") {
         Node * function = (Node *) Node::pop(&stack);
         Node * parameters = (Node *) Node::pop(&stack);
@@ -266,16 +283,13 @@ void SECD::execute() {
         Node::push(&dump, environment);
         Node::push(&dump, stack);
         Node* newControl = (Node*) function->car();
-        // std::cout << "Function cdr: ";
-        // function->cdr()->print();
         parameters->print();
         Node* newEnv = Node::cons(parameters, function->cdr());
-        // std::cout << "NewEnv: ";
-        // newEnv->print();
         control = newControl;
         environment = newEnv;
-        stack = new Node(); //TODO: Check
+        stack = new Node(); 
     }
+    // RAP - recursively apply functions
     else if (atomInstString == "RAP") {
         // Node* closure = (Node*) Node::pop(&stack);
         // Expression* v = Node::pop(&stack);
@@ -303,10 +317,12 @@ void SECD::execute() {
         control = (Node *) stack->caar();
         stack = new Node();
     }
+    // WRITE - modified write instruction to write S-Expression from given Node on top of stack
     else if (atomInstString == "WRITE") {
         Node * output = (Node *) Node::pop(&stack);
         output->print();
     }
+    // TA Instructions print images representing each TA. ASCII art in .txt file located in /docs
     else if (atomInstString == "FINN") {
         std::ifstream finn;
         finn.open("docs/finn.txt");
@@ -330,7 +346,6 @@ void SECD::execute() {
         }
     }
     else if (atomInstString == "NIKITA") {
-        std::cout << "|     ALL HAIL PIAZZA PROFILE PICS     |" << std::endl;
         std::ifstream nikita;
         nikita.open("docs/nikita.txt");
         std::string line;
@@ -385,6 +400,8 @@ Node * SECD::location(Node * target, Node * list) {
         return Node::cons(car_atom, cdr_atom);
     }
     else {
+        // finds the location coordinate pair if not found in head of member list
+        // acts as recursive step to iterate through environments to look for correct location
         Node * z = (SECD::location(target, (Node *) list->cdr()));
         Atom * car_z = (Atom *) z->car();
         Atom * cdr_z = (Atom *) z->cdr();
@@ -412,6 +429,8 @@ void SECD::print(){
     std::cout << std::endl;
 }
 
+/* The main here is needed if you want to run just the .ponzi file
+   If that's the case, the other main in compiler.cxx will have to be commented out */
 // int main(int argc, char** argv){
 //     SECD * secd = new SECD(argv[1]);
 //     while(true){

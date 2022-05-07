@@ -1,0 +1,66 @@
+
+Your name: Benson Ngai
+
+Your CSID: bn6686
+
+Your team name: PONZI
+
+What do you plan on doing?
+We plan on implementing both a compiler and emulator for the SECD machine,
+a machine structured to efficiently run functional programming languages such
+as LISP. Though there are a variety of LISP-based languages, we are focusing
+on Scheme. Therefore, we can write Scheme that compiles to an intermediate
+representation (like Assembly), which then is executed by the machine.
+
+How do you plan on doing it?
+We first have to write a modified recursive parser that is able to take in 
+Scheme input (arithmetic ops, boolean ops, conditions, functions) and tokenize
+it with parentheses. Then, this expression is passed to the PONZI compiler, which
+can compile the code to an intermediate representation. This code is then passed onto
+the SECD machine, where all the instructions in our instruction have to be implemented
+in order to support the operations mentioned above. These are mostly list manipulation
+operations. We aim to have non-recursive and recursive functions fully operational by 
+the end.
+
+What research did you do?
+Since neither Anant or I had any previous knowledge about functional programming, LISP,
+or SECD machines, we had to do a LOT of research in order to even get started on our
+project. Though the machine is stack-based, it's definitely more complicated with our
+CAR and CDR functions that treat it more like a list rather than a basic stack with push
+and pop functions. Therefore, we did a lot of planning in order to both have a good enough
+understanding to code our instructions. To do our research, we mainly read "Functional
+Programming Application and Implementation" by Peter Henderson, which is one of the few
+resources that thoroughly cover SECD machines.
+
+What alternatives did you consider?
+We had a rough time deciding which LISP language we want to implement. However, Dr. Gheith
+told us about Scheme-48, which has syntax so simple it seems as if the language was developed
+in 48 hours. However, due to limited documentation (and more documentation on general Scheme), 
+we decided to do basic Scheme instead, taking its fundamentals to do arithmetic operations,
+boolean operations, conditionals, and functions. Additionally, when implementing our machine,
+we had some decisions to make about our type system, especilaly differentiating between NILs
+and ATOM/NODE types. We decided to make NILs a subset of Atoms that just have a member variable
+indicating that they're NIL.
+
+What did you decide to do?
+In our original plan, we decided to cover all the objectives that were mentioned above, along
+with garbage collection and writing. However, we were unable to get to these parts of the project
+working due to being occupied with bugs with the more fundamental parts of our project that
+we wanted to prioritize. For example, we spent a while getting functions to successfully take in 
+parameters, which ended up working. In our final strides of the project, we spent a lot of time
+debugging our recursive function application; even though the recursive step was being entered,
+the code was executing in the wrong order, and certain instructions were mishandling our S, E, C
+stacks when our recursive step was being applied.
+
+What did you you learn so far?
+In terms of functional languages, I have learned that they have far more power than they seem
+to contain. I initially didn't even understand the paradigm, but now am able to code basic programs
+and methods (learned while writing and experimenting with tests). Additionally, the nature of 
+applying pure mathematical functions to data allows code to act as data and vice versa, with the
+nice touch of immutability to ensure referential transparency (ensure state of program always).
+I also am amazed at how an SECD machine is able to load and execute functions with parameters - 
+seeing that the function code itself and the arguments being passed in have to being positioned
+correctly in a list and arrive at the same time for AP to apply the function is pretty awesome. 
+
+Who are the team members? how much did each contribute?
+Anant. We both contributed an equal amount. 
