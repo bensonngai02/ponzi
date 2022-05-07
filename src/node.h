@@ -16,10 +16,9 @@ public:
     Expression * car();
     Expression * cdr();
     Expression * copy();
-    void rplaca(Expression* c){
-        carPtr = c;
-        rplacable = false;
-    }
+    void setCar(Expression * c);
+    void setCdr(Expression * c);
+    void rplaca(Expression* c);
 
     bool getRplacable();
 

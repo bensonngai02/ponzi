@@ -12,6 +12,7 @@ Compiler::Compiler(std::string inputFile){
     code->print();
 }
 
+
 Expression * Compiler::vars(Expression * d){
     if (d->getExpType() == NIL_TYPE) {
         return new Atom();

@@ -50,6 +50,7 @@ int Atom::getType(){
     return type;
 }
 
+// check if two atoms have the same type
 void Atom::checkDataTypeEq(Atom * atom1, Atom * atom2, int targetDataType) {
     if(atom1->getType() != INTEGER || atom2->getType() != targetDataType){
         printf("Trying to operate (+, -, *, /) on two non integers");
@@ -57,6 +58,7 @@ void Atom::checkDataTypeEq(Atom * atom1, Atom * atom2, int targetDataType) {
     }
 }
 
+/* Add two integers */
 Atom* Atom::add(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
     int64_t sum = op1->get_atom_integer() + op2->get_atom_integer();
@@ -64,6 +66,7 @@ Atom* Atom::add(Atom * op1, Atom * op2){
     return ret;
 }
 
+/* Subtract two integers */
 Atom* Atom::sub(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
     int64_t diff = op1->get_atom_integer() - op2->get_atom_integer();
@@ -71,6 +74,7 @@ Atom* Atom::sub(Atom * op1, Atom * op2){
     return ret;
 }
 
+/* Multiply two integers */
 Atom* Atom::mul(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
     int64_t prod = op1->get_atom_integer() * op2->get_atom_integer();
@@ -78,6 +82,7 @@ Atom* Atom::mul(Atom * op1, Atom * op2){
     return ret;
 }
 
+/* Divide two integers */
 Atom* Atom::div(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
     if (op2->get_atom_integer() == 0) {
@@ -89,6 +94,7 @@ Atom* Atom::div(Atom * op1, Atom * op2){
     return ret;
 }
 
+/* Remainder */
 Atom* Atom::rem(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
     int64_t rem = op1->get_atom_integer() % op2->get_atom_integer();
@@ -176,15 +182,16 @@ Expression * Atom::cdr(){
     return new Atom();
 }
 
+/* Returns copy of atom to avoid mutability */
 Expression * Atom::copy(){
-    if(this->getType() == NIL_TYPE){
+    if (this->getType() == NIL_TYPE){
         return new Atom();
     }
-    if(this->type == BOOLEAN){
+    if (this->type == BOOLEAN){
         Boolean b = this->get_atom_boolean() ? t : f;
         return new Atom(b);
     }
-    if(this->type == INTEGER){
+    if (this->type == INTEGER){
         return new Atom(this->get_atom_integer());
     }
     std::string * cpStr = new std::string(this->get_atom_string());

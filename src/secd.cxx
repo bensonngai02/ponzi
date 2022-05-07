@@ -246,7 +246,7 @@ void SECD::execute() {
         dump = (Node*) dump->cddr()->cdr();
     }
     else if (atomInstString == "DUM") {
-        Node * emptyList = Node::cons(new Atom(), new Atom()); // TODO: Check
+        Node * emptyList = new Node(); // TODO: Check
         Node::push(&environment, emptyList);
     }
     else if (atomInstString == "LD") {
@@ -277,27 +277,31 @@ void SECD::execute() {
         stack = new Node(); //TODO: Check
     }
     else if (atomInstString == "RAP") {
-        Node* closure = (Node*) Node::pop(&stack);
-        Expression* v = Node::pop(&stack);
-        // pop dummy environment off stack
-        Expression* omega = environment->peek();
-        Node* newNode = new Node();
-        // std::cout << omega->getExpType() << omega->car()->getExpType() << omega->cdr()->getExpType();
-        if(omega->car()->getExpType() != 3 && omega->cdr()->getExpType() != 3){
-            std::cout << "RAP cannot be executed because the top of the enivronment stack is not omega";
-            exit(1);
-        }
-        Node::push(&dump, control);
-        Node::push(&dump, environment);
-        Node::push(&dump, stack);
-        stack = new Node();
-        control = (Node*) closure->car();
-        environment = (Node*) closure->cdr();   // omega should be first item of closure->cdr()
-        std::cout << "Environment' first item: ";
-        environment->car()->print();
-        environment->rplaca(v);
+        // Node* closure = (Node*) Node::pop(&stack);
+        // Expression* v = Node::pop(&stack);
+        // // pop dummy environment off stack
+        // Expression* omega = environment->peek();
+        // Node* newNode = new Node();
+        // // std::cout << omega->getExpType() << omega->car()->getExpType() << omega->cdr()->getExpType();
+        // if(omega->car()->getExpType() != 3 && omega->cdr()->getExpType() != 3){
+        //     std::cout << "RAP cannot be executed because the top of the enivronment stack is not omega";
+        //     exit(1);
+        // }
+        // Node::push(&dump, control);
+        // Node::push(&dump, environment);
+        // Node::push(&dump, stack);
+        // stack = new Node();
+        // control = (Node*) closure->car();
+        // environment = (Node*) closure->cdr();   // omega should be first item of closure->cdr()
+        // std::cout << "Environment' first item: ";
+        // environment->car()->print();
+        // environment->rplaca(v);
 
-        
+        dump = Node::cons(stack->cddr(), Node::cons(environment->cdr(), Node::cons(control, dump)));
+        environment = (Node *) stack->cdar();
+        environment->rplaca(stack->cadr());
+        control = (Node *) stack->caar();
+        stack = new Node();
     }
     else if (atomInstString == "WRITE") {
         Node * output = (Node *) Node::pop(&stack);
@@ -338,16 +342,6 @@ void SECD::execute() {
         }
     }
     else if (atomInstString == "MICHAEL") {
-        std::cout << "|     Ode to MJ     |" << std::endl;
-        std::cout << "---------------------" << std::endl;
-        std::cout << "  He sing" << std::endl;
-        std::cout << "  He dance" << std::endl;
-        std::cout << "  But most importantly" << std::endl;
-        std::cout << "  He hee" << std::endl;
-        std::cout << "---------------------" << std::endl;
-        std::cout << "Click for a surprise: https://www.youtube.com/watch?v=GCUz359flrM" << std::endl;
-        std::cout << "---------------------" << std::endl;
-
         std::ifstream michael;
         michael.open("docs/michael.txt");
         std::string line;
@@ -360,6 +354,7 @@ void SECD::execute() {
     }
 }
 
+/* Checks whether a target node is in a list recursively */
 bool SECD::member(Node * target, Node * list) {
     if (list->getExpType() == NIL_TYPE)
         return false;
@@ -369,19 +364,23 @@ bool SECD::member(Node * target, Node * list) {
         return member(target, (Node *) list->cdr());
 }
 
+/* Returns the position of the target in the list recursively */
 int SECD::position(Node * target, Node * list) {
     bool val_eq = Node::eq(target, list->car());
     return val_eq? 0 : 1 + position(target, (Node *) list->cdr());
 }
 
+/* Returns a node of the location of the target in the list in the form of a coordinate pair */
 Node * SECD::location(Node * target, Node * list) {
     if(Node::eq(new Atom(), list->car())){
             std::cout << "Reached end of list without finding location. Printing environment list: " << std::endl;
             exit(1);
         }
     if (member(target, (Node *) list->car())) {
+        // If a member of the list, x-coordinate must be 0. 
         int got_pos = position(target, (Node *) list->car());
         Atom * car_atom = new Atom(0);
+        // Find y coordinate
         Atom * cdr_atom = new Atom(got_pos);
         return Node::cons(car_atom, cdr_atom);
     }

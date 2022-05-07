@@ -40,17 +40,26 @@ Expression * Node::cdr() {
     return this->cdrPtr;
 }
 
+void Node::setCar(Expression * c) {
+    this->carPtr = c;
+}
+
+void Node::setCdr(Expression * c) {
+    this->cdrPtr = c;
+}
+
+/* returns copy of a node to cons (immutability) */
 Expression * Node::copy(){
     return Node::cons(this->car()->copy(), this->cdr()->copy());
 }
 
+/* Takes in two node/atom arguments and combines them to create new node in list */
 Node * Node::cons(Expression * car, Expression * cdr) {
     Node * newNode;
     if(cdr->expType == NODE_TYPE && ((Node*) cdr)->rplacable){
         ((Node*)cdr)->rplaca(car);
         return (Node*) cdr;
     }
-
     int car_type = car->expType;
     int cdr_type = cdr->expType;
     if (car_type == ATOM_TYPE && cdr_type == ATOM_TYPE)
@@ -68,9 +77,11 @@ void Node::push(Node** headPtr, Expression * expression) {
     *headPtr = cons(expression, *headPtr);
 }
 
-Expression * Node::pop(Node** headPtr) { //sketchy
+Expression * Node::pop(Node** headPtr) { 
     Node * head = *headPtr;
-    *headPtr = (Node *) head->cdr(); //May not work if cdr is atom*
+    *headPtr = (Node *) head->cdr(); 
+    // if NIL type, head->cdr() as performed above doesn't work for NIL type
+    // check is necessary to instantiate new atom representing NIL type
     if((*headPtr)->getExpType() == NIL_TYPE){
         *headPtr = new Node();
     }
@@ -80,6 +91,12 @@ Expression * Node::pop(Node** headPtr) { //sketchy
 
 Expression * Node::peek() {
     return this;
+}
+
+/* replaces the CAR (head of expression) */
+void Node::rplaca(Expression* c){
+    this->carPtr = c;
+    this->rplacable = false;
 }
 
 bool Node::getRplacable() {

@@ -22,6 +22,8 @@
 #define NIL_TYPE 3
 #define NIL_STR "nil"
 
+/* Boolean enum to avoid conflicting constructors with integers
+   since Atom(0) and Atom(false) would be the same */
 enum Boolean {
     f = 0,
     t = 1
