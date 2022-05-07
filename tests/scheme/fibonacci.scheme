@@ -3,5 +3,4 @@
     (IF (LEQ A (QUOTE 1))
         (QUOTE 1)
         (FIB (SUB A (QUOTE 1)))
-    ))
-    )(QUOTE 2)
+    )))(QUOTE 2)

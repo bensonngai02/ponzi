@@ -3,7 +3,6 @@
 #include "node.h"
 #include "string.h"
 
-
 class SECD {
     public:
         SECD(std::string s);
@@ -13,6 +12,7 @@ class SECD {
         // need to read in control 
         Node * control;
         Node * dump;
+
     void execute();
     void print();
     void peekStackExpType(Node * stack, int expType);

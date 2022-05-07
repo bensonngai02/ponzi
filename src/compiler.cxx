@@ -12,7 +12,7 @@ Compiler::Compiler(std::string inputFile){
     code->print();
 }
 
-
+// selects list of variables from a passed in expression
 Expression * Compiler::vars(Expression * d){
     if (d->getExpType() == NIL_TYPE) {
         return new Atom();
@@ -20,6 +20,7 @@ Expression * Compiler::vars(Expression * d){
     return Node::cons(d->caar(), vars(d->cdr())); 
 }
 
+// selects list of expressions from a passed in expression
 Expression * Compiler::exprs(Expression * d) {
     if (d->getExpType() == NIL_TYPE) {
         return new Atom();
@@ -27,6 +28,8 @@ Expression * Compiler::exprs(Expression * d) {
     return Node::cons(d->cdar(), exprs(d->cdr()));
 }
 
+// compiles list of expressions (instructions from codelist + variables from namelist) and 
+// generates code accordingly, recursively
 Expression * Compiler::complis(Expression * expressions, Expression * namelist, Expression * codelist) {
     if (expressions->getExpType() == NIL_TYPE || Node::eq(expressions, new Node())) {
         return Node::cons(new Atom("NIL"), codelist);
@@ -34,17 +37,22 @@ Expression * Compiler::complis(Expression * expressions, Expression * namelist, 
     return complis(expressions->cdr(), namelist, comp(expressions->car(), namelist, Node::cons(new Atom("CONS"), codelist)));
 }
 
+// Handles binary operations (add, sub, mul, div, rem) & boolean ops (geq, gt, leq, lt, eq)
+// creates new code list in PONZI format based on prefix notation & operands of .scheme file
 Expression * Compiler::binaryOp(Expression * expressions, Expression * namelist, Expression * codelist, std::string operation){
     Expression * newCodeList = comp(expressions->caddr(), namelist, Node::cons(new Atom(operation), codelist));
     return comp(expressions->cadr(), namelist, newCodeList);
 }
 
+// main compiler function
+// replaces various scheme keywords with combination(s) of instructions part of PONZI ISA to create executable for SECD
 Expression * Compiler::comp(Expression * expressions, Expression * namelist, Expression * codelist) {
     if (expressions->getExpType() != NODE_TYPE) {
         return Node::cons(new Atom("LD"), Node::cons(SECD::location((Node*) expressions, (Node*) namelist), codelist));
     }
-    std::string checkStr = ((Atom *) expressions->car())->get_atom_string();
+    std::string checkStr = ((Atom *) expressions->car())->getAtomString();
 
+    // QUOTE - needed in front of integer values in .scheme files for ease in parsing
     if (checkStr == "QUOTE") {
         return Node::cons(new Atom("LDC"), Node::cons(expressions->cadr(), codelist));
     }
@@ -93,16 +101,19 @@ Expression * Compiler::comp(Expression * expressions, Expression * namelist, Exp
         Expression * elsePt = comp(expressions->cadddr(), namelist, Node::cons(new Atom("JOIN"), new Atom()) );
         return comp(expressions->cadr(), namelist, Node::cons(new Atom("SEL"), Node::cons(thenPt, Node::cons(elsePt, codelist))));
     }
+    // LAMBDA - necessary to declare function, and apply if desired with passed in arguments. 
     else if (checkStr == "LAMBDA") {
         Expression * body = comp(expressions->caddr(), Node::cons(expressions->cadr(), namelist), Node::cons(new Atom("RET"), new Atom()) );
         return Node::cons(new Atom("LDF"), Node::cons(body, codelist));
     }
+    // LET - keyword to declare function. However, not needed if lambda function is directly called.
     else if (checkStr == "LET") {
         Expression * m = Node::cons(vars(expressions->cddr()), namelist);
         Expression * args = exprs(expressions->cddr());
         Expression * body = comp(expressions->cadr(), m, Node::cons(new Atom("RET"), new Atom()) );
         return complis(args, namelist, Node::cons(new Atom("LDF"), Node::cons(body, Node::cons(new Atom("AP"), codelist))));
     }
+    // LETREC - keyword to declare recursive function
     else if (checkStr == "LETREC") {
         Expression * m = Node::cons(vars(expressions->cddr()), namelist);
         Expression * args = exprs(expressions->cddr());

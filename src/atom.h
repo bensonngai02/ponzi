@@ -44,10 +44,10 @@ public:
     Atom(int64_t integer);
     Atom(std::string string);
     Atom(Boolean boolean);
-    AtomVal * get_atom();
-    int64_t get_atom_integer();
-    std::string get_atom_string();
-    bool get_atom_boolean();
+    AtomVal * getAtom();
+    int64_t getAtomInteger();
+    std::string getAtomString();
+    bool getAtomBoolean();
     int getType();
     void print();
     void printRecur();

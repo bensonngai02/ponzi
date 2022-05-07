@@ -8,9 +8,7 @@
 #include <fstream>
 
 /* Upon instantiating new SECD, each S, E, C, D register
-    contains a new stack with "NIL" as head.
-*/
-
+    contains a new stack with "NIL" as head. */
 SECD::SECD(std::string inputFile){
     int i = 0;
     std::string inputSStr = createInterpretedString(inputFile);
@@ -43,7 +41,7 @@ Expression * SECD::index(Atom* n, Node * list) {
         return list->car();
     }
     else {
-        Atom* temp = new Atom(n->get_atom_integer() - 1);
+        Atom* temp = new Atom(n->getAtomInteger() - 1);
         list->print();
         return SECD::index(temp, ((Node *) list->cdr()));
     }
@@ -52,9 +50,9 @@ Expression * SECD::index(Atom* n, Node * list) {
 Expression * SECD::locate(Node * coordinates, Node * environment) { //wrong
     if(coordinates->car()->getExpType() != ATOM_TYPE || coordinates->cadr()->getExpType() != ATOM_TYPE){
         std::cout << "Calling location on a non-2-tuple";
-        std::cout << "Car: ";
+        std::cout << "CAR: ";
         coordinates->car()->print();
-        std::cout << "Cadr: ";
+        std::cout << "CADR: ";
         coordinates->cadr()->print();
         exit(1);
     }
@@ -65,6 +63,8 @@ Expression * SECD::locate(Node * coordinates, Node * environment) { //wrong
     return ret;
 }
 
+/* handles all arithmetic operations with two operands 
+   (add, sub, mul, div, rem) */
 void SECD::mathOp(std::string operation) {
     peekStackExpType(stack, ATOM_TYPE);
     Atom* op2 = (Atom*) Node::pop(&stack);
@@ -86,6 +86,8 @@ void SECD::mathOp(std::string operation) {
     Node::push(&stack, result);
 }
 
+/* handles all boolean operations with two operands 
+   (gt, lt, geq, leq, eq) */
 void SECD::boolOp(std::string operation) {
     peekStackExpType(stack, ATOM_TYPE);
     Atom* op2 = (Atom*) Node::pop(&stack);
@@ -110,6 +112,7 @@ void SECD::boolOp(std::string operation) {
     Node::push(&stack, result);
 }
 
+/* executes a ponzi instruction part of our established ISA */
 void SECD::execute() {
     Expression * inst = Node::pop(&control)->car();
     int inst_type = inst->getExpType();
@@ -121,7 +124,7 @@ void SECD::execute() {
 
     Atom * atom_inst = (Atom *) inst;
     // consider integer, string, boolean cases
-    std::string atomInstString = atom_inst->get_atom_string();
+    std::string atomInstString = atom_inst->getAtomString();
     if (atomInstString == "ADD")
         mathOp("ADD");
     else if (atomInstString== "SUB")
@@ -159,7 +162,7 @@ void SECD::execute() {
     // SEL - if top of stack is 1, runs If-statement. Else, runs Else-statement.
     else if (atomInstString == "SEL") {
         Atom * popped = (Atom *) Node::pop(&stack);
-        bool cond = popped->get_atom_boolean();
+        bool cond = popped->getAtomBoolean();
         Expression * ct = Node::pop(&control);
         Expression * cf = Node::pop(&control);
         Node::push(&dump, control);
@@ -221,7 +224,7 @@ void SECD::execute() {
         Atom* result = new Atom(bo);
         Node::push(&stack, result);
     }
-    // JOIN returns to default program control flow after If-Else statement is run
+    // JOIN - returns to default program control flow after If-Else statement is run
     else if (atomInstString == "JOIN") {
         if (dump->peek()->getExpType() != NODE_TYPE) {
             std::cout << "JOIN on non-node (top of dump is not a node when it should be).";
@@ -232,24 +235,6 @@ void SECD::execute() {
     // RET - return needed at end of function code to return out of function
     // needed to restore stack, environment, and control stacks previously stored on dump
     else if (atomInstString == "RET") {
-        // Expression* tempStack = Node::pop(&dump);
-        // Expression* tempEnv = Node::pop(&dump);
-        // Expression* tempControl = Node::pop(&dump);
-        // if(tempStack->getExpType() != NODE_TYPE || 
-        //     tempEnv->getExpType() != NODE_TYPE || 
-        //     tempControl->getExpType() != NODE_TYPE){
-        //     std::cout << "RET prev values is not Node";
-        //     std::cout << tempStack->getExpType() << " " << tempEnv->getExpType() << " " << tempControl->getExpType() << std::endl;
-        //     tempStack->print();
-        //     tempEnv->print();
-        //     tempControl->print();
-        //     exit(1);
-        // }
-        // Node* prevStack = (Node*) tempStack;
-        // environment = (Node*) tempEnv;
-        // control = (Node*) tempControl;
-        // Node::push(&prevStack, stack->car());
-        // stack = prevStack;
         stack = Node::cons(stack->car(), dump->car());
         environment = (Node*) dump->cadr();
         control = (Node* ) dump->caddr();
@@ -257,8 +242,8 @@ void SECD::execute() {
     }
     // DUM - pushes dummy environment, needed for recursively apply
     else if (atomInstString == "DUM") {
-        Node * emptyList = new Node(); // TODO: Check
-        Node::push(&environment, emptyList);
+        environment = Node::cons(new Atom(), environment);
+        control = (Node *) control->cdr();
     }
     // LD - loads variables from a specific environment
     else if (atomInstString == "LD") {
@@ -291,26 +276,6 @@ void SECD::execute() {
     }
     // RAP - recursively apply functions
     else if (atomInstString == "RAP") {
-        // Node* closure = (Node*) Node::pop(&stack);
-        // Expression* v = Node::pop(&stack);
-        // // pop dummy environment off stack
-        // Expression* omega = environment->peek();
-        // Node* newNode = new Node();
-        // // std::cout << omega->getExpType() << omega->car()->getExpType() << omega->cdr()->getExpType();
-        // if(omega->car()->getExpType() != 3 && omega->cdr()->getExpType() != 3){
-        //     std::cout << "RAP cannot be executed because the top of the enivronment stack is not omega";
-        //     exit(1);
-        // }
-        // Node::push(&dump, control);
-        // Node::push(&dump, environment);
-        // Node::push(&dump, stack);
-        // stack = new Node();
-        // control = (Node*) closure->car();
-        // environment = (Node*) closure->cdr();   // omega should be first item of closure->cdr()
-        // std::cout << "Environment' first item: ";
-        // environment->car()->print();
-        // environment->rplaca(v);
-
         dump = Node::cons(stack->cddr(), Node::cons(environment->cdr(), Node::cons(control, dump)));
         environment = (Node *) stack->cdar();
         environment->rplaca(stack->cadr());
@@ -405,12 +370,11 @@ Node * SECD::location(Node * target, Node * list) {
         Node * z = (SECD::location(target, (Node *) list->cdr()));
         Atom * car_z = (Atom *) z->car();
         Atom * cdr_z = (Atom *) z->cdr();
-        Atom * new_car = new Atom(car_z->get_atom_integer() + 1);
-        Atom * new_cdr = new Atom(cdr_z->get_atom_integer());
+        Atom * new_car = new Atom(car_z->getAtomInteger() + 1);
+        Atom * new_cdr = new Atom(cdr_z->getAtomInteger());
         return Node::cons(new_car, new_cdr);
     }
 }
-
 
 void SECD::print(){
     std::cout << &stack << &environment << &control << &dump << std::endl;
@@ -431,6 +395,7 @@ void SECD::print(){
 
 /* The main here is needed if you want to run just the .ponzi file
    If that's the case, the other main in compiler.cxx will have to be commented out */
+
 // int main(int argc, char** argv){
 //     SECD * secd = new SECD(argv[1]);
 //     while(true){

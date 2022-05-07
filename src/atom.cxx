@@ -30,19 +30,19 @@ Atom::Atom(Boolean boolean) {
     this->expType = ATOM_TYPE;
 }
 
-AtomVal * Atom::get_atom() {
+AtomVal * Atom::getAtom() {
     return this->val;
 }
 
-int64_t Atom::get_atom_integer() {
+int64_t Atom::getAtomInteger() {
     return this->val->integer;
 } 
 
-std::string Atom::get_atom_string() {
+std::string Atom::getAtomString() {
     return this->val->string;
 }
 
-bool Atom::get_atom_boolean() {
+bool Atom::getAtomBoolean() {
     return this->val->boolean;
 }
 
@@ -61,7 +61,7 @@ void Atom::checkDataTypeEq(Atom * atom1, Atom * atom2, int targetDataType) {
 /* Add two integers */
 Atom* Atom::add(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
-    int64_t sum = op1->get_atom_integer() + op2->get_atom_integer();
+    int64_t sum = op1->getAtomInteger() + op2->getAtomInteger();
     Atom * ret = new Atom(sum);
     return ret;
 }
@@ -69,7 +69,7 @@ Atom* Atom::add(Atom * op1, Atom * op2){
 /* Subtract two integers */
 Atom* Atom::sub(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
-    int64_t diff = op1->get_atom_integer() - op2->get_atom_integer();
+    int64_t diff = op1->getAtomInteger() - op2->getAtomInteger();
     Atom * ret = new Atom(diff);
     return ret;
 }
@@ -77,7 +77,7 @@ Atom* Atom::sub(Atom * op1, Atom * op2){
 /* Multiply two integers */
 Atom* Atom::mul(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
-    int64_t prod = op1->get_atom_integer() * op2->get_atom_integer();
+    int64_t prod = op1->getAtomInteger() * op2->getAtomInteger();
     Atom * ret = new Atom(prod);
     return ret;
 }
@@ -85,11 +85,11 @@ Atom* Atom::mul(Atom * op1, Atom * op2){
 /* Divide two integers */
 Atom* Atom::div(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
-    if (op2->get_atom_integer() == 0) {
+    if (op2->getAtomInteger() == 0) {
         std::cout << "Error: Divide by zero";
         exit(1);
     }
-    int64_t div = op1->get_atom_integer() / op2->get_atom_integer();
+    int64_t div = op1->getAtomInteger() / op2->getAtomInteger();
     Atom * ret = new Atom(div);
     return ret;
 }
@@ -97,7 +97,7 @@ Atom* Atom::div(Atom * op1, Atom * op2){
 /* Remainder */
 Atom* Atom::rem(Atom * op1, Atom * op2){
     checkDataTypeEq(op1, op2, INTEGER);
-    int64_t rem = op1->get_atom_integer() % op2->get_atom_integer();
+    int64_t rem = op1->getAtomInteger() % op2->getAtomInteger();
     Atom * ret = new Atom(rem);
     return ret;
 }
@@ -109,7 +109,7 @@ Atom * Atom::gt(Atom * op1, Atom * op2){
     bool same_type = op1_is_integer && op2_is_integer && op1->getType() == op2->getType();
     if (!same_type)
         exit(1);
-    bool val = ((Atom *) op1)->get_atom_integer() > ((Atom *) op2)->get_atom_integer();
+    bool val = ((Atom *) op1)->getAtomInteger() > ((Atom *) op2)->getAtomInteger();
     Boolean result = val ? t : f;
     return new Atom(result);
 }
@@ -121,7 +121,7 @@ Atom * Atom::lt(Atom * op1, Atom * op2){
     bool same_type = op1_is_integer && op2_is_integer && op1->getType() == op2->getType();
     if (!same_type)
         exit(1);
-    bool val = ((Atom *) op1)->get_atom_integer() < ((Atom *) op2)->get_atom_integer();
+    bool val = ((Atom *) op1)->getAtomInteger() < ((Atom *) op2)->getAtomInteger();
     Boolean result = val ? t : f;
     return new Atom(result);
 }
@@ -133,7 +133,7 @@ Atom * Atom::geq(Atom * op1, Atom * op2){
     bool same_type = op1_is_integer && op2_is_integer && op1->getType() == op2->getType();
     if (!same_type)
         exit(1);
-    bool val = ((Atom *) op1)->get_atom_integer() >= ((Atom *) op2)->get_atom_integer();
+    bool val = ((Atom *) op1)->getAtomInteger() >= ((Atom *) op2)->getAtomInteger();
     Boolean result = val ? t : f;
     return new Atom(result);
 }
@@ -145,7 +145,7 @@ Atom * Atom::leq(Atom * op1, Atom * op2){
     bool same_type = op1_is_integer && op2_is_integer && op1->getType() == op2->getType();
     if (!same_type)
         exit(1);
-    bool val = ((Atom *) op1)->get_atom_integer() <= ((Atom *) op2)->get_atom_integer();
+    bool val = ((Atom *) op1)->getAtomInteger() <= ((Atom *) op2)->getAtomInteger();
     Boolean result = val ? t : f;
     return new Atom(result);
 }
@@ -158,13 +158,13 @@ void Atom::print(){
 
 void Atom::printRecur(){
     if(this->type == STRING){
-        std::cout << this->get_atom_string() << " ";
+        std::cout << this->getAtomString() << " ";
     }
     else if(this->type == BOOLEAN){
-        std::cout << this->get_atom_boolean() << " ";
+        std::cout << this->getAtomBoolean() << " ";
     }
     else if(this->type == INTEGER){
-        std::cout << this->get_atom_integer() << " ";
+        std::cout << this->getAtomInteger() << " ";
     }
     else if( this-> type != NIL_TYPE){
         std::cout <<"Printing something unknown: " << this->type << " " << (this->type == STRING) << "\n";
@@ -188,13 +188,13 @@ Expression * Atom::copy(){
         return new Atom();
     }
     if (this->type == BOOLEAN){
-        Boolean b = this->get_atom_boolean() ? t : f;
+        Boolean b = this->getAtomBoolean() ? t : f;
         return new Atom(b);
     }
     if (this->type == INTEGER){
-        return new Atom(this->get_atom_integer());
+        return new Atom(this->getAtomInteger());
     }
-    std::string * cpStr = new std::string(this->get_atom_string());
+    std::string * cpStr = new std::string(this->getAtomString());
     return new Atom(*cpStr);
 }
 

@@ -50,6 +50,9 @@ void Node::setCdr(Expression * c) {
 
 /* returns copy of a node to cons (immutability) */
 Expression * Node::copy(){
+    if(this->cdr()->getExpType() == NIL_TYPE){
+        return Node::cons(this->car(), new Node());
+    }
     return Node::cons(this->car()->copy(), this->cdr()->copy());
 }
 

@@ -26,13 +26,13 @@ bool Expression::eq(Expression * op1, Expression * op2) {
         int atomType = atomOp1->getType();
 
         if (atomType == INTEGER) {
-            return atomOp1->get_atom_integer() == atomOp2->get_atom_integer();
+            return atomOp1->getAtomInteger() == atomOp2->getAtomInteger();
         }
         else if (atomType == STRING) {
-            return atomOp1->get_atom_string() == atomOp2->get_atom_string();
+            return atomOp1->getAtomString() == atomOp2->getAtomString();
         }
         else if (atomType == BOOLEAN) {
-            return atomOp1->get_atom_boolean() == atomOp2->get_atom_boolean();
+            return atomOp1->getAtomBoolean() == atomOp2->getAtomBoolean();
         }
         
         return false;

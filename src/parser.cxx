@@ -31,6 +31,7 @@ std::string consumeIdentifier(std::string* str, int* index)
     }
 }
 
+// Consumes input to create an Expression (consisting of nodes + atoms)
 Expression * consume(std::string* str, int* index) {
     skip(str, index);
     if ((*str)[*index] == ')' || *index == str->length()) {
@@ -69,6 +70,7 @@ Expression * getControlPtr(std::string * string, int * index){
     return consume(string, index);
 }
 
+// Parses the .scheme file to create an tokenized input that is fed into compiler
 std::string createInterpretedString(std::string inputFile){
     std::ifstream t(inputFile);
     std::stringstream buffer;

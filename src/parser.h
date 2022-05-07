@@ -27,4 +27,3 @@ std::string consumeIdentifier(std::string * str, int * index);
 Expression * consume(std::string * str, int * index);
 Expression * getControlPtr(std::string * string, int * index);
 std::string createInterpretedString(std::string s);
-
