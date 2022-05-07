@@ -1,0 +1,93 @@
+Parsed Scheme: ((LAMBDA ((A (B ))((MUL (A (B ))))))((QUOTE (6 ))((QUOTE (3 )))))
+
+Expressions:  ((LAMBDA ((A (B ))((MUL (A (B ))))))((QUOTE (6 ))((QUOTE (3 )))))
+Compiled Scheme into PONZI: (NIL (LDC (3 (CONS (LDC (6 (CONS (LDF ((LD ((0 0 )(LD ((0 1 )(MUL (RET ))))))(AP STOP ))))))))))
+
+0x16eefb4380x16eefb4400x16eefb4480x16eefb450
+Stack: ()
+Environment: ()
+Control: (NIL (LDC (3 (CONS (LDC (6 (CONS (LDF ((LD ((0 0 )(LD ((0 1 )(MUL (RET ))))))(AP STOP ))))))))))
+Dump: ()
+
+0x16eefb4380x16eefb4400x16eefb4480x16eefb450
+Stack: ()
+Environment: ()
+Control: (LDC (3 (CONS (LDC (6 (CONS (LDF ((LD ((0 0 )(LD ((0 1 )(MUL (RET ))))))(AP STOP )))))))))
+Dump: ()
+
+0x16eefb4380x16eefb4400x16eefb4480x16eefb450
+Stack: (3 ())
+Environment: ()
+Control: (CONS (LDC (6 (CONS (LDF ((LD ((0 0 )(LD ((0 1 )(MUL (RET ))))))(AP STOP )))))))
+Dump: ()
+
+0x16eefb4380x16eefb4400x16eefb4480x16eefb450
+Stack: ((3 ))
+Environment: ()
+Control: (LDC (6 (CONS (LDF ((LD ((0 0 )(LD ((0 1 )(MUL (RET ))))))(AP STOP ))))))
+Dump: ()
+
+0x16eefb4380x16eefb4400x16eefb4480x16eefb450
+Stack: (6 ((3 )))
+Environment: ()
+Control: (CONS (LDF ((LD ((0 0 )(LD ((0 1 )(MUL (RET ))))))(AP STOP ))))
+Dump: ()
+
+0x16eefb4380x16eefb4400x16eefb4480x16eefb450
+Stack: ((6 (3 )))
+Environment: ()
+Control: (LDF ((LD ((0 0 )(LD ((0 1 )(MUL (RET ))))))(AP STOP )))
+Dump: ()
+
+0x16eefb4380x16eefb4400x16eefb4480x16eefb450
+Stack: (((LD ((0 0 )(LD ((0 1 )(MUL (RET ))))))())((6 (3 ))))
+Environment: ()
+Control: (AP STOP )
+Dump: ()
+
+(6 (3 ))
+0x16eefb4380x16eefb4400x16eefb4480x16eefb450
+Stack: ()
+Environment: ((6 (3 ))())
+Control: (LD ((0 0 )(LD ((0 1 )(MUL (RET ))))))
+Dump: (()(()(STOP )))
+
+Returing: 3(6 (3 ))
+Returing: 46 
+6 
+0x16eefb4380x16eefb4400x16eefb4480x16eefb450
+Stack: (6 )
+Environment: ((6 (3 ))())
+Control: (LD ((0 1 )(MUL (RET ))))
+Dump: (()(()(STOP )))
+
+Returing: 3(6 (3 ))
+(6 (3 ))
+Returing: 33 
+3 
+0x16eefb4380x16eefb4400x16eefb4480x16eefb450
+Stack: (3 (6 ))
+Environment: ((6 (3 ))())
+Control: (MUL (RET ))
+Dump: (()(()(STOP )))
+
+0x16eefb4380x16eefb4400x16eefb4480x16eefb450
+Stack: (18 )
+Environment: ((6 (3 ))())
+Control: (RET )
+Dump: (()(()(STOP )))
+
+0x16eefb4380x16eefb4400x16eefb4480x16eefb450
+Stack: (18 )
+Environment: ()
+Control: STOP 
+Dump: 
+
+------------------------------------
+OUTPUT
+------------------------------------
+Stack: (18 )
+Environment: ()
+Control: ()
+Dump: 
+

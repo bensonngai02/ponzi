@@ -1,0 +1,98 @@
+Parsed Scheme: ((LETREC (WHILE ((WHILE (LAMBDA ((A )((IF ((LEQ (A ((QUOTE (5 )))))((QUOTE (1 ))((WHILE ((SUB (A ((QUOTE (1 ))))))))))))))))))((QUOTE (6 ))))
+
+Expressions:  ((LETREC (WHILE ((WHILE (LAMBDA ((A )((IF ((LEQ (A ((QUOTE (5 )))))((QUOTE (1 ))((WHILE ((SUB (A ((QUOTE (1 ))))))))))))))))))((QUOTE (6 ))))
+Expressions: WHILE (WHILE ((SUB (A ((QUOTE (1 )))))))
+Compiled Scheme into PONZI: (NIL (LDC (6 (CONS (DUM (NIL (LDF ((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))(CONS (LDF ((LD ((0 0 )(RET )))(RAP (AP STOP )))))))))))))
+
+0x16d6b34380x16d6b34400x16d6b34480x16d6b3450
+Stack: ()
+Environment: ()
+Control: (NIL (LDC (6 (CONS (DUM (NIL (LDF ((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))(CONS (LDF ((LD ((0 0 )(RET )))(RAP (AP STOP )))))))))))))
+Dump: ()
+
+0x16d6b34380x16d6b34400x16d6b34480x16d6b3450
+Stack: ()
+Environment: ()
+Control: (LDC (6 (CONS (DUM (NIL (LDF ((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))(CONS (LDF ((LD ((0 0 )(RET )))(RAP (AP STOP ))))))))))))
+Dump: ()
+
+0x16d6b34380x16d6b34400x16d6b34480x16d6b3450
+Stack: (6 ())
+Environment: ()
+Control: (CONS (DUM (NIL (LDF ((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))(CONS (LDF ((LD ((0 0 )(RET )))(RAP (AP STOP ))))))))))
+Dump: ()
+
+0x16d6b34380x16d6b34400x16d6b34480x16d6b3450
+Stack: ((6 ))
+Environment: ()
+Control: (DUM (NIL (LDF ((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))(CONS (LDF ((LD ((0 0 )(RET )))(RAP (AP STOP )))))))))
+Dump: ()
+
+0x16d6b34380x16d6b34400x16d6b34480x16d6b3450
+Stack: ((6 ))
+Environment: ()
+Control: (LDF ((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))(CONS (LDF ((LD ((0 0 )(RET )))(RAP (AP STOP )))))))
+Dump: ()
+
+0x16d6b34380x16d6b34400x16d6b34480x16d6b3450
+Stack: (((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))())((6 )))
+Environment: ()
+Control: (CONS (LDF ((LD ((0 0 )(RET )))(RAP (AP STOP )))))
+Dump: ()
+
+0x16d6b34380x16d6b34400x16d6b34480x16d6b3450
+Stack: ((((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))())(6 )))
+Environment: ()
+Control: (LDF ((LD ((0 0 )(RET )))(RAP (AP STOP ))))
+Dump: ()
+
+0x16d6b34380x16d6b34400x16d6b34480x16d6b3450
+Stack: (((LD ((0 0 )(RET )))())((((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))())(6 ))))
+Environment: ()
+Control: (RAP (AP STOP ))
+Dump: ()
+
+0x16d6b34380x16d6b34400x16d6b34480x16d6b3450
+Stack: ()
+Environment: ((((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))())(6 )))
+Control: (LD ((0 0 )(RET )))
+Dump: ((((AP STOP ))))
+
+Returing: 3(((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))())(6 ))
+Returing: 4((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))())
+((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))())
+0x16d6b34380x16d6b34400x16d6b34480x16d6b3450
+Stack: (((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))()))
+Environment: ((((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))())(6 )))
+Control: (RET )
+Dump: ((((AP STOP ))))
+
+0x16d6b34380x16d6b34400x16d6b34480x16d6b3450
+Stack: (((LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))()))
+Environment: 
+Control: (AP STOP )
+Dump: 
+
+
+0x16d6b34380x16d6b34400x16d6b34480x16d6b3450
+Stack: ()
+Environment: (())
+Control: (LD ((0 0 )(LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))))
+Dump: (()((STOP )))
+
+Returing: 3
+Returing: 3
+
+0x16d6b34380x16d6b34400x16d6b34480x16d6b3450
+Stack: ()
+Environment: (())
+Control: (LDC (5 (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))))
+Dump: (()((STOP )))
+
+0x16d6b34380x16d6b34400x16d6b34480x16d6b3450
+Stack: (5 ())
+Environment: (())
+Control: (LEQ (SEL ((LDC (1 (JOIN )))((NIL (LD ((0 0 )(LDC (1 (SUB (CONS (LD ((1 0 )(AP (JOIN )))))))))))(RET )))))
+Dump: (()((STOP )))
+
+Top of stack is not atom

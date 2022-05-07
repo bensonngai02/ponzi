@@ -1,0 +1,80 @@
+Parsed Scheme: ((LAMBDA ((A )((MUL (A (A ))))))((QUOTE (7 ))))
+
+Expressions:  ((LAMBDA ((A )((MUL (A (A ))))))((QUOTE (7 ))))
+Compiled Scheme into PONZI: (NIL (LDC (7 (CONS (LDF ((LD ((0 0 )(LD ((0 0 )(MUL (RET ))))))(AP STOP )))))))
+
+0x16ee634380x16ee634400x16ee634480x16ee63450
+Stack: ()
+Environment: ()
+Control: (NIL (LDC (7 (CONS (LDF ((LD ((0 0 )(LD ((0 0 )(MUL (RET ))))))(AP STOP )))))))
+Dump: ()
+
+0x16ee634380x16ee634400x16ee634480x16ee63450
+Stack: ()
+Environment: ()
+Control: (LDC (7 (CONS (LDF ((LD ((0 0 )(LD ((0 0 )(MUL (RET ))))))(AP STOP ))))))
+Dump: ()
+
+0x16ee634380x16ee634400x16ee634480x16ee63450
+Stack: (7 ())
+Environment: ()
+Control: (CONS (LDF ((LD ((0 0 )(LD ((0 0 )(MUL (RET ))))))(AP STOP ))))
+Dump: ()
+
+0x16ee634380x16ee634400x16ee634480x16ee63450
+Stack: ((7 ))
+Environment: ()
+Control: (LDF ((LD ((0 0 )(LD ((0 0 )(MUL (RET ))))))(AP STOP )))
+Dump: ()
+
+0x16ee634380x16ee634400x16ee634480x16ee63450
+Stack: (((LD ((0 0 )(LD ((0 0 )(MUL (RET ))))))())((7 )))
+Environment: ()
+Control: (AP STOP )
+Dump: ()
+
+(7 )
+0x16ee634380x16ee634400x16ee634480x16ee63450
+Stack: ()
+Environment: ((7 )())
+Control: (LD ((0 0 )(LD ((0 0 )(MUL (RET ))))))
+Dump: (()(()(STOP )))
+
+Returing: 3(7 )
+Returing: 37 
+7 
+0x16ee634380x16ee634400x16ee634480x16ee63450
+Stack: (7 )
+Environment: ((7 )())
+Control: (LD ((0 0 )(MUL (RET ))))
+Dump: (()(()(STOP )))
+
+Returing: 3(7 )
+Returing: 37 
+7 
+0x16ee634380x16ee634400x16ee634480x16ee63450
+Stack: (7 (7 ))
+Environment: ((7 )())
+Control: (MUL (RET ))
+Dump: (()(()(STOP )))
+
+0x16ee634380x16ee634400x16ee634480x16ee63450
+Stack: (49 )
+Environment: ((7 )())
+Control: (RET )
+Dump: (()(()(STOP )))
+
+0x16ee634380x16ee634400x16ee634480x16ee63450
+Stack: (49 )
+Environment: ()
+Control: STOP 
+Dump: 
+
+------------------------------------
+OUTPUT
+------------------------------------
+Stack: (49 )
+Environment: ()
+Control: ()
+Dump: 
+

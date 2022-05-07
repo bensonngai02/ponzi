@@ -1,0 +1,77 @@
+Parsed Scheme: ((LAMBDA ((A )((ADD (A ((QUOTE (1 ))))))))((QUOTE (5 ))))
+
+Expressions:  ((LAMBDA ((A )((ADD (A ((QUOTE (1 ))))))))((QUOTE (5 ))))
+Compiled Scheme into PONZI: (NIL (LDC (5 (CONS (LDF ((LD ((0 0 )(LDC (1 (ADD (RET ))))))(AP STOP )))))))
+
+0x16d67f4380x16d67f4400x16d67f4480x16d67f450
+Stack: ()
+Environment: ()
+Control: (NIL (LDC (5 (CONS (LDF ((LD ((0 0 )(LDC (1 (ADD (RET ))))))(AP STOP )))))))
+Dump: ()
+
+0x16d67f4380x16d67f4400x16d67f4480x16d67f450
+Stack: ()
+Environment: ()
+Control: (LDC (5 (CONS (LDF ((LD ((0 0 )(LDC (1 (ADD (RET ))))))(AP STOP ))))))
+Dump: ()
+
+0x16d67f4380x16d67f4400x16d67f4480x16d67f450
+Stack: (5 ())
+Environment: ()
+Control: (CONS (LDF ((LD ((0 0 )(LDC (1 (ADD (RET ))))))(AP STOP ))))
+Dump: ()
+
+0x16d67f4380x16d67f4400x16d67f4480x16d67f450
+Stack: ((5 ))
+Environment: ()
+Control: (LDF ((LD ((0 0 )(LDC (1 (ADD (RET ))))))(AP STOP )))
+Dump: ()
+
+0x16d67f4380x16d67f4400x16d67f4480x16d67f450
+Stack: (((LD ((0 0 )(LDC (1 (ADD (RET ))))))())((5 )))
+Environment: ()
+Control: (AP STOP )
+Dump: ()
+
+(5 )
+0x16d67f4380x16d67f4400x16d67f4480x16d67f450
+Stack: ()
+Environment: ((5 )())
+Control: (LD ((0 0 )(LDC (1 (ADD (RET ))))))
+Dump: (()(()(STOP )))
+
+Returing: 3(5 )
+Returing: 35 
+5 
+0x16d67f4380x16d67f4400x16d67f4480x16d67f450
+Stack: (5 )
+Environment: ((5 )())
+Control: (LDC (1 (ADD (RET ))))
+Dump: (()(()(STOP )))
+
+0x16d67f4380x16d67f4400x16d67f4480x16d67f450
+Stack: (1 (5 ))
+Environment: ((5 )())
+Control: (ADD (RET ))
+Dump: (()(()(STOP )))
+
+0x16d67f4380x16d67f4400x16d67f4480x16d67f450
+Stack: (6 )
+Environment: ((5 )())
+Control: (RET )
+Dump: (()(()(STOP )))
+
+0x16d67f4380x16d67f4400x16d67f4480x16d67f450
+Stack: (6 )
+Environment: ()
+Control: STOP 
+Dump: 
+
+------------------------------------
+OUTPUT
+------------------------------------
+Stack: (6 )
+Environment: ()
+Control: ()
+Dump: 
+
